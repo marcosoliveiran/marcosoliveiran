@@ -43,6 +43,15 @@ export const TalkingHeadComposition = () => {
         height={1080}
         defaultProps={{ characterFolder: "faces-mae", seed: "mae" }}
       />
+      <Composition
+        id="TalkingHead-Maju"
+        component={TalkingHead}
+        durationInFrames={DURATION_IN_SECONDS * FPS}
+        fps={FPS}
+        width={1080}
+        height={1080}
+        defaultProps={{ characterFolder: "faces-maju", seed: "maju" }}
+      />
     </>
   );
 };
