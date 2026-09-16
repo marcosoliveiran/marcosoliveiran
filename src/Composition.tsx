@@ -1,8 +1,12 @@
 import { Composition } from "remotion";
+import { Background } from "./Background";
+import { Scene } from "./Scene";
 import { TalkingHead } from "./TalkingHead";
 
 const FPS = 30;
 const DURATION_IN_SECONDS = 10;
+const WIDESCREEN_WIDTH = 1920;
+const WIDESCREEN_HEIGHT = 1080;
 
 export const TalkingHeadComposition = () => {
   return (
@@ -51,6 +55,23 @@ export const TalkingHeadComposition = () => {
         width={1080}
         height={1080}
         defaultProps={{ characterFolder: "faces-maju", seed: "maju" }}
+      />
+      <Composition
+        id="Background"
+        component={Background}
+        durationInFrames={DURATION_IN_SECONDS * FPS}
+        fps={FPS}
+        width={WIDESCREEN_WIDTH}
+        height={WIDESCREEN_HEIGHT}
+      />
+      <Composition
+        id="Scene"
+        component={Scene}
+        durationInFrames={DURATION_IN_SECONDS * FPS}
+        fps={FPS}
+        width={WIDESCREEN_WIDTH}
+        height={WIDESCREEN_HEIGHT}
+        defaultProps={{ characterFolder: "faces", seed: "talking-head" }}
       />
     </>
   );
