@@ -1,15 +1,9 @@
-import { useAudioData, visualizeAudio } from "@remotion/media-utils";
-import {
-  AbsoluteFill,
-  Audio,
-  Img,
-  staticFile,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { AbsoluteFill, Img, random, staticFile, useCurrentFrame } from "remotion";
 
 export type TalkingHeadProps = {
-  audioSrc: string;
+  // Change this to get a different (but still deterministic) talking
+  // pattern, e.g. when placing multiple heads in the same video.
+  seed?: string;
 };
 
 const MOUTH_STATES = [
@@ -19,44 +13,43 @@ const MOUTH_STATES = [
   staticFile("faces/mouth-wide.png"),
 ];
 
-// Volume thresholds that decide which mouth shape to show.
-// Tune these once you hear how your dub audio maps to them.
-const THRESHOLDS = [0.02, 0.08, 0.18];
+// How long each mouth shape is held, in frames, before it can change again.
+const BEAT_LENGTH_IN_FRAMES = 4;
 
-export const TalkingHead: React.FC<TalkingHeadProps> = ({ audioSrc }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const audioData = useAudioData(audioSrc);
+// Chance that a beat is a silent/closed-mouth beat, to mimic natural
+// pauses for breathing in between words and sentences.
+const PAUSE_CHANCE = 0.15;
 
-  let mouthIndex = 0;
+// Odds of each mouth shape (closed, small, open, wide) on a talking beat.
+const MOUTH_WEIGHTS = [0.15, 0.35, 0.35, 0.15];
 
-  if (audioData) {
-    // Average the amplitude over a few neighboring frames so the mouth
-    // doesn't flicker on every tiny spike in the waveform.
-    const windowSize = 2;
-    let total = 0;
-    let samples = 0;
-
-    for (let f = frame - windowSize; f <= frame + windowSize; f++) {
-      if (f < 0) continue;
-      const visualization = visualizeAudio({
-        audioData,
-        frame: f,
-        fps,
-        numberOfSamples: 16,
-      });
-      total += visualization.reduce((a, b) => a + b, 0) / visualization.length;
-      samples++;
-    }
-
-    const amplitude = samples > 0 ? total / samples : 0;
-
-    mouthIndex = THRESHOLDS.filter((t) => amplitude >= t).length;
+const pickMouthIndex = (beatIndex: number, seed: string) => {
+  if (random(`${seed}-pause-${beatIndex}`) < PAUSE_CHANCE) {
+    return 0;
   }
+
+  const roll = random(`${seed}-mouth-${beatIndex}`);
+  let cumulative = 0;
+
+  for (let i = 0; i < MOUTH_WEIGHTS.length; i++) {
+    cumulative += MOUTH_WEIGHTS[i];
+    if (roll < cumulative) {
+      return i;
+    }
+  }
+
+  return MOUTH_WEIGHTS.length - 1;
+};
+
+export const TalkingHead: React.FC<TalkingHeadProps> = ({
+  seed = "talking-head",
+}) => {
+  const frame = useCurrentFrame();
+  const beatIndex = Math.floor(frame / BEAT_LENGTH_IN_FRAMES);
+  const mouthIndex = pickMouthIndex(beatIndex, seed);
 
   return (
     <AbsoluteFill style={{ backgroundColor: "white" }}>
-      <Audio src={audioSrc} />
       <Img
         src={MOUTH_STATES[mouthIndex]}
         style={{ width: "100%", height: "100%", objectFit: "contain" }}
