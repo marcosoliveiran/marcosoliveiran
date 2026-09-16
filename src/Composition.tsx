@@ -6,14 +6,25 @@ const DURATION_IN_SECONDS = 10;
 
 export const TalkingHeadComposition = () => {
   return (
-    <Composition
-      id="TalkingHead"
-      component={TalkingHead}
-      durationInFrames={DURATION_IN_SECONDS * FPS}
-      fps={FPS}
-      width={1080}
-      height={1080}
-      defaultProps={{ seed: "talking-head" }}
-    />
+    <>
+      <Composition
+        id="TalkingHead"
+        component={TalkingHead}
+        durationInFrames={DURATION_IN_SECONDS * FPS}
+        fps={FPS}
+        width={1080}
+        height={1080}
+        defaultProps={{ characterFolder: "faces", seed: "talking-head" }}
+      />
+      <Composition
+        id="TalkingHead-Zico"
+        component={TalkingHead}
+        durationInFrames={DURATION_IN_SECONDS * FPS}
+        fps={FPS}
+        width={1080}
+        height={1080}
+        defaultProps={{ characterFolder: "faces-zico", seed: "zico" }}
+      />
+    </>
   );
 };

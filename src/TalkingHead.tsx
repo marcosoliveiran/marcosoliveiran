@@ -1,17 +1,13 @@
 import { AbsoluteFill, Img, random, staticFile, useCurrentFrame } from "remotion";
 
 export type TalkingHeadProps = {
+  // Folder under public/ that holds this character's
+  // mouth-closed.png / mouth-small.png / mouth-open.png / mouth-wide.png.
+  characterFolder: string;
   // Change this to get a different (but still deterministic) talking
   // pattern, e.g. when placing multiple heads in the same video.
   seed?: string;
 };
-
-const MOUTH_STATES = [
-  staticFile("faces/mouth-closed.png"),
-  staticFile("faces/mouth-small.png"),
-  staticFile("faces/mouth-open.png"),
-  staticFile("faces/mouth-wide.png"),
-];
 
 // How long each mouth shape is held, in frames, before it can change again.
 const BEAT_LENGTH_IN_FRAMES = 4;
@@ -42,16 +38,24 @@ const pickMouthIndex = (beatIndex: number, seed: string) => {
 };
 
 export const TalkingHead: React.FC<TalkingHeadProps> = ({
+  characterFolder,
   seed = "talking-head",
 }) => {
   const frame = useCurrentFrame();
   const beatIndex = Math.floor(frame / BEAT_LENGTH_IN_FRAMES);
   const mouthIndex = pickMouthIndex(beatIndex, seed);
 
+  const mouthStates = [
+    staticFile(`${characterFolder}/mouth-closed.png`),
+    staticFile(`${characterFolder}/mouth-small.png`),
+    staticFile(`${characterFolder}/mouth-open.png`),
+    staticFile(`${characterFolder}/mouth-wide.png`),
+  ];
+
   return (
     <AbsoluteFill style={{ backgroundColor: "white" }}>
       <Img
-        src={MOUTH_STATES[mouthIndex]}
+        src={mouthStates[mouthIndex]}
         style={{ width: "100%", height: "100%", objectFit: "contain" }}
       />
     </AbsoluteFill>
