@@ -1,60 +1,86 @@
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 
-// Soft, neutral pastel palette (sand, blush, sage, powder blue, lilac).
-const BLOBS = [
-  { color: "#f4d9cf", size: 0.62, baseX: 0.16, baseY: 0.26, driftX: 0.07, driftY: 0.06, cycles: 1 },
-  { color: "#dde9dd", size: 0.55, baseX: 0.86, baseY: 0.18, driftX: 0.06, driftY: 0.08, cycles: 2 },
-  { color: "#dbe5f0", size: 0.66, baseX: 0.82, baseY: 0.88, driftX: 0.08, driftY: 0.05, cycles: 1 },
-  { color: "#efe1ef", size: 0.5, baseX: 0.18, baseY: 0.92, driftX: 0.06, driftY: 0.07, cycles: 2 },
-  { color: "#f7ecd9", size: 0.45, baseX: 0.5, baseY: 0.5, driftX: 0.05, driftY: 0.05, cycles: 1 },
+const CELL_SIZE = 130;
+const LINE_RGB = "126,109,92";
+
+// Larger accent triangles that slowly rotate on top of the grid, in the
+// same neutral pastel family used across the character videos.
+const ACCENT_TRIANGLES = [
+  { cx: 0.18, cy: 0.14, size: 420, color: "#f0c9c2", rotationCycles: 1, phase: 0 },
+  { cx: 0.85, cy: 0.22, size: 340, color: "#cfe0d1", rotationCycles: -1, phase: 40 },
+  { cx: 0.78, cy: 0.62, size: 480, color: "#c9d9ea", rotationCycles: 1, phase: 120 },
+  { cx: 0.2, cy: 0.78, size: 380, color: "#e6d3ea", rotationCycles: -1, phase: 200 },
+  { cx: 0.5, cy: 0.45, size: 300, color: "#f2e0bd", rotationCycles: 1, phase: 280 },
 ] as const;
 
 export const Background: React.FC = () => {
   const frame = useCurrentFrame();
   const { width, height, durationInFrames } = useVideoConfig();
-  // One full progress cycle across the whole composition duration, so a
-  // looping render (frame 0 and frame durationInFrames line up) is seamless.
-  const progress = frame / durationInFrames;
+  const progress = frame / durationInFrames; // 0..1, loops seamlessly
+
+  const cols = Math.ceil(width / CELL_SIZE) + 1;
+  const rows = Math.ceil(height / CELL_SIZE) + 1;
+
+  // A soft diagonal shimmer that sweeps across the triangle grid twice per
+  // loop (an integer number of cycles keeps the loop seamless).
+  const waveCycles = 2;
+  const wavePhase = progress * waveCycles * Math.PI * 2;
+
+  const gridLines: React.ReactNode[] = [];
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const x = col * CELL_SIZE;
+      const y = row * CELL_SIZE;
+      const tl = `${x},${y}`;
+      const tr = `${x + CELL_SIZE},${y}`;
+      const bl = `${x},${y + CELL_SIZE}`;
+      const br = `${x + CELL_SIZE},${y + CELL_SIZE}`;
+
+      const d = (row + col) * 0.35;
+      const opacity = 0.06 + 0.16 * (0.5 + 0.5 * Math.sin(wavePhase - d));
+      const stroke = `rgba(${LINE_RGB},${opacity.toFixed(3)})`;
+
+      gridLines.push(
+        <polygon
+          key={`a-${row}-${col}`}
+          points={`${tl} ${tr} ${bl}`}
+          fill="none"
+          stroke={stroke}
+        />,
+      );
+      gridLines.push(
+        <polygon
+          key={`b-${row}-${col}`}
+          points={`${tr} ${br} ${bl}`}
+          fill="none"
+          stroke={stroke}
+        />,
+      );
+    }
+  }
 
   return (
-    <AbsoluteFill
-      style={{
-        background: "linear-gradient(160deg, #faf4ee 0%, #f6ece5 45%, #eef1ea 100%)",
-        overflow: "hidden",
-      }}
-    >
-      {BLOBS.map((blob, i) => {
-        const angle = progress * blob.cycles * Math.PI * 2;
-        const x = (blob.baseX + Math.sin(angle) * blob.driftX) * width;
-        const y = (blob.baseY + Math.cos(angle) * blob.driftY) * height;
-        const size = blob.size * height;
+    <AbsoluteFill style={{ backgroundColor: "#faf6f0" }}>
+      <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
+        {gridLines}
+        {ACCENT_TRIANGLES.map((t, i) => {
+          const angle = progress * t.rotationCycles * 360 + t.phase;
+          const half = t.size / 2;
+          const cx = t.cx * width;
+          const cy = t.cy * height;
+          const points = `${cx},${cy - half} ${cx + half},${cy + half} ${cx - half},${cy + half}`;
 
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: x - size / 2,
-              top: y - size / 2,
-              width: size,
-              height: size,
-              borderRadius: "50%",
-              backgroundColor: blob.color,
-              filter: "blur(90px)",
-              opacity: 0.75,
-            }}
-          />
-        );
-      })}
-      <AbsoluteFill
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px)",
-          backgroundSize: "3px 3px",
-          mixBlendMode: "multiply",
-          opacity: 0.4,
-        }}
-      />
+          return (
+            <polygon
+              key={i}
+              points={points}
+              fill={t.color}
+              fillOpacity={0.3}
+              transform={`rotate(${angle} ${cx} ${cy})`}
+            />
+          );
+        })}
+      </svg>
     </AbsoluteFill>
   );
 };
