@@ -25,6 +25,15 @@ export const TalkingHeadComposition = () => {
         height={1080}
         defaultProps={{ characterFolder: "faces-zico", seed: "zico" }}
       />
+      <Composition
+        id="TalkingHead-Gi"
+        component={TalkingHead}
+        durationInFrames={DURATION_IN_SECONDS * FPS}
+        fps={FPS}
+        width={1080}
+        height={1080}
+        defaultProps={{ characterFolder: "faces-gi", seed: "gi" }}
+      />
     </>
   );
 };
