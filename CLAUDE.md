@@ -29,7 +29,12 @@ comunicam de formas diferentes. Não reaproveitar o visual de um para o outro.
   e nas cenas.
 - **@marcosoliveiran (perfil pessoal):** estética de colagem animada, com o
   Marcos em tela dividida ou recortado sobre imagens, legendas estilo agência.
-  Ainda falta definir paleta e referências com o Marcos.
+  A identidade da **voom** (lima `#C6FF1A`, preto `#101010`, off-white
+  `#F4F4EE`, cinza `#8B8B8B`; Fredoka Bold nos títulos, Nunito nos textos;
+  logo sempre minúsculo; lima nunca com texto branco; lima = o mais importante
+  da peça) entra aos poucos como acento, sem pressa. A voom terá perfil e
+  identidade próprios no futuro: nesse caso, criar um tema separado, e o perfil
+  pessoal mantém só os acentos que o Marcos escolher.
 - **Marcas (clientes):** seguem a identidade do próprio site/marca (cores,
   fonte, logo), só com narração quando pedido, sem o rosto do Marcos.
   Innova: roxo `#1a0a3c`, laranja `#ff6b00`, fonte Inter, logo em
