@@ -99,11 +99,17 @@ const EASE = Easing.bezier(0.4, 0, 0.2, 1);
 
 export type Part = { text: string; highlight?: boolean };
 
+// Caption layouts: "default" (word-by-word, key word highlighted, centered),
+// "card" (accent-colored card, bottom) and "minimal" (small, left aligned,
+// with an accent bar).
+export type CaptionStyle = "default" | "card" | "minimal";
+
 export type SceneConfig = {
   startSeconds: number;
   durationSeconds: number;
   mode: Mode;
   caption: Part[];
+  captionStyle?: CaptionStyle;
   Illustration?: React.FC;
   // Sound effects played during the scene, from public/sfx.
   sfx?: SceneSfx[];
@@ -330,17 +336,141 @@ const CaptionWord: React.FC<{
   );
 };
 
+const CardCaption: React.FC<{ words: Part[] }> = ({ words }) => {
+  const theme = useTheme();
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const pop = spring({
+    frame: frame - 2,
+    fps,
+    config: { damping: 10, stiffness: 160 },
+  });
+  const ink = theme.highlightInk ?? "black";
+
+  return (
+    <div
+      style={{
+        maxWidth: SAFE_WIDTH,
+        padding: "34px 48px 40px",
+        borderRadius: 48,
+        backgroundColor: theme.accent,
+        color: ink,
+        fontFamily: theme.font,
+        fontWeight: 900,
+        fontSize: 62,
+        lineHeight: 1.12,
+        textTransform: "uppercase",
+        letterSpacing: -1.5,
+        textAlign: "center",
+        transform: `translateY(${(1 - pop) * 80}px) rotate(${-1.5 * pop}deg)`,
+        opacity: Math.min(1, pop * 2),
+      }}
+    >
+      {words.map((word, i) => (
+        <span key={i}>
+          {word.highlight ? (
+            <span
+              style={{
+                display: "inline-block",
+                backgroundColor: ink,
+                color: theme.accent,
+                fontFamily: theme.serif,
+                textTransform: "none",
+                fontWeight: 700,
+                fontSize: 68,
+                padding: "0 18px 6px",
+                borderRadius: 16,
+              }}
+            >
+              {word.text}
+            </span>
+          ) : (
+            word.text
+          )}
+          {i < words.length - 1 ? " " : ""}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+const MinimalCaption: React.FC<{
+  words: Part[];
+  ink: string;
+  outline: string;
+}> = ({ words, ink, outline }) => {
+  const theme = useTheme();
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const bar = spring({ frame, fps, config: { damping: 18, stiffness: 160 } });
+
+  return (
+    <div
+      style={{ display: "flex", gap: 30, alignItems: "stretch", width: 720 }}
+    >
+      <div
+        style={{
+          width: 12,
+          borderRadius: 6,
+          backgroundColor: theme.accent,
+          transform: `scaleY(${bar})`,
+          transformOrigin: "bottom",
+        }}
+      />
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          columnGap: 18,
+          rowGap: 4,
+          fontFamily: theme.font,
+          fontSize: 60,
+          lineHeight: 1.15,
+        }}
+      >
+        {words.map((word, i) => {
+          const pop = spring({
+            frame: frame - (4 + i * 4),
+            fps,
+            config: { damping: 13, stiffness: 160 },
+          });
+          return (
+            <span
+              key={i}
+              style={{
+                display: "inline-block",
+                opacity: pop,
+                transform: `translateY(${(1 - pop) * 24}px)`,
+                color: word.highlight ? theme.accent : ink,
+                fontWeight: word.highlight ? 900 : 800,
+                WebkitTextStroke: `16px ${outline}`,
+                paintOrder: "stroke fill",
+                strokeLinejoin: "round",
+              }}
+            >
+              {word.text}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 // `onPanel` is true when the caption sits on the (dark) illustration panel,
 // so it switches to the panel's text color and outline.
 export const Caption: React.FC<{
   parts: Part[];
   y: number;
   onPanel: boolean;
-}> = ({ parts, y, onPanel }) => {
+  variant?: CaptionStyle;
+}> = ({ parts, y, onPanel, variant = "default" }) => {
   const theme = useTheme();
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const words = toWords(parts);
+  const ink = onPanel ? theme.panelInk : theme.ink;
+  const outline = onPanel ? (theme.panelOutline ?? theme.panel) : theme.paper;
   const exit = interpolate(
     frame,
     [durationInFrames - EXIT_IN_FRAMES, durationInFrames],
@@ -356,35 +486,39 @@ export const Caption: React.FC<{
         width: SAFE_WIDTH,
         top: y,
         display: "flex",
-        justifyContent: "center",
+        justifyContent: variant === "minimal" ? "flex-start" : "center",
         transform: `translateY(-100%) translateY(${(1 - exit) * -24}px)`,
         opacity: exit,
       }}
     >
-      <div
-        style={{
-          maxWidth: SAFE_WIDTH,
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "baseline",
-          columnGap: 26,
-          rowGap: 6,
-          textAlign: "center",
-        }}
-      >
-        {words.map((word, i) => (
-          <CaptionWord
-            key={i}
-            word={word}
-            delay={2 + i * WORD_STAGGER_IN_FRAMES}
-            ink={onPanel ? theme.panelInk : theme.ink}
-            outline={
-              onPanel ? (theme.panelOutline ?? theme.panel) : theme.paper
-            }
-          />
-        ))}
-      </div>
+      {variant === "card" ? (
+        <CardCaption words={words} />
+      ) : variant === "minimal" ? (
+        <MinimalCaption words={words} ink={ink} outline={outline} />
+      ) : (
+        <div
+          style={{
+            maxWidth: SAFE_WIDTH,
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "baseline",
+            columnGap: 26,
+            rowGap: 6,
+            textAlign: "center",
+          }}
+        >
+          {words.map((word, i) => (
+            <CaptionWord
+              key={i}
+              word={word}
+              delay={2 + i * WORD_STAGGER_IN_FRAMES}
+              ink={ink}
+              outline={outline}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -508,6 +642,7 @@ export const SplitVideo: React.FC<SplitVideoProps> = ({
                 parts={scene.caption}
                 y={layout.captionY}
                 onPanel={layout.topHeight >= layout.captionY}
+                variant={scene.captionStyle}
               />
             </Sequence>
           );

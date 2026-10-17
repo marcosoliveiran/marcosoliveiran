@@ -42,3 +42,19 @@ comunicam de formas diferentes. Não reaproveitar o visual de um para o outro.
   `public/innova-logo.png`.
 - Ao começar um vídeo novo, confirmar para qual perfil/marca ele é e olhar a
   identidade daquele perfil/marca antes de desenhar.
+
+## Estilos de legenda do perfil pessoal (voom)
+
+Três estilos, escolhidos por cena com `captionStyle` em `SceneConfig`
+(`src/kit.tsx`). Opções para comparar: composição `Voom-Legendas`.
+
+- **A · Marcador** (`"default"`, padrão): explicação, narração corrida e a
+  maioria das cenas. Palavra-chave num bloco lima com texto preto.
+- **D · Cartão lima** (`"card"`): frase de impacto, gancho, oferta e CTA. É o
+  que mais usa o lima, então usar com parcimônia (lima ~20% do uso).
+- **E · Minimalista** (`"minimal"`): momentos reflexivos, falas mais sérias ou
+  mais longas, quando a imagem precisa respirar. Fica à esquerda, longe dos
+  botões da direita.
+
+Evitar trocar de estilo a cada cena: no máximo um estilo de destaque (D) por
+vídeo, e o resto em A ou E.
