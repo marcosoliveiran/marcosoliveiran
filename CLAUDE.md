@@ -17,3 +17,22 @@ as interfaces das plataformas mudam, então confira em vídeos novos.
 
 Ao criar uma composição nova, use essas constantes e confira um frame com a área
 segura marcada antes de entregar.
+
+## Cada marca tem a sua identidade — nunca um layout único
+
+O perfil pessoal **@marcosoliveiran** e as marcas atendidas (Innova etc.) se
+comunicam de formas diferentes. Não reaproveitar o visual de um para o outro.
+
+- `src/kit.tsx` é só o motor (zonas mortas, legenda animada, cenas, efeitos
+  sonoros). Cores, fontes, fundo, estilo de legenda, tipo de ilustração e
+  formato (com ou sem apresentador) são definidos por vídeo/marca no `Theme`
+  e nas cenas.
+- **@marcosoliveiran (perfil pessoal):** estética de colagem animada, com o
+  Marcos em tela dividida ou recortado sobre imagens, legendas estilo agência.
+  Ainda falta definir paleta e referências com o Marcos.
+- **Marcas (clientes):** seguem a identidade do próprio site/marca (cores,
+  fonte, logo), só com narração quando pedido, sem o rosto do Marcos.
+  Innova: roxo `#1a0a3c`, laranja `#ff6b00`, fonte Inter, logo em
+  `public/innova-logo.png`.
+- Ao começar um vídeo novo, confirmar para qual perfil/marca ele é e olhar a
+  identidade daquele perfil/marca antes de desenhar.
