@@ -14,3 +14,13 @@ Palavras da fala (a transcrição errou nomes; usar a grafia certa nos gatilhos)
 Creep, Thom Yorke, lixo, OK Computer, turnê, maldição, setlist, 78º, 7º.
 
 Paleta e fontes: voom (decisão do Marcos), no lugar da paleta do roteiro original.
+
+## Duração final
+Decisão do Marcos: **manter todo o conteúdo** (sem enxugar), duração final em
+torno de 2:20 a 2:30. Os motions do roteiro acompanham as palavras, não os
+tempos escritos no roteiro (que previa ~1:30).
+
+## Medição de silêncio (aprovada)
+Limiar -54 dB, pausa mínima 0,35s, 55 blocos de fala, 2:26 de fala em 5:43.
+Blocos 002 e 003 (abertura errada e 1ª tomada) e 006 (1ª versão de "Ele a
+escreveu") saem; 004 e 007 ficam. Blocos com menos de 0,3s são descartados.
