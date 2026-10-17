@@ -22,6 +22,14 @@ export const UGC_VIDEO_FPS = FPS;
 const WIDTH = 1080;
 const HEIGHT = 1920;
 
+// Instagram Reels and TikTok draw their own UI over the video: the top bar,
+// the account/caption block at the bottom and the like/comment buttons on the
+// right. Everything that must be read or seen (faces, text, illustrations)
+// stays inside this box; only backgrounds may bleed into the dead zones.
+export const SAFE = { top: 250, bottom: 480, left: 60, right: 140 };
+const SAFE_WIDTH = WIDTH - SAFE.left - SAFE.right;
+const SAFE_CENTER_X = SAFE.left + SAFE_WIDTH / 2;
+
 const INK = "#3b2f2a";
 const MUTED = "#a39a92";
 const PINK = "#f0c9c2";
@@ -49,30 +57,30 @@ type Layout = {
   faceY: number; // vertical center of the face
   faceSize: number;
   faceOpacity: number;
-  captionY: number; // vertical center of the caption
+  captionY: number; // bottom edge of the caption
 };
 
 const LAYOUTS: Record<Mode, Layout> = {
   faceFull: {
     topHeight: 0,
-    faceY: 900,
-    faceSize: 1000,
+    faceY: 800,
+    faceSize: 760,
     faceOpacity: 1,
-    captionY: 1560,
+    captionY: 1420,
   },
   split: {
-    topHeight: 960,
-    faceY: 1450,
-    faceSize: 820,
+    topHeight: 860,
+    faceY: 1215,
+    faceSize: 480,
     faceOpacity: 1,
-    captionY: 960,
+    captionY: 980,
   },
   illFull: {
     topHeight: HEIGHT,
-    faceY: 1700,
-    faceSize: 820,
+    faceY: 1215,
+    faceSize: 480,
     faceOpacity: 0,
-    captionY: 1700,
+    captionY: 1420,
   },
 };
 
@@ -109,7 +117,7 @@ const SCENES: SceneConfig[] = [
     mode: "split",
     caption: [
       { text: "Gente de verdade", highlight: true },
-      { text: " convence mais que propaganda." },
+      { text: " convence mais." },
     ],
     Illustration: () => <CompareIllustration />,
   },
@@ -230,25 +238,52 @@ const FadeInOut: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <AbsoluteFill style={{ opacity }}>{children}</AbsoluteFill>;
 };
 
-// In the split layout the caption sits on the bottom edge of the panel, so
-// content is lifted by `bottomInset` to stay clear of it.
-const Center: React.FC<{ children: React.ReactNode; bottomInset?: number }> = ({
-  children,
-  bottomInset = 140,
-}) => (
-  <AbsoluteFill
-    style={{
-      paddingBottom: bottomInset,
-      alignItems: "center",
-      justifyContent: "center",
-      flexDirection: "column",
-      fontFamily: FONT,
-      color: INK,
-    }}
-  >
-    {children}
-  </AbsoluteFill>
-);
+// Illustrations are designed on a 960px-wide box and scaled to fit the safe
+// area they are given (the strip above the caption in split mode, or most of
+// the safe box in full-screen mode).
+type Area = { top: number; height: number };
+const SPLIT_AREA: Area = { top: SAFE.top, height: 540 };
+const FULL_AREA: Area = { top: SAFE.top, height: 880 };
+const DESIGN_WIDTH = 960;
+
+const Center: React.FC<{
+  children: React.ReactNode;
+  area?: Area;
+  designHeight?: number;
+}> = ({ children, area = SPLIT_AREA, designHeight = 740 }) => {
+  const scale = Math.min(SAFE_WIDTH / DESIGN_WIDTH, area.height / designHeight);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: SAFE.left,
+        width: SAFE_WIDTH,
+        top: area.top,
+        height: area.height,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: FONT,
+        color: INK,
+      }}
+    >
+      <div
+        style={{
+          width: DESIGN_WIDTH,
+          height: designHeight,
+          flexShrink: 0,
+          transform: `scale(${scale})`,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
 
 const Heading: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <div
@@ -724,7 +759,7 @@ const FlowIllustration: React.FC = () => {
   const { fps } = useVideoConfig();
 
   return (
-    <Center bottomInset={0}>
+    <Center area={FULL_AREA} designHeight={1070}>
       <Heading>Como funciona</Heading>
       <div
         style={{
@@ -933,7 +968,7 @@ const CaptionWord: React.FC<{ word: Part; delay: number }> = ({
         fontFamily: word.highlight ? SERIF : FONT,
         fontStyle: word.highlight ? "italic" : "normal",
         fontWeight: word.highlight ? 700 : 900,
-        fontSize: word.highlight ? 100 : 78,
+        fontSize: word.highlight ? 84 : 64,
         textTransform: word.highlight ? "none" : "uppercase",
         letterSpacing: word.highlight ? -2 : -3,
         lineHeight: 1,
@@ -977,18 +1012,18 @@ const Caption: React.FC<{ parts: Part[]; y: number }> = ({ parts, y }) => {
     <div
       style={{
         position: "absolute",
-        left: 0,
-        width: WIDTH,
+        left: SAFE.left,
+        width: SAFE_WIDTH,
         top: y,
         display: "flex",
         justifyContent: "center",
-        transform: `translateY(-50%) translateY(${(1 - exit) * -24}px)`,
+        transform: `translateY(-100%) translateY(${(1 - exit) * -24}px)`,
         opacity: exit,
       }}
     >
       <div
         style={{
-          maxWidth: 960,
+          maxWidth: SAFE_WIDTH,
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
@@ -1031,7 +1066,7 @@ export const UGCVideo: React.FC<UGCVideoProps> = ({
       <div
         style={{
           position: "absolute",
-          left: (WIDTH - layout.faceSize) / 2,
+          left: SAFE_CENTER_X - layout.faceSize / 2,
           top: layout.faceY - layout.faceSize / 2 + floatY,
           width: layout.faceSize,
           height: layout.faceSize,
