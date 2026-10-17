@@ -20,6 +20,10 @@ import { promisify } from "node:util";
 const run = promisify(execFile);
 
 const FPS = 30;
+
+// Volume final: -14 LUFS é o nível usado por Instagram, TikTok e YouTube.
+const TARGET_LUFS = -14;
+const TARGET_PEAK_DB = -1.5;
 // 1440 de largura (a gravação é 4K): sobra resolução para os enquadramentos com
 // aproximação, sem pesar tanto quanto o 4K.
 const WIDTH = 1440;
@@ -164,21 +168,60 @@ export const buildInfo = (blocks, edit, config) => {
   return { fps: FPS, durationMs: Math.round(edit.duration * 1000), sentences };
 };
 
-const filterGraph = (segments) => {
+// Trechos de áudio (corte + fade curto nas pontas) para cada segmento.
+const audioChains = (segments) =>
+  segments.map((s, i) => {
+    const length = s.rawEnd - s.rawStart;
+    return `[t${i}]atrim=start=${s.rawStart.toFixed(3)}:end=${s.rawEnd.toFixed(3)},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.02,afade=t=out:st=${Math.max(0, length - 0.03).toFixed(3)}:d=0.03[a${i}]`;
+  });
+
+const splitAudio = (n) =>
+  `[0:a]aresample=48000,asplit=${n}${Array.from({ length: n }, (_, i) => `[t${i}]`).join("")}`;
+
+// Filtro de volume: tira o grave que não é voz e normaliza para o alvo.
+const loudnessFilter = (measured) => {
+  const base = `loudnorm=I=${TARGET_LUFS}:TP=${TARGET_PEAK_DB}:LRA=11`;
+  if (!measured) {
+    return `highpass=f=70,${base}:print_format=json`;
+  }
+  return `highpass=f=70,${base}:measured_I=${measured.input_i}:measured_TP=${measured.input_tp}:measured_LRA=${measured.input_lra}:measured_thresh=${measured.input_thresh}:offset=${measured.target_offset}:linear=true`;
+};
+
+// 1ª passada: só áudio, para medir o volume dos trechos já juntos.
+export const measureGraph = (segments) => {
+  const n = segments.length;
+  return [
+    splitAudio(n),
+    ...audioChains(segments),
+    `${segments.map((_, i) => `[a${i}]`).join("")}concat=n=${n}:v=0:a=1[ac]`,
+    `[ac]${loudnessFilter(null)}[out]`,
+  ].join(";");
+};
+
+export const parseLoudness = (log) => {
+  const match = log.match(/\{[^{}]*"input_i"[^{}]*\}/);
+  if (!match) {
+    return null;
+  }
+  const data = JSON.parse(match[0]);
+  return Number.isFinite(Number(data.input_i)) ? data : null;
+};
+
+export const filterGraph = (segments, measured) => {
   const n = segments.length;
   const lines = [
     `[0:v]fps=${FPS},scale=${WIDTH}:-2:flags=lanczos,format=yuv420p,split=${n}${segments.map((_, i) => `[s${i}]`).join("")}`,
-    `[0:a]aresample=48000,asplit=${n}${segments.map((_, i) => `[t${i}]`).join("")}`,
+    splitAudio(n),
   ];
   segments.forEach((s, i) => {
-    const length = s.rawEnd - s.rawStart;
     lines.push(
       `[s${i}]trim=start=${s.rawStart.toFixed(3)}:end=${s.rawEnd.toFixed(3)},setpts=PTS-STARTPTS[v${i}]`,
-      `[t${i}]atrim=start=${s.rawStart.toFixed(3)}:end=${s.rawEnd.toFixed(3)},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.02,afade=t=out:st=${Math.max(0, length - 0.03).toFixed(3)}:d=0.03[a${i}]`,
     );
   });
+  lines.push(...audioChains(segments));
   lines.push(
-    `${segments.map((_, i) => `[v${i}][a${i}]`).join("")}concat=n=${n}:v=1:a=1[v][a]`,
+    `${segments.map((_, i) => `[v${i}][a${i}]`).join("")}concat=n=${n}:v=1:a=1[v][ac]`,
+    `[ac]${loudnessFilter(measured)}[a]`,
   );
   return lines.join(";");
 };
@@ -229,7 +272,39 @@ const main = async () => {
 
   await mkdir(outDir, { recursive: true });
   const scriptPath = path.join(outDir, "filtro.txt");
-  const graph = filterGraph(edit.segments);
+  console.log("Medindo o volume dos trechos...");
+  let measured = null;
+  try {
+    const pass = await run(
+      "ffmpeg",
+      [
+        "-hide_banner",
+        "-y",
+        "-i",
+        input,
+        "-filter_complex",
+        measureGraph(edit.segments),
+        "-map",
+        "[out]",
+        "-vn",
+        "-f",
+        "null",
+        "-",
+      ],
+      { maxBuffer: 256 * 1024 * 1024 },
+    );
+    measured = parseLoudness(pass.stderr);
+  } catch (error) {
+    console.log(
+      "Não consegui medir o volume; vou normalizar em uma passada só.",
+    );
+  }
+  if (measured) {
+    console.log(
+      `  volume antes: ${Number(measured.input_i).toFixed(1)} LUFS  ->  depois: ${TARGET_LUFS} LUFS`,
+    );
+  }
+  const graph = filterGraph(edit.segments, measured);
   await writeFile(scriptPath, graph);
   await writeFile(
     path.join(outDir, "fala-info.json"),
