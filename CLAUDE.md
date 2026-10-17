@@ -12,6 +12,12 @@ ficam sempre dentro da área segura:
 - direita: 140px livres (botões de curtir/comentar). O centro útil fica em x = 500, não 540.
 
 Só fundos e elementos decorativos podem invadir essas zonas.
+
+**Legenda da fala sempre o mais baixo possível:** a base da legenda fica em
+y = 1440 (limite da área segura), para nunca cobrir o rosto. Com rosto na tela,
+o queixo fica acima do topo de uma legenda de duas linhas (~y 1270), então a
+legenda tem no máximo duas linhas nessas cenas. Constante `CAPTION_BOTTOM` em
+`src/kit.tsx`.
 As constantes ficam em `SAFE` no começo de `src/UGCVideo.tsx`. Valores aproximados:
 as interfaces das plataformas mudam, então confira em vídeos novos.
 

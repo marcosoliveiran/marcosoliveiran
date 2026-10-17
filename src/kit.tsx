@@ -70,27 +70,33 @@ export type Layout = {
   captionY: number; // bottom edge of the caption
 };
 
+// Spoken captions always sit as low as the safe zone allows (their bottom edge
+// is at y = 1440), so they never cover the face. In layouts with a face, the
+// chin stays above the top of a two-line caption (~y 1270): keep captions to
+// two lines whenever a face is on screen.
+export const CAPTION_BOTTOM = HEIGHT - SAFE.bottom;
+
 export const LAYOUTS: Record<Mode, Layout> = {
   faceFull: {
     topHeight: 0,
     faceY: 800,
     faceSize: 760,
     faceOpacity: 1,
-    captionY: 1420,
+    captionY: CAPTION_BOTTOM,
   },
   split: {
-    topHeight: 860,
-    faceY: 1215,
-    faceSize: 480,
+    topHeight: 800,
+    faceY: 1040,
+    faceSize: 440,
     faceOpacity: 1,
-    captionY: 980,
+    captionY: CAPTION_BOTTOM,
   },
   illFull: {
     topHeight: HEIGHT,
-    faceY: 1215,
-    faceSize: 480,
+    faceY: 1040,
+    faceSize: 440,
     faceOpacity: 0,
-    captionY: 1420,
+    captionY: CAPTION_BOTTOM,
   },
 };
 
@@ -186,7 +192,7 @@ export const FadeInOut: React.FC<{ children: React.ReactNode }> = ({
 // area they are given (the strip above the caption in split mode, or most of
 // the safe box in full-screen mode).
 export type Area = { top: number; height: number };
-export const SPLIT_AREA: Area = { top: SAFE.top, height: 540 };
+export const SPLIT_AREA: Area = { top: SAFE.top, height: 520 };
 export const FULL_AREA: Area = { top: SAFE.top, height: 880 };
 const DESIGN_WIDTH = 960;
 
