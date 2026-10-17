@@ -3,6 +3,12 @@ import { Background } from "./Background";
 import { Scene } from "./Scene";
 import { TalkingHead } from "./TalkingHead";
 import {
+  CreepVideo,
+  CREEP_DURATION_IN_FRAMES,
+  CREEP_FPS,
+  CREEP_SIZE,
+} from "./creep/CreepVideo";
+import {
   VoomCaptionOptions,
   VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
   VOOM_CAPTION_OPTIONS_SIZE,
@@ -139,6 +145,14 @@ export const TalkingHeadComposition = () => {
         fps={VOOM_BASE_FPS}
         width={VOOM_CAPTION_OPTIONS_SIZE.width}
         height={VOOM_CAPTION_OPTIONS_SIZE.height}
+      />
+      <Composition
+        id="Creep"
+        component={CreepVideo}
+        durationInFrames={CREEP_DURATION_IN_FRAMES}
+        fps={CREEP_FPS}
+        width={CREEP_SIZE.width}
+        height={CREEP_SIZE.height}
       />
     </>
   );

@@ -87,3 +87,17 @@ cheia** quando a imagem é o assunto (a voz continua por cima).
 Limites: não gero fotos realistas nem desenhos complexos. Faço motion
 tipográfico, números, listas, gráficos, ícones, formas e fluxos; imagens
 recortadas vêm do Marcos (enviadas ou geradas em outra ferramenta).
+
+## Vídeo "Creep" (perfil pessoal, com o Marcos falando)
+
+Fluxo no PC do Marcos (a nuvem não recebe o vídeo, ele tem 529 MB, 4K):
+`npm run transcrever` → `npm run silencios` → `npm run compactar` →
+`npm run cortar -- bruto/IMG_3556.MOV` (cria `public/creep/fala.mp4`, cortado e
+normalizado em -14 LUFS). Cortes aprovados em `docs/creep-cortes.json` e
+`docs/creep-decisoes.md`. Composição `Creep` em `src/creep/` (`CreepVideo.tsx`,
+`motions.tsx`, `captions.ts`, `timing.ts`). Os motions são ligados a palavras
+da fala por `wordAt` em `timing.ts`; `src/creep/fala-info.json` é gerado por
+`tools/cortar.mjs` e tem que ser refeito se `docs/creep-cortes.json` mudar.
+Imagens em `public/creep/` (lista em `public/creep/LEIA-ME.md`); sem elas
+aparece um quadro de reserva. Vermelho só para o que é negativo (carimbo
+ODEIAM, X, riscos, REC, coração partido); o resto é lima, preto e off-white.

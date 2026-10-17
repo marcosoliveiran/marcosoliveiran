@@ -130,11 +130,62 @@ def click():
             + 0.3 * highpass(RNG.standard_normal(len(t)), 3000) * np.exp(-t * 200))
 
 
+def stamp():
+    t = t_axis(0.5)
+    thump = np.sin(2 * np.pi * (60 + 140 * np.exp(-t * 30)) * t) * np.exp(-t * 14)
+    paper = lowpass_sweep(RNG.standard_normal(len(t)), np.full(len(t), 2500.0)) * np.exp(-t * 40)
+    return thump + 0.5 * paper
+
+
+def gavel():
+    t = t_axis(0.8)
+    out = np.zeros_like(t)
+    for start in (0.0, 0.26):
+        local = np.clip(t - start, 0, None)
+        mask = (t >= start).astype(float)
+        knock = np.sin(2 * np.pi * 330 * local) * np.exp(-local * 28)
+        knock += 0.6 * np.sin(2 * np.pi * 760 * local) * np.exp(-local * 40)
+        click = highpass(RNG.standard_normal(len(t)), 1500) * np.exp(-local * 160) * 0.5
+        out += mask * (knock + click)
+    return out
+
+
+def bounce():
+    t = t_axis(1.1)
+    out = np.zeros_like(t)
+    start, gap, amp = 0.0, 0.32, 1.0
+    for _ in range(5):
+        local = np.clip(t - start, 0, None)
+        mask = (t >= start).astype(float)
+        freq = 180 + 260 * np.exp(-local * 30)
+        out += mask * amp * np.sin(2 * np.pi * np.cumsum(freq) / SR) * np.exp(-local * 24)
+        start += gap
+        gap *= 0.68
+        amp *= 0.62
+    return out
+
+
+def fuse():
+    t = t_axis(1.3)
+    hiss = highpass(RNG.standard_normal(len(t)), 3000)
+    crackle = (RNG.random(len(t)) > 0.9985).astype(float)
+    crackle = np.convolve(crackle, np.exp(-np.arange(200) / 25.0), mode="same") * 3
+    env = np.minimum(1, t / 0.08) * np.minimum(1, (1.3 - t) / 0.2)
+    return (0.5 * hiss + crackle * RNG.standard_normal(len(t))) * env
+
+
+def rec():
+    t = t_axis(0.2)
+    return np.sin(2 * np.pi * 1000 * t) * np.minimum(1, t / 0.005) * np.exp(-t * 10)
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     for name, fn in [
         ("whoosh.wav", whoosh), ("impact.wav", impact), ("sparkle.wav", sparkle),
         ("riser.wav", riser), ("pop.wav", pop), ("ding.wav", ding),
         ("notification.wav", notification), ("tick.wav", tick), ("click.wav", click),
+        ("stamp.wav", stamp), ("gavel.wav", gavel), ("bounce.wav", bounce),
+        ("fuse.wav", fuse), ("rec.wav", rec),
     ]:
         finish(fn(), name)

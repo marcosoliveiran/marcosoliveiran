@@ -1,0 +1,2057 @@
+{
+ "fps": 30,
+ "durationMs": 147008,
+ "sentences": [
+  {
+   "index": 1,
+   "blocks": [
+    4
+   ],
+   "startMs": 0,
+   "endMs": 5213,
+   "text": "A música mais famosa do Radiohead quase acabou com a banda e eles odeiam ela até hoje.",
+   "words": [
+    {
+     "text": "A",
+     "startMs": 0,
+     "endMs": 111
+    },
+    {
+     "text": "música",
+     "startMs": 111,
+     "endMs": 321
+    },
+    {
+     "text": "mais",
+     "startMs": 321,
+     "endMs": 611
+    },
+    {
+     "text": "famosa",
+     "startMs": 611,
+     "endMs": 1031
+    },
+    {
+     "text": "do",
+     "startMs": 1031,
+     "endMs": 1171
+    },
+    {
+     "text": "Radiohead",
+     "startMs": 1171,
+     "endMs": 1811
+    },
+    {
+     "text": "quase",
+     "startMs": 1811,
+     "endMs": 2191
+    },
+    {
+     "text": "acabou",
+     "startMs": 2191,
+     "endMs": 2631
+    },
+    {
+     "text": "com",
+     "startMs": 2631,
+     "endMs": 2821
+    },
+    {
+     "text": "a",
+     "startMs": 2821,
+     "endMs": 2951
+    },
+    {
+     "text": "banda",
+     "startMs": 2951,
+     "endMs": 3251
+    },
+    {
+     "text": "e",
+     "startMs": 3251,
+     "endMs": 3321
+    },
+    {
+     "text": "eles",
+     "startMs": 3321,
+     "endMs": 3611
+    },
+    {
+     "text": "odeiam",
+     "startMs": 3611,
+     "endMs": 4031
+    },
+    {
+     "text": "ela",
+     "startMs": 4031,
+     "endMs": 4271
+    },
+    {
+     "text": "até",
+     "startMs": 4271,
+     "endMs": 4531
+    },
+    {
+     "text": "hoje.",
+     "startMs": 4531,
+     "endMs": 4863
+    }
+   ]
+  },
+  {
+   "index": 2,
+   "blocks": [
+    5
+   ],
+   "startMs": 5213,
+   "endMs": 9857,
+   "text": "Crip nasceu no final dos anos 80 quando Tom York ainda era universitário",
+   "words": [
+    {
+     "text": "Crip",
+     "startMs": 5213,
+     "endMs": 5361
+    },
+    {
+     "text": "nasceu",
+     "startMs": 5361,
+     "endMs": 5811
+    },
+    {
+     "text": "no",
+     "startMs": 5811,
+     "endMs": 5921
+    },
+    {
+     "text": "final",
+     "startMs": 5921,
+     "endMs": 6281
+    },
+    {
+     "text": "dos",
+     "startMs": 6281,
+     "endMs": 6491
+    },
+    {
+     "text": "anos",
+     "startMs": 6491,
+     "endMs": 6781
+    },
+    {
+     "text": "80",
+     "startMs": 6781,
+     "endMs": 7241
+    },
+    {
+     "text": "quando",
+     "startMs": 7241,
+     "endMs": 7711
+    },
+    {
+     "text": "Tom",
+     "startMs": 7711,
+     "endMs": 7851
+    },
+    {
+     "text": "York",
+     "startMs": 7851,
+     "endMs": 8221
+    },
+    {
+     "text": "ainda",
+     "startMs": 8221,
+     "endMs": 8501
+    },
+    {
+     "text": "era",
+     "startMs": 8501,
+     "endMs": 8711
+    },
+    {
+     "text": "universitário",
+     "startMs": 8711,
+     "endMs": 9507
+    }
+   ]
+  },
+  {
+   "index": 3,
+   "blocks": [
+    7
+   ],
+   "startMs": 9857,
+   "endMs": 15820,
+   "text": "Ele escreveu a música depois de passar meses obcecados por uma garota que ele nunca nem falou.",
+   "words": [
+    {
+     "text": "Ele",
+     "startMs": 9857,
+     "endMs": 9967
+    },
+    {
+     "text": "escreveu",
+     "startMs": 9967,
+     "endMs": 10507
+    },
+    {
+     "text": "a",
+     "startMs": 10507,
+     "endMs": 10567
+    },
+    {
+     "text": "música",
+     "startMs": 10567,
+     "endMs": 11097
+    },
+    {
+     "text": "depois",
+     "startMs": 11097,
+     "endMs": 11577
+    },
+    {
+     "text": "de",
+     "startMs": 11577,
+     "endMs": 11687
+    },
+    {
+     "text": "passar",
+     "startMs": 11687,
+     "endMs": 12137
+    },
+    {
+     "text": "meses",
+     "startMs": 12137,
+     "endMs": 12577
+    },
+    {
+     "text": "obcecados",
+     "startMs": 12577,
+     "endMs": 13167
+    },
+    {
+     "text": "por",
+     "startMs": 13167,
+     "endMs": 13367
+    },
+    {
+     "text": "uma",
+     "startMs": 13367,
+     "endMs": 13577
+    },
+    {
+     "text": "garota",
+     "startMs": 13577,
+     "endMs": 14027
+    },
+    {
+     "text": "que",
+     "startMs": 14027,
+     "endMs": 14247
+    },
+    {
+     "text": "ele",
+     "startMs": 14247,
+     "endMs": 14467
+    },
+    {
+     "text": "nunca",
+     "startMs": 14467,
+     "endMs": 14927
+    },
+    {
+     "text": "nem",
+     "startMs": 14927,
+     "endMs": 15057
+    },
+    {
+     "text": "falou.",
+     "startMs": 15057,
+     "endMs": 15470
+    }
+   ]
+  },
+  {
+   "index": 4,
+   "blocks": [
+    9,
+    10,
+    11
+   ],
+   "startMs": 15820,
+   "endMs": 28071,
+   "text": "Anos depois, em estúdio, a banda tocou a música em um ensaio. E quando os produtores descobriram que a música não era nem um couve, sim uma música original, eles gravaram na hora em um take só.",
+   "words": [
+    {
+     "text": "Anos",
+     "startMs": 15887,
+     "endMs": 16057
+    },
+    {
+     "text": "depois,",
+     "startMs": 16057,
+     "endMs": 16737
+    },
+    {
+     "text": "em",
+     "startMs": 16737,
+     "endMs": 16917
+    },
+    {
+     "text": "estúdio,",
+     "startMs": 16917,
+     "endMs": 17777
+    },
+    {
+     "text": "a",
+     "startMs": 17777,
+     "endMs": 17897
+    },
+    {
+     "text": "banda",
+     "startMs": 17897,
+     "endMs": 18277
+    },
+    {
+     "text": "tocou",
+     "startMs": 18277,
+     "endMs": 18797
+    },
+    {
+     "text": "a",
+     "startMs": 18797,
+     "endMs": 18827
+    },
+    {
+     "text": "música",
+     "startMs": 18827,
+     "endMs": 19407
+    },
+    {
+     "text": "em",
+     "startMs": 19407,
+     "endMs": 19577
+    },
+    {
+     "text": "um",
+     "startMs": 19577,
+     "endMs": 19747
+    },
+    {
+     "text": "ensaio.",
+     "startMs": 19747,
+     "endMs": 20192
+    },
+    {
+     "text": "E",
+     "startMs": 20192,
+     "endMs": 20307
+    },
+    {
+     "text": "quando",
+     "startMs": 20307,
+     "endMs": 20477
+    },
+    {
+     "text": "os",
+     "startMs": 20477,
+     "endMs": 20577
+    },
+    {
+     "text": "produtores",
+     "startMs": 20577,
+     "endMs": 21147
+    },
+    {
+     "text": "descobriram",
+     "startMs": 21147,
+     "endMs": 21777
+    },
+    {
+     "text": "que",
+     "startMs": 21777,
+     "endMs": 21997
+    },
+    {
+     "text": "a",
+     "startMs": 21997,
+     "endMs": 21997
+    },
+    {
+     "text": "música",
+     "startMs": 21997,
+     "endMs": 22397
+    },
+    {
+     "text": "não",
+     "startMs": 22397,
+     "endMs": 22627
+    },
+    {
+     "text": "era",
+     "startMs": 22627,
+     "endMs": 22797
+    },
+    {
+     "text": "nem",
+     "startMs": 22797,
+     "endMs": 22967
+    },
+    {
+     "text": "um",
+     "startMs": 22967,
+     "endMs": 23077
+    },
+    {
+     "text": "couve,",
+     "startMs": 23077,
+     "endMs": 23567
+    },
+    {
+     "text": "sim",
+     "startMs": 23567,
+     "endMs": 23797
+    },
+    {
+     "text": "uma",
+     "startMs": 23797,
+     "endMs": 24017
+    },
+    {
+     "text": "música",
+     "startMs": 24017,
+     "endMs": 24527
+    },
+    {
+     "text": "original,",
+     "startMs": 24527,
+     "endMs": 25165
+    },
+    {
+     "text": "eles",
+     "startMs": 25165,
+     "endMs": 25347
+    },
+    {
+     "text": "gravaram",
+     "startMs": 25347,
+     "endMs": 26087
+    },
+    {
+     "text": "na",
+     "startMs": 26087,
+     "endMs": 26267
+    },
+    {
+     "text": "hora",
+     "startMs": 26267,
+     "endMs": 26637
+    },
+    {
+     "text": "em",
+     "startMs": 26637,
+     "endMs": 26817
+    },
+    {
+     "text": "um",
+     "startMs": 26817,
+     "endMs": 27027
+    },
+    {
+     "text": "take",
+     "startMs": 27027,
+     "endMs": 27307
+    },
+    {
+     "text": "só.",
+     "startMs": 27307,
+     "endMs": 27721
+    }
+   ]
+  },
+  {
+   "index": 5,
+   "blocks": [
+    12,
+    14,
+    15
+   ],
+   "startMs": 28071,
+   "endMs": 38959,
+   "text": "O guitarista odiava a música e na hora de gravar,ilo, quis sabotar a gravação com uma distorção de guitarra que acabou virando a marca registrada da canção",
+   "words": [
+    {
+     "text": "O",
+     "startMs": 28071,
+     "endMs": 28187
+    },
+    {
+     "text": "guitarista",
+     "startMs": 28187,
+     "endMs": 29167
+    },
+    {
+     "text": "odiava",
+     "startMs": 29167,
+     "endMs": 29827
+    },
+    {
+     "text": "a",
+     "startMs": 29827,
+     "endMs": 29937
+    },
+    {
+     "text": "música",
+     "startMs": 29937,
+     "endMs": 30727
+    },
+    {
+     "text": "e",
+     "startMs": 30727,
+     "endMs": 30867
+    },
+    {
+     "text": "na",
+     "startMs": 30867,
+     "endMs": 31057
+    },
+    {
+     "text": "hora",
+     "startMs": 31057,
+     "endMs": 31507
+    },
+    {
+     "text": "de",
+     "startMs": 31507,
+     "endMs": 31727
+    },
+    {
+     "text": "gravar,ilo,",
+     "startMs": 31727,
+     "endMs": 32444
+    },
+    {
+     "text": "quis",
+     "startMs": 32444,
+     "endMs": 32624
+    },
+    {
+     "text": "sabotar",
+     "startMs": 32624,
+     "endMs": 33134
+    },
+    {
+     "text": "a",
+     "startMs": 33134,
+     "endMs": 33204
+    },
+    {
+     "text": "gravação",
+     "startMs": 33204,
+     "endMs": 33934
+    },
+    {
+     "text": "com",
+     "startMs": 33934,
+     "endMs": 34154
+    },
+    {
+     "text": "uma",
+     "startMs": 34154,
+     "endMs": 34464
+    },
+    {
+     "text": "distorção",
+     "startMs": 34464,
+     "endMs": 35174
+    },
+    {
+     "text": "de",
+     "startMs": 35174,
+     "endMs": 35314
+    },
+    {
+     "text": "guitarra",
+     "startMs": 35314,
+     "endMs": 35904
+    },
+    {
+     "text": "que",
+     "startMs": 35904,
+     "endMs": 35944
+    },
+    {
+     "text": "acabou",
+     "startMs": 35944,
+     "endMs": 36324
+    },
+    {
+     "text": "virando",
+     "startMs": 36324,
+     "endMs": 36814
+    },
+    {
+     "text": "a",
+     "startMs": 36814,
+     "endMs": 36884
+    },
+    {
+     "text": "marca",
+     "startMs": 36884,
+     "endMs": 37234
+    },
+    {
+     "text": "registrada",
+     "startMs": 37234,
+     "endMs": 37934
+    },
+    {
+     "text": "da",
+     "startMs": 37934,
+     "endMs": 38074
+    },
+    {
+     "text": "canção",
+     "startMs": 38074,
+     "endMs": 38609
+    }
+   ]
+  },
+  {
+   "index": 6,
+   "blocks": [
+    16
+   ],
+   "startMs": 38959,
+   "endMs": 42861,
+   "text": "Lançada em 92, em um primeiro momento, a música fracassou",
+   "words": [
+    {
+     "text": "Lançada",
+     "startMs": 38959,
+     "endMs": 39344
+    },
+    {
+     "text": "em",
+     "startMs": 39344,
+     "endMs": 39474
+    },
+    {
+     "text": "92,",
+     "startMs": 39474,
+     "endMs": 40034
+    },
+    {
+     "text": "em",
+     "startMs": 40034,
+     "endMs": 40134
+    },
+    {
+     "text": "um",
+     "startMs": 40134,
+     "endMs": 40264
+    },
+    {
+     "text": "primeiro",
+     "startMs": 40264,
+     "endMs": 40794
+    },
+    {
+     "text": "momento,",
+     "startMs": 40794,
+     "endMs": 41394
+    },
+    {
+     "text": "a",
+     "startMs": 41394,
+     "endMs": 41454
+    },
+    {
+     "text": "música",
+     "startMs": 41454,
+     "endMs": 41934
+    },
+    {
+     "text": "fracassou",
+     "startMs": 41934,
+     "endMs": 42511
+    }
+   ]
+  },
+  {
+   "index": 7,
+   "blocks": [
+    17,
+    18,
+    19
+   ],
+   "startMs": 42861,
+   "endMs": 52978,
+   "text": "A BBC barrou por ser deprimente demais e a música estacionou no sceptuagesmo oitavo lugar no Reino Unido, mas pegou nas rádios dos Estados Unidos",
+   "words": [
+    {
+     "text": "A",
+     "startMs": 42861,
+     "endMs": 42974
+    },
+    {
+     "text": "BBC",
+     "startMs": 42974,
+     "endMs": 43194
+    },
+    {
+     "text": "barrou",
+     "startMs": 43194,
+     "endMs": 43854
+    },
+    {
+     "text": "por",
+     "startMs": 43854,
+     "endMs": 44184
+    },
+    {
+     "text": "ser",
+     "startMs": 44184,
+     "endMs": 44544
+    },
+    {
+     "text": "deprimente",
+     "startMs": 44544,
+     "endMs": 45614
+    },
+    {
+     "text": "demais",
+     "startMs": 45614,
+     "endMs": 46074
+    },
+    {
+     "text": "e",
+     "startMs": 46174,
+     "endMs": 46194
+    },
+    {
+     "text": "a",
+     "startMs": 46194,
+     "endMs": 46304
+    },
+    {
+     "text": "música",
+     "startMs": 46304,
+     "endMs": 46724
+    },
+    {
+     "text": "estacionou",
+     "startMs": 46724,
+     "endMs": 47484
+    },
+    {
+     "text": "no",
+     "startMs": 47484,
+     "endMs": 47634
+    },
+    {
+     "text": "sceptuagesmo",
+     "startMs": 47634,
+     "endMs": 48524
+    },
+    {
+     "text": "oitavo",
+     "startMs": 48524,
+     "endMs": 48974
+    },
+    {
+     "text": "lugar",
+     "startMs": 48974,
+     "endMs": 49354
+    },
+    {
+     "text": "no",
+     "startMs": 49354,
+     "endMs": 49504
+    },
+    {
+     "text": "Reino",
+     "startMs": 49504,
+     "endMs": 49874
+    },
+    {
+     "text": "Unido,",
+     "startMs": 49874,
+     "endMs": 50169
+    },
+    {
+     "text": "mas",
+     "startMs": 50169,
+     "endMs": 50304
+    },
+    {
+     "text": "pegou",
+     "startMs": 50304,
+     "endMs": 50694
+    },
+    {
+     "text": "nas",
+     "startMs": 50694,
+     "endMs": 50914
+    },
+    {
+     "text": "rádios",
+     "startMs": 50914,
+     "endMs": 51424
+    },
+    {
+     "text": "dos",
+     "startMs": 51424,
+     "endMs": 51654
+    },
+    {
+     "text": "Estados",
+     "startMs": 51654,
+     "endMs": 52184
+    },
+    {
+     "text": "Unidos",
+     "startMs": 52184,
+     "endMs": 52628
+    }
+   ]
+  },
+  {
+   "index": 8,
+   "blocks": [
+    20,
+    21
+   ],
+   "startMs": 52978,
+   "endMs": 61709,
+   "text": "Já em 93, a música chegou ao segundo lugar do top alternativo da Billboard e no trigésimo quarto lugar no Hot 100.",
+   "words": [
+    {
+     "text": "Já",
+     "startMs": 52978,
+     "endMs": 53144
+    },
+    {
+     "text": "em",
+     "startMs": 53144,
+     "endMs": 53264
+    },
+    {
+     "text": "93,",
+     "startMs": 53264,
+     "endMs": 53904
+    },
+    {
+     "text": "a",
+     "startMs": 53904,
+     "endMs": 53984
+    },
+    {
+     "text": "música",
+     "startMs": 53984,
+     "endMs": 54544
+    },
+    {
+     "text": "chegou",
+     "startMs": 54544,
+     "endMs": 55024
+    },
+    {
+     "text": "ao",
+     "startMs": 55024,
+     "endMs": 55184
+    },
+    {
+     "text": "segundo",
+     "startMs": 55184,
+     "endMs": 55744
+    },
+    {
+     "text": "lugar",
+     "startMs": 55744,
+     "endMs": 56214
+    },
+    {
+     "text": "do",
+     "startMs": 56214,
+     "endMs": 56384
+    },
+    {
+     "text": "top",
+     "startMs": 56384,
+     "endMs": 56684
+    },
+    {
+     "text": "alternativo",
+     "startMs": 56684,
+     "endMs": 57784
+    },
+    {
+     "text": "da",
+     "startMs": 57784,
+     "endMs": 57984
+    },
+    {
+     "text": "Billboard",
+     "startMs": 57984,
+     "endMs": 58609
+    },
+    {
+     "text": "e",
+     "startMs": 58709,
+     "endMs": 58804
+    },
+    {
+     "text": "no",
+     "startMs": 58804,
+     "endMs": 58824
+    },
+    {
+     "text": "trigésimo",
+     "startMs": 58824,
+     "endMs": 59524
+    },
+    {
+     "text": "quarto",
+     "startMs": 59524,
+     "endMs": 59954
+    },
+    {
+     "text": "lugar",
+     "startMs": 59954,
+     "endMs": 60314
+    },
+    {
+     "text": "no",
+     "startMs": 60314,
+     "endMs": 60454
+    },
+    {
+     "text": "Hot",
+     "startMs": 60454,
+     "endMs": 60664
+    },
+    {
+     "text": "100.",
+     "startMs": 60664,
+     "endMs": 61359
+    }
+   ]
+  },
+  {
+   "index": 9,
+   "blocks": [
+    22
+   ],
+   "startMs": 61709,
+   "endMs": 65833,
+   "text": "Foi relançada novamente no Reino Unido e alcançou o sétimo lugar.",
+   "words": [
+    {
+     "text": "Foi",
+     "startMs": 61709,
+     "endMs": 61824
+    },
+    {
+     "text": "relançada",
+     "startMs": 61824,
+     "endMs": 62444
+    },
+    {
+     "text": "novamente",
+     "startMs": 62444,
+     "endMs": 63054
+    },
+    {
+     "text": "no",
+     "startMs": 63054,
+     "endMs": 63204
+    },
+    {
+     "text": "Reino",
+     "startMs": 63204,
+     "endMs": 63544
+    },
+    {
+     "text": "Unido",
+     "startMs": 63544,
+     "endMs": 63894
+    },
+    {
+     "text": "e",
+     "startMs": 63894,
+     "endMs": 63954
+    },
+    {
+     "text": "alcançou",
+     "startMs": 63954,
+     "endMs": 64624
+    },
+    {
+     "text": "o",
+     "startMs": 64624,
+     "endMs": 64674
+    },
+    {
+     "text": "sétimo",
+     "startMs": 64674,
+     "endMs": 65094
+    },
+    {
+     "text": "lugar.",
+     "startMs": 65094,
+     "endMs": 65483
+    }
+   ]
+  },
+  {
+   "index": 10,
+   "blocks": [
+    23
+   ],
+   "startMs": 65833,
+   "endMs": 68279,
+   "text": "Também teve a acusação de plágio",
+   "words": [
+    {
+     "text": "Também",
+     "startMs": 65944,
+     "endMs": 66314
+    },
+    {
+     "text": "teve",
+     "startMs": 66314,
+     "endMs": 66574
+    },
+    {
+     "text": "a",
+     "startMs": 66574,
+     "endMs": 66624
+    },
+    {
+     "text": "acusação",
+     "startMs": 66624,
+     "endMs": 67394
+    },
+    {
+     "text": "de",
+     "startMs": 67394,
+     "endMs": 67544
+    },
+    {
+     "text": "plágio",
+     "startMs": 67544,
+     "endMs": 67929
+    }
+   ]
+  },
+  {
+   "index": 11,
+   "blocks": [
+    24,
+    25,
+    26
+   ],
+   "startMs": 68279,
+   "endMs": 75409,
+   "text": "A melodia lembrava, the air that I breathe, do hollies\". E os compositores passaram a ser acreditados na música",
+   "words": [
+    {
+     "text": "A",
+     "startMs": 68279,
+     "endMs": 68394
+    },
+    {
+     "text": "melodia",
+     "startMs": 68394,
+     "endMs": 68884
+    },
+    {
+     "text": "lembrava,",
+     "startMs": 68884,
+     "endMs": 69727
+    },
+    {
+     "text": "the",
+     "startMs": 69727,
+     "endMs": 69817
+    },
+    {
+     "text": "air",
+     "startMs": 69817,
+     "endMs": 69917
+    },
+    {
+     "text": "that",
+     "startMs": 69917,
+     "endMs": 70227
+    },
+    {
+     "text": "I",
+     "startMs": 70227,
+     "endMs": 70237
+    },
+    {
+     "text": "breathe,",
+     "startMs": 70237,
+     "endMs": 70897
+    },
+    {
+     "text": "do",
+     "startMs": 70897,
+     "endMs": 71057
+    },
+    {
+     "text": "hollies\".",
+     "startMs": 71057,
+     "endMs": 71894
+    },
+    {
+     "text": "E",
+     "startMs": 71994,
+     "endMs": 72067
+    },
+    {
+     "text": "os",
+     "startMs": 72067,
+     "endMs": 72107
+    },
+    {
+     "text": "compositores",
+     "startMs": 72107,
+     "endMs": 72887
+    },
+    {
+     "text": "passaram",
+     "startMs": 72887,
+     "endMs": 73437
+    },
+    {
+     "text": "a",
+     "startMs": 73437,
+     "endMs": 73507
+    },
+    {
+     "text": "ser",
+     "startMs": 73507,
+     "endMs": 73747
+    },
+    {
+     "text": "acreditados",
+     "startMs": 73747,
+     "endMs": 74467
+    },
+    {
+     "text": "na",
+     "startMs": 74467,
+     "endMs": 74607
+    },
+    {
+     "text": "música",
+     "startMs": 74607,
+     "endMs": 75059
+    }
+   ]
+  },
+  {
+   "index": 12,
+   "blocks": [
+    27
+   ],
+   "startMs": 75409,
+   "endMs": 79260,
+   "text": "O sucesso virou uma audição e entre 93 e 95",
+   "words": [
+    {
+     "text": "O",
+     "startMs": 75409,
+     "endMs": 75517
+    },
+    {
+     "text": "sucesso",
+     "startMs": 75517,
+     "endMs": 76007
+    },
+    {
+     "text": "virou",
+     "startMs": 76007,
+     "endMs": 76427
+    },
+    {
+     "text": "uma",
+     "startMs": 76427,
+     "endMs": 76687
+    },
+    {
+     "text": "audição",
+     "startMs": 76687,
+     "endMs": 77477
+    },
+    {
+     "text": "e",
+     "startMs": 77477,
+     "endMs": 77567
+    },
+    {
+     "text": "entre",
+     "startMs": 77567,
+     "endMs": 77997
+    },
+    {
+     "text": "93",
+     "startMs": 77997,
+     "endMs": 78527
+    },
+    {
+     "text": "e",
+     "startMs": 78527,
+     "endMs": 78587
+    },
+    {
+     "text": "95",
+     "startMs": 78587,
+     "endMs": 78910
+    }
+   ]
+  },
+  {
+   "index": 13,
+   "blocks": [
+    28,
+    29
+   ],
+   "startMs": 79260,
+   "endMs": 85478,
+   "text": "a banda passou a torneia inteira cantando para uma plateia que só conhecia a música",
+   "words": [
+    {
+     "text": "a",
+     "startMs": 79260,
+     "endMs": 79377
+    },
+    {
+     "text": "banda",
+     "startMs": 79377,
+     "endMs": 79907
+    },
+    {
+     "text": "passou",
+     "startMs": 79907,
+     "endMs": 80639
+    },
+    {
+     "text": "a",
+     "startMs": 80739,
+     "endMs": 80857
+    },
+    {
+     "text": "torneia",
+     "startMs": 80857,
+     "endMs": 81387
+    },
+    {
+     "text": "inteira",
+     "startMs": 81387,
+     "endMs": 82367
+    },
+    {
+     "text": "cantando",
+     "startMs": 82367,
+     "endMs": 82777
+    },
+    {
+     "text": "para",
+     "startMs": 82777,
+     "endMs": 83017
+    },
+    {
+     "text": "uma",
+     "startMs": 83017,
+     "endMs": 83197
+    },
+    {
+     "text": "plateia",
+     "startMs": 83197,
+     "endMs": 83637
+    },
+    {
+     "text": "que",
+     "startMs": 83637,
+     "endMs": 83907
+    },
+    {
+     "text": "só",
+     "startMs": 83907,
+     "endMs": 84057
+    },
+    {
+     "text": "conhecia",
+     "startMs": 84057,
+     "endMs": 84627
+    },
+    {
+     "text": "a",
+     "startMs": 84627,
+     "endMs": 84697
+    },
+    {
+     "text": "música",
+     "startMs": 84697,
+     "endMs": 85128
+    }
+   ]
+  },
+  {
+   "index": 14,
+   "blocks": [
+    30,
+    31,
+    32,
+    33,
+    34
+   ],
+   "startMs": 85478,
+   "endMs": 100810,
+   "text": "O Tom chegou a chamar a música de\"Lixo\" e conta-se que ele mandou um fã e catar o coquinho de tanto que pedia a música nos shows deles",
+   "words": [
+    {
+     "text": "O",
+     "startMs": 85478,
+     "endMs": 85587
+    },
+    {
+     "text": "Tom",
+     "startMs": 85587,
+     "endMs": 85807
+    },
+    {
+     "text": "chegou",
+     "startMs": 85807,
+     "endMs": 86397
+    },
+    {
+     "text": "a",
+     "startMs": 86397,
+     "endMs": 86497
+    },
+    {
+     "text": "chamar",
+     "startMs": 86497,
+     "endMs": 87077
+    },
+    {
+     "text": "a",
+     "startMs": 87077,
+     "endMs": 87177
+    },
+    {
+     "text": "música",
+     "startMs": 87177,
+     "endMs": 87867
+    },
+    {
+     "text": "de\"Lixo\"",
+     "startMs": 87867,
+     "endMs": 88522
+    },
+    {
+     "text": "e",
+     "startMs": 88637,
+     "endMs": 88677
+    },
+    {
+     "text": "conta-se",
+     "startMs": 88677,
+     "endMs": 90847
+    },
+    {
+     "text": "que",
+     "startMs": 90847,
+     "endMs": 91224
+    },
+    {
+     "text": "ele",
+     "startMs": 91437,
+     "endMs": 92147
+    },
+    {
+     "text": "mandou",
+     "startMs": 92147,
+     "endMs": 93707
+    },
+    {
+     "text": "um",
+     "startMs": 93707,
+     "endMs": 94367
+    },
+    {
+     "text": "fã",
+     "startMs": 94367,
+     "endMs": 95017
+    },
+    {
+     "text": "e",
+     "startMs": 95017,
+     "endMs": 95017
+    },
+    {
+     "text": "catar",
+     "startMs": 95017,
+     "endMs": 95017
+    },
+    {
+     "text": "o",
+     "startMs": 95017,
+     "endMs": 95017
+    },
+    {
+     "text": "coquinho",
+     "startMs": 95117,
+     "endMs": 95227
+    },
+    {
+     "text": "de",
+     "startMs": 95227,
+     "endMs": 97542
+    },
+    {
+     "text": "tanto",
+     "startMs": 98507,
+     "endMs": 98827
+    },
+    {
+     "text": "que",
+     "startMs": 98827,
+     "endMs": 99027
+    },
+    {
+     "text": "pedia",
+     "startMs": 99027,
+     "endMs": 99327
+    },
+    {
+     "text": "a",
+     "startMs": 99327,
+     "endMs": 99377
+    },
+    {
+     "text": "música",
+     "startMs": 99377,
+     "endMs": 99837
+    },
+    {
+     "text": "nos",
+     "startMs": 99837,
+     "endMs": 100027
+    },
+    {
+     "text": "shows",
+     "startMs": 100027,
+     "endMs": 100267
+    },
+    {
+     "text": "deles",
+     "startMs": 100267,
+     "endMs": 100460
+    }
+   ]
+  },
+  {
+   "index": 15,
+   "blocks": [
+    35,
+    36,
+    37
+   ],
+   "startMs": 100810,
+   "endMs": 110177,
+   "text": "No fim da torneia, o K-Compiler, de 98, a banda basicamente tirou\"Creep\" dos set listidos shows.",
+   "words": [
+    {
+     "text": "No",
+     "startMs": 100810,
+     "endMs": 100927
+    },
+    {
+     "text": "fim",
+     "startMs": 100927,
+     "endMs": 101117
+    },
+    {
+     "text": "da",
+     "startMs": 101117,
+     "endMs": 101287
+    },
+    {
+     "text": "torneia,",
+     "startMs": 101287,
+     "endMs": 102097
+    },
+    {
+     "text": "o",
+     "startMs": 102097,
+     "endMs": 102217
+    },
+    {
+     "text": "K-Compiler,",
+     "startMs": 102217,
+     "endMs": 103267
+    },
+    {
+     "text": "de",
+     "startMs": 103267,
+     "endMs": 103447
+    },
+    {
+     "text": "98,",
+     "startMs": 103447,
+     "endMs": 104071
+    },
+    {
+     "text": "a",
+     "startMs": 104171,
+     "endMs": 104287
+    },
+    {
+     "text": "banda",
+     "startMs": 104287,
+     "endMs": 104737
+    },
+    {
+     "text": "basicamente",
+     "startMs": 104737,
+     "endMs": 106157
+    },
+    {
+     "text": "tirou\"Creep\"",
+     "startMs": 106157,
+     "endMs": 107537
+    },
+    {
+     "text": "dos",
+     "startMs": 107537,
+     "endMs": 107817
+    },
+    {
+     "text": "set",
+     "startMs": 107817,
+     "endMs": 108207
+    },
+    {
+     "text": "listidos",
+     "startMs": 108207,
+     "endMs": 109237
+    },
+    {
+     "text": "shows.",
+     "startMs": 109237,
+     "endMs": 109827
+    }
+   ]
+  },
+  {
+   "index": 16,
+   "blocks": [
+    42,
+    43,
+    45,
+    46,
+    47
+   ],
+   "startMs": 110177,
+   "endMs": 121205,
+   "text": "O guitarrista Johnny Greenwood explicou a letra do Tom e ele simplesmente não está mais naquele lugar emocional.",
+   "words": [
+    {
+     "text": "O",
+     "startMs": 110812,
+     "endMs": 110206
+    },
+    {
+     "text": "guitarrista",
+     "startMs": 110206,
+     "endMs": 111952
+    },
+    {
+     "text": "Johnny",
+     "startMs": 111952,
+     "endMs": 113091
+    },
+    {
+     "text": "Greenwood",
+     "startMs": 113302,
+     "endMs": 114472
+    },
+    {
+     "text": "explicou",
+     "startMs": 114472,
+     "endMs": 115918
+    },
+    {
+     "text": "a",
+     "startMs": 116018,
+     "endMs": 116032
+    },
+    {
+     "text": "letra",
+     "startMs": 116032,
+     "endMs": 116202
+    },
+    {
+     "text": "do",
+     "startMs": 116202,
+     "endMs": 116382
+    },
+    {
+     "text": "Tom",
+     "startMs": 116382,
+     "endMs": 116622
+    },
+    {
+     "text": "e",
+     "startMs": 116622,
+     "endMs": 116752
+    },
+    {
+     "text": "ele",
+     "startMs": 116752,
+     "endMs": 116952
+    },
+    {
+     "text": "simplesmente",
+     "startMs": 116952,
+     "endMs": 117982
+    },
+    {
+     "text": "não",
+     "startMs": 117982,
+     "endMs": 118322
+    },
+    {
+     "text": "está",
+     "startMs": 118322,
+     "endMs": 118705
+    },
+    {
+     "text": "mais",
+     "startMs": 118805,
+     "endMs": 118922
+    },
+    {
+     "text": "naquele",
+     "startMs": 118922,
+     "endMs": 119372
+    },
+    {
+     "text": "lugar",
+     "startMs": 119372,
+     "endMs": 119792
+    },
+    {
+     "text": "emocional.",
+     "startMs": 119792,
+     "endMs": 120855
+    }
+   ]
+  },
+  {
+   "index": 17,
+   "blocks": [
+    48
+   ],
+   "startMs": 121205,
+   "endMs": 127842,
+   "text": "A última vez que eles tocaram\"Creep\" ao vivo foi em Bogotá em 2018.",
+   "words": [
+    {
+     "text": "A",
+     "startMs": 121205,
+     "endMs": 121312
+    },
+    {
+     "text": "última",
+     "startMs": 121312,
+     "endMs": 121652
+    },
+    {
+     "text": "vez",
+     "startMs": 121652,
+     "endMs": 121962
+    },
+    {
+     "text": "que",
+     "startMs": 121962,
+     "endMs": 122252
+    },
+    {
+     "text": "eles",
+     "startMs": 122252,
+     "endMs": 122652
+    },
+    {
+     "text": "tocaram\"Creep\"",
+     "startMs": 122652,
+     "endMs": 124052
+    },
+    {
+     "text": "ao",
+     "startMs": 124052,
+     "endMs": 124262
+    },
+    {
+     "text": "vivo",
+     "startMs": 124262,
+     "endMs": 124652
+    },
+    {
+     "text": "foi",
+     "startMs": 124652,
+     "endMs": 124952
+    },
+    {
+     "text": "em",
+     "startMs": 124952,
+     "endMs": 125152
+    },
+    {
+     "text": "Bogotá",
+     "startMs": 125152,
+     "endMs": 125872
+    },
+    {
+     "text": "em",
+     "startMs": 125872,
+     "endMs": 126052
+    },
+    {
+     "text": "2018.",
+     "startMs": 126052,
+     "endMs": 127492
+    }
+   ]
+  },
+  {
+   "index": 18,
+   "blocks": [
+    49
+   ],
+   "startMs": 127842,
+   "endMs": 130994,
+   "text": "Na torneia de 2025, nem sinal.",
+   "words": [
+    {
+     "text": "Na",
+     "startMs": 127842,
+     "endMs": 127842
+    },
+    {
+     "text": "torneia",
+     "startMs": 127842,
+     "endMs": 128372
+    },
+    {
+     "text": "de",
+     "startMs": 128372,
+     "endMs": 128542
+    },
+    {
+     "text": "2025,",
+     "startMs": 128542,
+     "endMs": 129772
+    },
+    {
+     "text": "nem",
+     "startMs": 129772,
+     "endMs": 130032
+    },
+    {
+     "text": "sinal.",
+     "startMs": 130032,
+     "endMs": 130644
+    }
+   ]
+  },
+  {
+   "index": 19,
+   "blocks": [
+    52,
+    53
+   ],
+   "startMs": 130994,
+   "endMs": 141540,
+   "text": "E agora a parte doida, se na época a música chegou num modesto 34º lugar nos Estados Unidos, hoje já acumula cerca de 3 bilhões de reproduções apenas no Spotify.",
+   "words": [
+    {
+     "text": "E",
+     "startMs": 130994,
+     "endMs": 131101
+    },
+    {
+     "text": "agora",
+     "startMs": 131101,
+     "endMs": 131181
+    },
+    {
+     "text": "a",
+     "startMs": 131181,
+     "endMs": 131311
+    },
+    {
+     "text": "parte",
+     "startMs": 131311,
+     "endMs": 131831
+    },
+    {
+     "text": "doida,",
+     "startMs": 131831,
+     "endMs": 132561
+    },
+    {
+     "text": "se",
+     "startMs": 132561,
+     "endMs": 132641
+    },
+    {
+     "text": "na",
+     "startMs": 132641,
+     "endMs": 132861
+    },
+    {
+     "text": "época",
+     "startMs": 132861,
+     "endMs": 132961
+    },
+    {
+     "text": "a",
+     "startMs": 132961,
+     "endMs": 133001
+    },
+    {
+     "text": "música",
+     "startMs": 133001,
+     "endMs": 133291
+    },
+    {
+     "text": "chegou",
+     "startMs": 133291,
+     "endMs": 133561
+    },
+    {
+     "text": "num",
+     "startMs": 133561,
+     "endMs": 133791
+    },
+    {
+     "text": "modesto",
+     "startMs": 133791,
+     "endMs": 134331
+    },
+    {
+     "text": "34º",
+     "startMs": 134331,
+     "endMs": 134951
+    },
+    {
+     "text": "lugar",
+     "startMs": 134951,
+     "endMs": 135341
+    },
+    {
+     "text": "nos",
+     "startMs": 135341,
+     "endMs": 135571
+    },
+    {
+     "text": "Estados",
+     "startMs": 135571,
+     "endMs": 136091
+    },
+    {
+     "text": "Unidos,",
+     "startMs": 136091,
+     "endMs": 136800
+    },
+    {
+     "text": "hoje",
+     "startMs": 136900,
+     "endMs": 137011
+    },
+    {
+     "text": "já",
+     "startMs": 137011,
+     "endMs": 137091
+    },
+    {
+     "text": "acumula",
+     "startMs": 137091,
+     "endMs": 137621
+    },
+    {
+     "text": "cerca",
+     "startMs": 137621,
+     "endMs": 138001
+    },
+    {
+     "text": "de",
+     "startMs": 138001,
+     "endMs": 138181
+    },
+    {
+     "text": "3",
+     "startMs": 138181,
+     "endMs": 138381
+    },
+    {
+     "text": "bilhões",
+     "startMs": 138381,
+     "endMs": 138991
+    },
+    {
+     "text": "de",
+     "startMs": 138991,
+     "endMs": 139141
+    },
+    {
+     "text": "reproduções",
+     "startMs": 139141,
+     "endMs": 140141
+    },
+    {
+     "text": "apenas",
+     "startMs": 140141,
+     "endMs": 140671
+    },
+    {
+     "text": "no",
+     "startMs": 140671,
+     "endMs": 140751
+    },
+    {
+     "text": "Spotify.",
+     "startMs": 140751,
+     "endMs": 141190
+    }
+   ]
+  },
+  {
+   "index": 20,
+   "blocks": [
+    54
+   ],
+   "startMs": 141540,
+   "endMs": 147008,
+   "text": "Mas e aí, o que você acha de\"Creep\"? Conta pra mim aqui nos comentários e me siga pra mais conteúdos como esse.",
+   "words": [
+    {
+     "text": "Mas",
+     "startMs": 141540,
+     "endMs": 141540
+    },
+    {
+     "text": "e",
+     "startMs": 141540,
+     "endMs": 141651
+    },
+    {
+     "text": "aí,",
+     "startMs": 141651,
+     "endMs": 141811
+    },
+    {
+     "text": "o",
+     "startMs": 141811,
+     "endMs": 141861
+    },
+    {
+     "text": "que",
+     "startMs": 141861,
+     "endMs": 142031
+    },
+    {
+     "text": "você",
+     "startMs": 142031,
+     "endMs": 142321
+    },
+    {
+     "text": "acha",
+     "startMs": 142321,
+     "endMs": 142551
+    },
+    {
+     "text": "de\"Creep\"?",
+     "startMs": 142551,
+     "endMs": 143311
+    },
+    {
+     "text": "Conta",
+     "startMs": 143311,
+     "endMs": 143551
+    },
+    {
+     "text": "pra",
+     "startMs": 143551,
+     "endMs": 143701
+    },
+    {
+     "text": "mim",
+     "startMs": 143701,
+     "endMs": 143851
+    },
+    {
+     "text": "aqui",
+     "startMs": 143851,
+     "endMs": 144051
+    },
+    {
+     "text": "nos",
+     "startMs": 144051,
+     "endMs": 144201
+    },
+    {
+     "text": "comentários",
+     "startMs": 144201,
+     "endMs": 144811
+    },
+    {
+     "text": "e",
+     "startMs": 144811,
+     "endMs": 144861
+    },
+    {
+     "text": "me",
+     "startMs": 144861,
+     "endMs": 144991
+    },
+    {
+     "text": "siga",
+     "startMs": 144991,
+     "endMs": 145161
+    },
+    {
+     "text": "pra",
+     "startMs": 145161,
+     "endMs": 145311
+    },
+    {
+     "text": "mais",
+     "startMs": 145311,
+     "endMs": 145521
+    },
+    {
+     "text": "conteúdos",
+     "startMs": 145521,
+     "endMs": 146031
+    },
+    {
+     "text": "como",
+     "startMs": 146031,
+     "endMs": 146251
+    },
+    {
+     "text": "esse.",
+     "startMs": 146251,
+     "endMs": 146611
+    }
+   ]
+  }
+ ]
+}

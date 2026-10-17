@@ -24,3 +24,10 @@ tempos escritos no roteiro (que previa ~1:30).
 Limiar -54 dB, pausa mínima 0,35s, 55 blocos de fala, 2:26 de fala em 5:43.
 Blocos 002 e 003 (abertura errada e 1ª tomada) e 006 (1ª versão de "Ele a
 escreveu") saem; 004 e 007 ficam. Blocos com menos de 0,3s são descartados.
+
+## Ajustes depois da escuta
+- Remover "não pôde ficar tranquilo" (bloco 13); a frase vira "O guitarrista odiava a música e, na hora de gravar, quis sabotar a gravação...".
+- Mapa de motions aprovado (adaptado às palavras ditas).
+- Enquadramentos: A (100%) e B (112%) alternando por frase; C (135%, tela cheia) em "maldição" e no início do CTA.
+- Legendas: A padrão; E na frase do Jonny Greenwood; D no CTA. O Marcos ajusta vendo na prática.
+- Números e nomes em lima. Música (Creep): o Marcos coloca no Instagram.

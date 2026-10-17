@@ -15,6 +15,11 @@ Formato: WAV, mono, 44,1 kHz. Funcionam em CapCut, Premiere, DaVinci etc.
 | `notification.wav` | duas notas (0,6s) | botão, mensagem, chamada para ação |
 | `tick.wav` | clique seco (0,07s) | digitação, contagem |
 | `click.wav` | clique de botão (0,1s) | toque na tela |
+| `stamp.wav` | batida de carimbo (0,5s) | selo ou carimbo caindo |
+| `gavel.wav` | duas batidas de martelo (0,8s) | decisão, tribunal |
+| `bounce.wav` | objeto quicando (1,1s) | humor, coco ou bola |
+| `fuse.wav` | pavio aceso (1,3s) | tensão, bomba |
+| `rec.wav` | bipe de gravação (0,2s) | botão REC |
 
 ## No vídeo da Innova (Innova-Reels)
 

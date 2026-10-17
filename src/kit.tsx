@@ -47,6 +47,8 @@ export type Theme = {
 
 const ThemeContext = createContext<Theme | null>(null);
 
+export const ThemeProvider = ThemeContext.Provider;
+
 export const useTheme = (): Theme => {
   const theme = useContext(ThemeContext);
   if (!theme) {
