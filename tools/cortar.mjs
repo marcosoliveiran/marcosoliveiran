@@ -180,7 +180,7 @@ const filterGraph = (segments) => {
   lines.push(
     `${segments.map((_, i) => `[v${i}][a${i}]`).join("")}concat=n=${n}:v=1:a=1[v][a]`,
   );
-  return lines.join(";\n");
+  return lines.join(";");
 };
 
 const main = async () => {
@@ -229,7 +229,8 @@ const main = async () => {
 
   await mkdir(outDir, { recursive: true });
   const scriptPath = path.join(outDir, "filtro.txt");
-  await writeFile(scriptPath, filterGraph(edit.segments));
+  const graph = filterGraph(edit.segments);
+  await writeFile(scriptPath, graph);
   await writeFile(
     path.join(outDir, "fala-info.json"),
     JSON.stringify(info, null, 2),
@@ -243,8 +244,8 @@ const main = async () => {
         "-y",
         "-i",
         input,
-        "-filter_complex_script",
-        scriptPath,
+        "-filter_complex",
+        graph,
         "-map",
         "[v]",
         "-map",
