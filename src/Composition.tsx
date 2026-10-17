@@ -3,6 +3,17 @@ import { Background } from "./Background";
 import { Scene } from "./Scene";
 import { TalkingHead } from "./TalkingHead";
 import {
+  VoomCaptionOptions,
+  VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
+  VOOM_CAPTION_OPTIONS_SIZE,
+} from "./VoomCaptionOptions";
+import {
+  VoomBase,
+  VOOM_BASE_DURATION_IN_FRAMES,
+  VOOM_BASE_FPS,
+  VOOM_BASE_SIZE,
+} from "./VoomBase";
+import {
   InnovaVideo,
   INNOVA_VIDEO_DURATION_IN_FRAMES,
   INNOVA_VIDEO_FPS,
@@ -112,6 +123,22 @@ export const TalkingHeadComposition = () => {
         width={INNOVA_VIDEO_SIZE.width}
         height={INNOVA_VIDEO_SIZE.height}
         defaultProps={{}}
+      />
+      <Composition
+        id="Voom-Base"
+        component={VoomBase}
+        durationInFrames={VOOM_BASE_DURATION_IN_FRAMES}
+        fps={VOOM_BASE_FPS}
+        width={VOOM_BASE_SIZE.width}
+        height={VOOM_BASE_SIZE.height}
+      />
+      <Composition
+        id="Voom-Legendas"
+        component={VoomCaptionOptions}
+        durationInFrames={VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES}
+        fps={VOOM_BASE_FPS}
+        width={VOOM_CAPTION_OPTIONS_SIZE.width}
+        height={VOOM_CAPTION_OPTIONS_SIZE.height}
       />
     </>
   );

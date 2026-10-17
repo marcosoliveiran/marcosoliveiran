@@ -37,7 +37,11 @@ export type Theme = {
   panelInk: string; // default text color inside the panel
   panelOutline?: string; // caption outline over the panel (default: panel)
   font: string;
-  serif: string;
+  serif: string; // font of highlighted caption words
+  // "serif": accent-colored italic with an underline (default).
+  // "marker": accent-colored block behind the word, with `highlightInk` text.
+  highlightStyle?: "serif" | "marker";
+  highlightInk?: string;
   shadow: string; // rgb triplet used for soft shadows, e.g. "80, 60, 50"
 };
 
@@ -262,6 +266,29 @@ const CaptionWord: React.FC<{
     fps,
     config: { damping: 20, stiffness: 120 },
   });
+
+  if (word.highlight && theme.highlightStyle === "marker") {
+    return (
+      <span
+        style={{
+          display: "inline-block",
+          opacity: pop,
+          transform: `translateY(${(1 - pop) * 44}px) rotate(${-1.5 + (1 - pop) * -5}deg) scale(${0.8 + 0.2 * pop})`,
+          backgroundColor: theme.accent,
+          color: theme.highlightInk ?? "black",
+          fontFamily: theme.serif,
+          fontWeight: 700,
+          fontSize: 74,
+          lineHeight: 1,
+          letterSpacing: -1,
+          padding: "10px 22px 14px",
+          borderRadius: 20,
+        }}
+      >
+        {word.text}
+      </span>
+    );
+  }
 
   return (
     <span
