@@ -1,5 +1,5 @@
 // Aplica os cortes aprovados: junta só as falas escolhidas, sem os silêncios
-// longos, e gera uma versão leve do vídeo (H.264, 1080 de largura, 30 fps).
+// longos, e gera uma versão leve do vídeo (H.264, 1440 de largura, 30 fps).
 //
 // Uso:  npm run cortar -- bruto/IMG_3556.MOV
 //       npm run cortar -- bruto/IMG_3556.MOV --plano     (só mostra o plano)
@@ -20,7 +20,9 @@ import { promisify } from "node:util";
 const run = promisify(execFile);
 
 const FPS = 30;
-const WIDTH = 1080;
+// 1440 de largura (a gravação é 4K): sobra resolução para os enquadramentos com
+// aproximação, sem pesar tanto quanto o 4K.
+const WIDTH = 1440;
 
 // Folgas ao redor de cada fala (em segundos). Mais folga no fim da frase dá
 // um respiro natural; a folga depois da fala também protege as sílabas finais,
