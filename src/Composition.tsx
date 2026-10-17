@@ -3,6 +3,12 @@ import { Background } from "./Background";
 import { Scene } from "./Scene";
 import { TalkingHead } from "./TalkingHead";
 import {
+  InnovaVideo,
+  INNOVA_VIDEO_DURATION_IN_FRAMES,
+  INNOVA_VIDEO_FPS,
+  INNOVA_VIDEO_SIZE,
+} from "./InnovaVideo";
+import {
   UGCVideo,
   UGC_VIDEO_DURATION_IN_FRAMES,
   UGC_VIDEO_FPS,
@@ -97,6 +103,15 @@ export const TalkingHeadComposition = () => {
         width={UGC_VIDEO_SIZE.width}
         height={UGC_VIDEO_SIZE.height}
         defaultProps={{ characterFolder: "faces-marcos", seed: "ugc" }}
+      />
+      <Composition
+        id="Innova-30s"
+        component={InnovaVideo}
+        durationInFrames={INNOVA_VIDEO_DURATION_IN_FRAMES}
+        fps={INNOVA_VIDEO_FPS}
+        width={INNOVA_VIDEO_SIZE.width}
+        height={INNOVA_VIDEO_SIZE.height}
+        defaultProps={{ characterFolder: "faces-marcos", seed: "innova" }}
       />
     </>
   );
