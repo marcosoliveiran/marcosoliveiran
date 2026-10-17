@@ -29,7 +29,9 @@
     "lint": "eslint src && tsc",
     "transcrever": "node tools/transcrever.mjs",
     "silencios": "node tools/silencios.mjs",
-    "compactar": "node tools/compactar.mjs"
+    "compactar": "node tools/compactar.mjs",
+    "cortar": "node tools/cortar.mjs",
+    "quadros": "node tools/quadros.mjs"
   },
   "sideEffects": [
     "*.css"

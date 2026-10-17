@@ -13,3 +13,5 @@ whisper.cpp/
 transcricao/*.wav
 *.MOV
 *.mov
+public/creep/fala.mp4
+public/creep/filtro.txt
