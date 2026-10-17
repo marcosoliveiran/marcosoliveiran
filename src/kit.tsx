@@ -2,9 +2,11 @@ import { createContext, useContext } from "react";
 import {
   AbsoluteFill,
   Easing,
+  Html5Audio,
   Sequence,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
@@ -33,6 +35,7 @@ export type Theme = {
   paper: string; // caption outline and video background
   panel: string; // illustration panel background
   panelInk: string; // default text color inside the panel
+  panelOutline?: string; // caption outline over the panel (default: panel)
   font: string;
   serif: string;
   shadow: string; // rgb triplet used for soft shadows, e.g. "80, 60, 50"
@@ -98,6 +101,14 @@ export type SceneConfig = {
   mode: Mode;
   caption: Part[];
   Illustration?: React.FC;
+  // Sound effects played during the scene, from public/sfx.
+  sfx?: SceneSfx[];
+};
+
+export type SceneSfx = {
+  file: string; // e.g. "whoosh.wav"
+  atSeconds: number; // relative to the start of the scene
+  volume?: number;
 };
 
 export const sceneRange = (scene: SceneConfig) => ({
@@ -232,10 +243,12 @@ const toWords = (parts: Part[]): Part[] => {
   return words;
 };
 
-const CaptionWord: React.FC<{ word: Part; delay: number }> = ({
-  word,
-  delay,
-}) => {
+const CaptionWord: React.FC<{
+  word: Part;
+  delay: number;
+  ink: string;
+  outline: string;
+}> = ({ word, delay, ink, outline }) => {
   const theme = useTheme();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -257,7 +270,7 @@ const CaptionWord: React.FC<{ word: Part; delay: number }> = ({
         display: "inline-block",
         opacity: pop,
         transform: `translateY(${(1 - pop) * 44}px) rotate(${(1 - pop) * -4}deg)`,
-        color: word.highlight ? theme.accent : theme.ink,
+        color: word.highlight ? theme.accent : ink,
         fontFamily: word.highlight ? theme.serif : theme.font,
         fontStyle: word.highlight ? "italic" : "normal",
         fontWeight: word.highlight ? 700 : 900,
@@ -265,7 +278,7 @@ const CaptionWord: React.FC<{ word: Part; delay: number }> = ({
         textTransform: word.highlight ? "none" : "uppercase",
         letterSpacing: word.highlight ? -2 : -3,
         lineHeight: 1,
-        WebkitTextStroke: `16px ${theme.paper}`,
+        WebkitTextStroke: `16px ${outline}`,
         paintOrder: "stroke fill",
         strokeLinejoin: "round",
       }}
@@ -290,10 +303,14 @@ const CaptionWord: React.FC<{ word: Part; delay: number }> = ({
   );
 };
 
-export const Caption: React.FC<{ parts: Part[]; y: number }> = ({
-  parts,
-  y,
-}) => {
+// `onPanel` is true when the caption sits on the (dark) illustration panel,
+// so it switches to the panel's text color and outline.
+export const Caption: React.FC<{
+  parts: Part[];
+  y: number;
+  onPanel: boolean;
+}> = ({ parts, y, onPanel }) => {
+  const theme = useTheme();
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const words = toWords(parts);
@@ -334,6 +351,10 @@ export const Caption: React.FC<{ parts: Part[]; y: number }> = ({
             key={i}
             word={word}
             delay={2 + i * WORD_STAGGER_IN_FRAMES}
+            ink={onPanel ? theme.panelInk : theme.ink}
+            outline={
+              onPanel ? (theme.panelOutline ?? theme.panel) : theme.paper
+            }
           />
         ))}
       </div>
@@ -351,16 +372,21 @@ export type SplitVideoProps = {
   scenes: SceneConfig[];
   theme: Theme;
   Background: React.FC;
-  characterFolder: string;
-  seed: string;
+  // Animated head from public/<folder>. Leave out for videos with no face
+  // (voice-over only): the scenes then use the whole screen.
+  characterFolder?: string;
+  // Drawn above everything, e.g. transitions between scenes.
+  Overlay?: React.FC;
+  seed?: string;
 };
 
 export const SplitVideo: React.FC<SplitVideoProps> = ({
   scenes,
   theme,
   Background,
+  Overlay,
   characterFolder,
-  seed,
+  seed = "video",
 }) => {
   const frame = useCurrentFrame();
   const layout = layoutAt(frame, scenes);
@@ -371,21 +397,23 @@ export const SplitVideo: React.FC<SplitVideoProps> = ({
       <AbsoluteFill style={{ backgroundColor: theme.paper }}>
         <Background />
 
-        <div
-          style={{
-            position: "absolute",
-            left: SAFE_CENTER_X - layout.faceSize / 2,
-            top: layout.faceY - layout.faceSize / 2 + floatY,
-            width: layout.faceSize,
-            height: layout.faceSize,
-            opacity: layout.faceOpacity,
-            maskImage: SOFT_EDGE_MASK,
-            WebkitMaskImage: SOFT_EDGE_MASK,
-            filter: `drop-shadow(0 30px 35px rgba(${theme.shadow}, 0.18))`,
-          }}
-        >
-          <TalkingHead characterFolder={characterFolder} seed={seed} />
-        </div>
+        {characterFolder ? (
+          <div
+            style={{
+              position: "absolute",
+              left: SAFE_CENTER_X - layout.faceSize / 2,
+              top: layout.faceY - layout.faceSize / 2 + floatY,
+              width: layout.faceSize,
+              height: layout.faceSize,
+              opacity: layout.faceOpacity,
+              maskImage: SOFT_EDGE_MASK,
+              WebkitMaskImage: SOFT_EDGE_MASK,
+              filter: `drop-shadow(0 30px 35px rgba(${theme.shadow}, 0.18))`,
+            }}
+          >
+            <TalkingHead characterFolder={characterFolder} seed={seed} />
+          </div>
+        ) : null}
 
         <div
           style={{
@@ -424,6 +452,22 @@ export const SplitVideo: React.FC<SplitVideoProps> = ({
           })}
         </div>
 
+        {scenes.map((scene, i) =>
+          (scene.sfx ?? []).map((effect, j) => (
+            <Sequence
+              key={`sfx-${i}-${j}`}
+              from={sceneRange(scene).from + Math.round(effect.atSeconds * FPS)}
+              name={`SFX ${effect.file}`}
+              layout="none"
+            >
+              <Html5Audio
+                src={staticFile(`sfx/${effect.file}`)}
+                volume={() => effect.volume ?? 0.6}
+              />
+            </Sequence>
+          )),
+        )}
+
         {scenes.map((scene, i) => {
           const { from, duration } = sceneRange(scene);
           return (
@@ -433,10 +477,15 @@ export const SplitVideo: React.FC<SplitVideoProps> = ({
               durationInFrames={duration}
               name={`Caption ${i + 1}`}
             >
-              <Caption parts={scene.caption} y={layout.captionY} />
+              <Caption
+                parts={scene.caption}
+                y={layout.captionY}
+                onPanel={layout.topHeight >= layout.captionY}
+              />
             </Sequence>
           );
         })}
+        {Overlay ? <Overlay /> : null}
       </AbsoluteFill>
     </ThemeContext.Provider>
   );

@@ -105,13 +105,13 @@ export const TalkingHeadComposition = () => {
         defaultProps={{ characterFolder: "faces-marcos", seed: "ugc" }}
       />
       <Composition
-        id="Innova-30s"
+        id="Innova-Reels"
         component={InnovaVideo}
         durationInFrames={INNOVA_VIDEO_DURATION_IN_FRAMES}
         fps={INNOVA_VIDEO_FPS}
         width={INNOVA_VIDEO_SIZE.width}
         height={INNOVA_VIDEO_SIZE.height}
-        defaultProps={{ characterFolder: "faces-marcos", seed: "innova" }}
+        defaultProps={{}}
       />
     </>
   );
