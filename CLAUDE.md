@@ -64,3 +64,26 @@ Três estilos, escolhidos por cena com `captionStyle` em `SceneConfig`
 
 Evitar trocar de estilo a cada cena: no máximo um estilo de destaque (D) por
 vídeo, e o resto em A ou E.
+
+## Quando e como fazer ilustração e motion (perfil pessoal)
+
+Decisões do Marcos:
+
+- **Motion limpo, normalmente.** O rosto domina; a ilustração entra quando
+  acrescenta algo que a fala sozinha não mostra. Sem repetir a frase na tela e
+  sem empilhar efeitos. Cenas emocionais ou pessoais ficam só com o rosto.
+- **Sempre propor o mapa antes de montar.** A partir do roteiro ou da
+  transcrição, listar por trecho: o que entra, em que modo (dividida ou tela
+  cheia) e qual animação. Só montar depois da aprovação.
+- **Estilo visual:** mais imagens recortadas (colagem). Para dados e números,
+  gráficos e tipografia em lima e preto (identidade voom).
+
+Quando entra ilustração: número/dado/comparação, lista ou passos, conceito
+abstrato, prova ou exemplo visual, e quebra de atenção a cada ~4–6s de só rosto.
+
+Modos: **dividida** quando a imagem apoia e o Marcos segue falando; **tela
+cheia** quando a imagem é o assunto (a voz continua por cima).
+
+Limites: não gero fotos realistas nem desenhos complexos. Faço motion
+tipográfico, números, listas, gráficos, ícones, formas e fluxos; imagens
+recortadas vêm do Marcos (enviadas ou geradas em outra ferramenta).
