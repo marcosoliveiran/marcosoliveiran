@@ -344,7 +344,10 @@ const CaptionWord: React.FC<{
   );
 };
 
-const CardCaption: React.FC<{ words: Part[] }> = ({ words }) => {
+const CardCaption: React.FC<{ words: Part[]; maxWidth: number }> = ({
+  words,
+  maxWidth,
+}) => {
   const theme = useTheme();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -358,7 +361,7 @@ const CardCaption: React.FC<{ words: Part[] }> = ({ words }) => {
   return (
     <div
       style={{
-        maxWidth: SAFE_WIDTH,
+        maxWidth,
         padding: "34px 48px 40px",
         borderRadius: 48,
         backgroundColor: theme.accent,
@@ -406,16 +409,15 @@ const MinimalCaption: React.FC<{
   words: Part[];
   ink: string;
   outline: string;
-}> = ({ words, ink, outline }) => {
+  width: number;
+}> = ({ words, ink, outline, width }) => {
   const theme = useTheme();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const bar = spring({ frame, fps, config: { damping: 18, stiffness: 160 } });
 
   return (
-    <div
-      style={{ display: "flex", gap: 30, alignItems: "stretch", width: 720 }}
-    >
+    <div style={{ display: "flex", gap: 30, alignItems: "stretch", width }}>
       <div
         style={{
           width: 12,
@@ -472,7 +474,10 @@ export const Caption: React.FC<{
   y: number;
   onPanel: boolean;
   variant?: CaptionStyle;
-}> = ({ parts, y, onPanel, variant = "default" }) => {
+  // 1 = tamanho padrão; menos que 1 encolhe a legenda inteira (e ela cabe em
+  // menos linhas, porque a largura útil continua a mesma).
+  size?: number;
+}> = ({ parts, y, onPanel, variant = "default", size = 1 }) => {
   const theme = useTheme();
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
@@ -499,34 +504,41 @@ export const Caption: React.FC<{
         opacity: exit,
       }}
     >
-      {variant === "card" ? (
-        <CardCaption words={words} />
-      ) : variant === "minimal" ? (
-        <MinimalCaption words={words} ink={ink} outline={outline} />
-      ) : (
-        <div
-          style={{
-            maxWidth: SAFE_WIDTH,
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            alignItems: "baseline",
-            columnGap: 26,
-            rowGap: 6,
-            textAlign: "center",
-          }}
-        >
-          {words.map((word, i) => (
-            <CaptionWord
-              key={i}
-              word={word}
-              delay={2 + i * WORD_STAGGER_IN_FRAMES}
-              ink={ink}
-              outline={outline}
-            />
-          ))}
-        </div>
-      )}
+      <div style={{ zoom: size }}>
+        {variant === "card" ? (
+          <CardCaption words={words} maxWidth={SAFE_WIDTH / size} />
+        ) : variant === "minimal" ? (
+          <MinimalCaption
+            words={words}
+            ink={ink}
+            outline={outline}
+            width={720 / size}
+          />
+        ) : (
+          <div
+            style={{
+              maxWidth: SAFE_WIDTH / size,
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "baseline",
+              columnGap: 26,
+              rowGap: 6,
+              textAlign: "center",
+            }}
+          >
+            {words.map((word, i) => (
+              <CaptionWord
+                key={i}
+                word={word}
+                delay={2 + i * WORD_STAGGER_IN_FRAMES}
+                ink={ink}
+                outline={outline}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

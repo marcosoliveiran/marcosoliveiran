@@ -179,6 +179,7 @@ export const parseParts = (text: string): Part[] =>
     .filter((p) => p.text.length > 0);
 
 export type CaptionEntry = {
+  sentence: number;
   from: number; // segundos
   to: number;
   parts: Part[];
@@ -206,6 +207,7 @@ export const buildCaptionEntries = (): CaptionEntry[] => {
           ? starts[i + 1]
           : sentenceEnd(block.sentence) + 0.1;
       entries.push({
+        sentence: block.sentence,
         from: starts[i],
         to: Math.max(end, starts[i] + 0.4),
         parts: parseParts(chunk),

@@ -101,3 +101,8 @@ da fala por `wordAt` em `timing.ts`; `src/creep/fala-info.json` é gerado por
 Imagens em `public/creep/` (lista em `public/creep/LEIA-ME.md`); sem elas
 aparece um quadro de reserva. Vermelho só para o que é negativo (carimbo
 ODEIAM, X, riscos, REC, coração partido); o resto é lima, preto e off-white.
+
+No vídeo "Creep" a legenda da fala só aparece no começo (as 3 primeiras frases,
+o gancho e a abertura) e em tamanho reduzido (72%), a pedido do Marcos. Ajuste em
+`CAPTION_UNTIL_SENTENCE` e `CAPTION_SIZE` (`src/creep/CreepVideo.tsx`); o
+componente `Caption` do `src/kit.tsx` aceita `size`.
