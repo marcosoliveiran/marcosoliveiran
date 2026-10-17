@@ -882,9 +882,96 @@ const CallToActionIllustration: React.FC = () => {
 };
 
 // --- Caption --------------------------------------------------------------
+// Agency-style kinetic type: heavy uppercase sans for normal words, an italic
+// serif in the accent color for the key words, popping in one by one. There is
+// no box; a paper-colored outline keeps the text legible over the face.
+
+const SERIF = "'Georgia', 'Times New Roman', serif";
+const WORD_STAGGER_IN_FRAMES = 4;
+const EXIT_IN_FRAMES = 8;
+
+const toWords = (parts: Part[]): Part[] => {
+  const words: Part[] = [];
+  for (const part of parts) {
+    for (const token of part.text.split(" ").filter(Boolean)) {
+      const isPunctuation = /^[.,!?;:]+$/.test(token);
+      if (isPunctuation && words.length > 0) {
+        words[words.length - 1].text += token;
+      } else {
+        words.push({ text: token, highlight: part.highlight });
+      }
+    }
+  }
+  return words;
+};
+
+const CaptionWord: React.FC<{ word: Part; delay: number }> = ({
+  word,
+  delay,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const pop = spring({
+    frame: frame - delay,
+    fps,
+    config: { damping: 13, stiffness: 160 },
+  });
+  const underline = spring({
+    frame: frame - delay - 6,
+    fps,
+    config: { damping: 20, stiffness: 120 },
+  });
+
+  return (
+    <span
+      style={{
+        position: "relative",
+        display: "inline-block",
+        opacity: pop,
+        transform: `translateY(${(1 - pop) * 44}px) rotate(${(1 - pop) * -4}deg)`,
+        color: word.highlight ? PINK_STRONG : INK,
+        fontFamily: word.highlight ? SERIF : FONT,
+        fontStyle: word.highlight ? "italic" : "normal",
+        fontWeight: word.highlight ? 700 : 900,
+        fontSize: word.highlight ? 100 : 78,
+        textTransform: word.highlight ? "none" : "uppercase",
+        letterSpacing: word.highlight ? -2 : -3,
+        lineHeight: 1,
+        WebkitTextStroke: `16px ${PAPER}`,
+        paintOrder: "stroke fill",
+        strokeLinejoin: "round",
+      }}
+    >
+      {word.text}
+      {word.highlight ? (
+        <span
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: -6,
+            height: 8,
+            borderRadius: 4,
+            backgroundColor: PINK_STRONG,
+            transformOrigin: "left center",
+            transform: `scaleX(${underline})`,
+          }}
+        />
+      ) : null}
+    </span>
+  );
+};
 
 const Caption: React.FC<{ parts: Part[]; y: number }> = ({ parts, y }) => {
-  const pop = usePop(2);
+  const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
+  const words = toWords(parts);
+  const exit = interpolate(
+    frame,
+    [durationInFrames - EXIT_IN_FRAMES, durationInFrames],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
 
   return (
     <div
@@ -895,43 +982,29 @@ const Caption: React.FC<{ parts: Part[]; y: number }> = ({ parts, y }) => {
         top: y,
         display: "flex",
         justifyContent: "center",
-        transform: `translateY(-50%) scale(${0.9 + 0.1 * pop})`,
-        opacity: Math.min(1, pop * 2),
+        transform: `translateY(-50%) translateY(${(1 - exit) * -24}px)`,
+        opacity: exit,
       }}
     >
       <div
         style={{
-          maxWidth: 940,
-          padding: "26px 44px",
-          borderRadius: 48,
-          backgroundColor: "white",
-          boxShadow: "0 18px 40px rgba(80, 60, 50, 0.2)",
-          fontFamily: FONT,
-          fontSize: 64,
-          fontWeight: 900,
-          lineHeight: 1.15,
-          color: INK,
+          maxWidth: 960,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "baseline",
+          columnGap: 26,
+          rowGap: 6,
           textAlign: "center",
         }}
       >
-        {parts.map((part, i) =>
-          part.highlight ? (
-            <span
-              key={i}
-              style={{
-                backgroundColor: YELLOW,
-                borderRadius: 16,
-                padding: "0 12px",
-                boxDecorationBreak: "clone",
-                WebkitBoxDecorationBreak: "clone",
-              }}
-            >
-              {part.text}
-            </span>
-          ) : (
-            <span key={i}>{part.text}</span>
-          ),
-        )}
+        {words.map((word, i) => (
+          <CaptionWord
+            key={i}
+            word={word}
+            delay={2 + i * WORD_STAGGER_IN_FRAMES}
+          />
+        ))}
       </div>
     </div>
   );
