@@ -74,39 +74,24 @@ export const toTxt = (captions) => {
   return lines.join("\n") + "\n";
 };
 
-const main = async () => {
-  const input = process.argv[2];
-  if (!input) {
-    console.error('Uso: npm run transcrever -- "caminho/do/video.MOV"');
-    process.exit(1);
-  }
-  if (!existsSync(input)) {
-    console.error(`Não encontrei o arquivo: ${input}`);
-    process.exit(1);
-  }
-
-  const name = path.parse(input).name;
-  const outDir = path.resolve("transcricao");
+// Instala o Whisper (se preciso) e transcreve um .wav de 16 kHz com o tempo de
+// cada palavra. Devolve as legendas no formato do Remotion (startMs, endMs).
+export const transcribeWav = async (wav) => {
   const whisperPath = path.resolve("whisper.cpp");
-  await mkdir(outDir, { recursive: true });
 
-  const wav = path.join(outDir, `${name}.wav`);
-  console.log("1/3  Extraindo o áudio com o ffmpeg...");
-  try {
-    await run("ffmpeg", ["-y", "-i", input, "-vn", "-ac", "1", "-ar", "16000", wav]);
-  } catch (error) {
-    console.error(
-      "Não consegui rodar o ffmpeg. Confira se ele está instalado: abra um CMD novo e digite  ffmpeg -version",
-    );
-    console.error(String(error.message ?? error).slice(0, 400));
-    process.exit(1);
-  }
+  console.log("Preparando o Whisper (só demora na primeira vez)...");
+  await installWhisperCpp({
+    to: whisperPath,
+    version: WHISPER_VERSION,
+    printOutput: false,
+  });
+  await downloadWhisperModel({
+    model: MODEL,
+    folder: whisperPath,
+    printOutput: false,
+  });
 
-  console.log("2/3  Preparando o Whisper (só demora na primeira vez)...");
-  await installWhisperCpp({ to: whisperPath, version: WHISPER_VERSION, printOutput: false });
-  await downloadWhisperModel({ model: MODEL, folder: whisperPath, printOutput: false });
-
-  console.log("3/3  Transcrevendo... isso pode levar alguns minutos.");
+  console.log("Transcrevendo... isso pode levar alguns minutos.");
   const output = await transcribe({
     inputPath: wav,
     whisperPath,
@@ -122,7 +107,49 @@ const main = async () => {
   });
   process.stdout.write("\n");
 
-  const { captions } = toCaptions({ whisperCppOutput: output });
+  return toCaptions({ whisperCppOutput: output }).captions;
+};
+
+const main = async () => {
+  const input = process.argv[2];
+  if (!input) {
+    console.error('Uso: npm run transcrever -- "caminho/do/video.MOV"');
+    process.exit(1);
+  }
+  if (!existsSync(input)) {
+    console.error(`Não encontrei o arquivo: ${input}`);
+    process.exit(1);
+  }
+
+  const name = path.parse(input).name;
+  const outDir = path.resolve("transcricao");
+  await mkdir(outDir, { recursive: true });
+
+  const wav = path.join(outDir, `${name}.wav`);
+  console.log("1/2  Extraindo o áudio com o ffmpeg...");
+  try {
+    await run("ffmpeg", [
+      "-y",
+      "-i",
+      input,
+      "-vn",
+      "-ac",
+      "1",
+      "-ar",
+      "16000",
+      wav,
+    ]);
+  } catch (error) {
+    console.error(
+      "Não consegui rodar o ffmpeg. Confira se ele está instalado: abra um CMD novo e digite  ffmpeg -version",
+    );
+    console.error(String(error.message ?? error).slice(0, 400));
+    process.exit(1);
+  }
+
+  console.log("2/2  Transcrevendo o áudio...");
+  const captions = await transcribeWav(wav);
+
   const jsonPath = path.join(outDir, `${name}.json`);
   const txtPath = path.join(outDir, `${name}.txt`);
   await writeFile(jsonPath, JSON.stringify(captions, null, 2));
@@ -131,11 +158,16 @@ const main = async () => {
   console.log("\nPronto! Arquivos gerados:");
   console.log(`  ${txtPath}`);
   console.log(`  ${jsonPath}`);
-  console.log("\nPróximo passo: me mande o conteúdo do arquivo .txt (cole na conversa)");
+  console.log(
+    "\nPróximo passo: me mande o conteúdo do arquivo .txt (cole na conversa)",
+  );
   console.log("e suba o .json no Drive, ou cole também se for pequeno.");
 };
 
-if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href
+) {
   main().catch((error) => {
     console.error("\nDeu erro:", error?.message ?? error);
     process.exit(1);
