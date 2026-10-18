@@ -1,10 +1,11 @@
-import { CaptionStyle, Part } from "../kit";
+import { Part } from "../kit";
 import { timeAtFraction, sentenceEnd, sentenceStart } from "./timing";
 
 // Legenda da fala, já com a grafia certa (o Whisper errou alguns nomes).
-// *palavra* = destaque. Cada linha é uma "página" de até duas linhas na tela.
-// Estilos: A = padrão, E = "minimal" (frase do Jonny), D = "card" (CTA).
-type Block = { sentence: number; style?: CaptionStyle; chunks: string[] };
+// Cada linha é uma "página" da legenda, que agora é de linha única (estilo
+// "clean", padrão do perfil pessoal): manter até ~28 letras por página.
+// O *destaque* é ignorado pelo estilo atual.
+type Block = { sentence: number; chunks: string[] };
 
 export const CAPTION_BLOCKS: Block[] = [
   {
@@ -133,7 +134,6 @@ export const CAPTION_BLOCKS: Block[] = [
   },
   {
     sentence: 16,
-    style: "minimal",
     chunks: [
       "O guitarrista *Jonny Greenwood* explicou:",
       "a letra é do Tom,",
@@ -183,7 +183,6 @@ export type CaptionEntry = {
   from: number; // segundos
   to: number;
   parts: Part[];
-  style: CaptionStyle;
 };
 
 // Distribui as páginas pelo tempo da frase, pelo tamanho do texto de cada uma.
@@ -211,8 +210,6 @@ export const buildCaptionEntries = (): CaptionEntry[] => {
         from: starts[i],
         to: Math.max(end, starts[i] + 0.4),
         parts: parseParts(chunk),
-        style:
-          block.style ?? (block.sentence === 20 && i > 0 ? "card" : "default"),
       });
     });
   }

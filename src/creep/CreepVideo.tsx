@@ -31,9 +31,9 @@ export const CREEP_SIZE = { width: WIDTH, height: HEIGHT };
 
 // Legenda da fala: só no começo (o gancho e a abertura), a pedido do Marcos.
 // CAPTION_UNTIL_SENTENCE = quantas frases do começo têm legenda (0 = nenhuma).
-// CAPTION_SIZE = 1 é o tamanho padrão; menor deixa a legenda mais discreta.
+// CAPTION_SIZE = 1 é o tamanho padrão do estilo "clean" (linha única).
 const CAPTION_UNTIL_SENTENCE = 3;
-const CAPTION_SIZE = 0.72;
+const CAPTION_SIZE = 1;
 
 const STAGE = { x: 60, y: 250 };
 const PANEL_HEIGHT = 800;
@@ -444,7 +444,6 @@ export const CreepVideo: React.FC = () => {
               parts={entry.parts}
               y={CAPTION_BOTTOM}
               onPanel={false}
-              variant={entry.style}
               size={CAPTION_SIZE}
             />
           </Sequence>

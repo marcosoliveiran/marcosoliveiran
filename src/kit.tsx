@@ -42,6 +42,9 @@ export type Theme = {
   // "marker": accent-colored block behind the word, with `highlightInk` text.
   highlightStyle?: "serif" | "marker";
   highlightInk?: string;
+  // Caption layout used when a scene does not choose one. Personal profile
+  // (voom) uses "clean"; brands keep the kinetic "default".
+  captionVariant?: CaptionStyle;
   shadow: string; // rgb triplet used for soft shadows, e.g. "80, 60, 50"
 };
 
@@ -107,10 +110,11 @@ const EASE = Easing.bezier(0.4, 0, 0.2, 1);
 
 export type Part = { text: string; highlight?: boolean };
 
-// Caption layouts: "default" (word-by-word, key word highlighted, centered),
-// "card" (accent-colored card, bottom) and "minimal" (small, left aligned,
-// with an accent bar).
-export type CaptionStyle = "default" | "card" | "minimal";
+// Caption layouts: "clean" (standard of the personal profile: one line, white
+// caps on a 40% black strip, pops in whole), "default" (word-by-word, key word
+// highlighted, centered), "card" (accent-colored card, bottom) and "minimal"
+// (small, left aligned, with an accent bar). The last three are for brands.
+export type CaptionStyle = "clean" | "default" | "card" | "minimal";
 
 export type SceneConfig = {
   startSeconds: number;
@@ -467,6 +471,55 @@ const MinimalCaption: React.FC<{
   );
 };
 
+// Standard caption of the personal profile: always a single line, white
+// uppercase on a 40% black strip, entering whole with a short pop. The font
+// shrinks to keep the line inside the safe width (keep chunks to ~28 letters;
+// longer ones get small, and below CLEAN_MIN_FONT they would overflow).
+const CLEAN_FONT = 56;
+const CLEAN_MIN_FONT = 36;
+const CLEAN_PAD_X = 32;
+const CLEAN_CHAR_WIDTH = 0.68; // average Nunito 900 uppercase width, in em
+
+const CleanCaption: React.FC<{ words: Part[] }> = ({ words }) => {
+  const theme = useTheme();
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const pop = spring({
+    frame: frame - 1,
+    fps,
+    config: { damping: 14, stiffness: 220 },
+  });
+  const text = words.map((w) => w.text).join(" ");
+  const room = SAFE_WIDTH - CLEAN_PAD_X * 2;
+  const fontSize = Math.max(
+    CLEAN_MIN_FONT,
+    Math.min(CLEAN_FONT, room / (text.length * CLEAN_CHAR_WIDTH)),
+  );
+
+  return (
+    <div
+      style={{
+        whiteSpace: "nowrap",
+        padding: `10px ${CLEAN_PAD_X}px 14px`,
+        borderRadius: 18,
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
+        color: "white",
+        fontFamily: theme.font,
+        fontWeight: 900,
+        fontSize,
+        lineHeight: 1.15,
+        textTransform: "uppercase",
+        textAlign: "center",
+        opacity: Math.min(1, pop * 2),
+        transform: `scale(${0.82 + 0.18 * pop})`,
+        transformOrigin: "50% 100%",
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
 // `onPanel` is true when the caption sits on the (dark) illustration panel,
 // so it switches to the panel's text color and outline.
 export const Caption: React.FC<{
@@ -477,8 +530,9 @@ export const Caption: React.FC<{
   // 1 = tamanho padrão; menos que 1 encolhe a legenda inteira (e ela cabe em
   // menos linhas, porque a largura útil continua a mesma).
   size?: number;
-}> = ({ parts, y, onPanel, variant = "default", size = 1 }) => {
+}> = ({ parts, y, onPanel, variant: variantProp, size = 1 }) => {
   const theme = useTheme();
+  const variant = variantProp ?? theme.captionVariant ?? "default";
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
   const words = toWords(parts);
@@ -505,7 +559,9 @@ export const Caption: React.FC<{
       }}
     >
       <div style={{ zoom: size }}>
-        {variant === "card" ? (
+        {variant === "clean" ? (
+          <CleanCaption words={words} />
+        ) : variant === "card" ? (
           <CardCaption words={words} maxWidth={SAFE_WIDTH / size} />
         ) : variant === "minimal" ? (
           <MinimalCaption
@@ -572,6 +628,7 @@ export const SplitVideo: React.FC<SplitVideoProps> = ({
   const frame = useCurrentFrame();
   const layout = layoutAt(frame, scenes);
   const floatY = Math.sin(frame * 0.05) * 10;
+  const transparentPanel = theme.panel === "transparent";
 
   return (
     <ThemeContext.Provider value={theme}>
@@ -605,9 +662,11 @@ export const SplitVideo: React.FC<SplitVideoProps> = ({
             height: layout.topHeight,
             overflow: "hidden",
             backgroundColor: theme.panel,
-            borderRadius: "0 0 56px 56px",
+            // Transparent panel (personal profile): no block, the resources
+            // float over the background; each one carries its own soft shadow.
+            borderRadius: transparentPanel ? 0 : "0 0 56px 56px",
             boxShadow:
-              layout.topHeight > 0
+              layout.topHeight > 0 && !transparentPanel
                 ? `0 20px 50px rgba(${theme.shadow}, 0.2)`
                 : "none",
           }}

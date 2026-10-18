@@ -49,21 +49,30 @@ comunicam de formas diferentes. Não reaproveitar o visual de um para o outro.
 - Ao começar um vídeo novo, confirmar para qual perfil/marca ele é e olhar a
   identidade daquele perfil/marca antes de desenhar.
 
-## Estilos de legenda do perfil pessoal (voom)
+## Legenda do perfil pessoal (voom): estilo único "clean"
 
-Três estilos, escolhidos por cena com `captionStyle` em `SceneConfig`
-(`src/kit.tsx`). Opções para comparar: composição `Voom-Legendas`.
+Decisão do Marcos: um só estilo, o novo padrão (substitui A · Marcador,
+D · Cartão e E · Minimalista, que só continuam disponíveis para as marcas).
+`VOOM_THEME` já usa `captionVariant: "clean"`; não precisa escolher por cena.
 
-- **A · Marcador** (`"default"`, padrão): explicação, narração corrida e a
-  maioria das cenas. Palavra-chave num bloco lima com texto preto.
-- **D · Cartão lima** (`"card"`): frase de impacto, gancho, oferta e CTA. É o
-  que mais usa o lima, então usar com parcimônia (lima ~20% do uso).
-- **E · Minimalista** (`"minimal"`): momentos reflexivos, falas mais sérias ou
-  mais longas, quando a imagem precisa respirar. Fica à esquerda, longe dos
-  botões da direita.
+- **Linha única, sempre.** Fonte reduz sozinha para caber em 880px (de 56px
+  até 36px). Escrever as páginas da legenda com até ~28 letras.
+- **Branca, caixa-alta, Nunito 900** (boa leitura, acentos e ç corretos), sobre
+  faixa **preta a 40%** de opacidade com cantos arredondados.
+- **Entrada de uma vez, tipo popup** (escala leve + fade), sem palavra a palavra
+  e sem destaque de palavra-chave.
+- **Posição:** o mais baixo possível fora da zona morta, base em
+  `CAPTION_BOTTOM` (y = 1440).
 
-Evitar trocar de estilo a cada cena: no máximo um estilo de destaque (D) por
-vídeo, e o resto em A ou E.
+Referência visual enviada pelo Marcos: print do CapCut (legenda pequena,
+branca, caixa-alta, na tela dividida).
+
+## Fluxo de edição
+
+A edição grossa (cortes, respiração, ritmo) é feita antes no CapCut. O Marcos
+entrega o vídeo já editado e **sem legenda**; aqui só se transcreve esse vídeo
+final para sincronizar legenda e motion. `silencios`, `compactar` e `cortar`
+(fluxo do "Creep") não são mais o caminho padrão.
 
 ## Quando e como fazer ilustração e motion (perfil pessoal)
 
@@ -84,6 +93,10 @@ abstrato, prova ou exemplo visual, e quebra de atenção a cada ~4–6s de só r
 Modos: **dividida** quando a imagem apoia e o Marcos segue falando; **tela
 cheia** quando a imagem é o assunto (a voz continua por cima).
 
+**Tela dividida sem "blocão":** o painel de cima é transparente (sem caixa
+grande atrás). Os recursos ocupam a parte de cima sobrepondo o fundo, cada um
+com uma sombra leve própria. Não desenhar painel/bloco de fundo.
+
 Limites: não gero fotos realistas nem desenhos complexos. Faço motion
 tipográfico, números, listas, gráficos, ícones, formas e fluxos; imagens
 recortadas vêm do Marcos (enviadas ou geradas em outra ferramenta).
@@ -103,6 +116,7 @@ aparece um quadro de reserva. Vermelho só para o que é negativo (carimbo
 ODEIAM, X, riscos, REC, coração partido); o resto é lima, preto e off-white.
 
 No vídeo "Creep" a legenda da fala só aparece no começo (as 3 primeiras frases,
-o gancho e a abertura) e em tamanho reduzido (72%), a pedido do Marcos. Ajuste em
+o gancho e a abertura), a pedido do Marcos, agora no estilo "clean" em tamanho
+normal. Ajuste em
 `CAPTION_UNTIL_SENTENCE` e `CAPTION_SIZE` (`src/creep/CreepVideo.tsx`); o
 componente `Caption` do `src/kit.tsx` aceita `size`.

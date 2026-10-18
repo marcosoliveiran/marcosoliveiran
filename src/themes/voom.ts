@@ -38,5 +38,6 @@ export const VOOM_THEME: Theme = {
   serif: VOOM_TITLE_FONT,
   highlightStyle: "marker",
   highlightInk: VOOM.black,
+  captionVariant: "clean",
   shadow: "0, 0, 0",
 };

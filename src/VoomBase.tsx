@@ -337,7 +337,6 @@ const SCENES: SceneConfig[] = [
     startSeconds: 3,
     durationSeconds: 3,
     mode: "illFull",
-    captionStyle: "minimal",
     caption: [
       { text: "Um número que " },
       { text: "prova", highlight: true },
@@ -354,7 +353,6 @@ const SCENES: SceneConfig[] = [
     startSeconds: 6,
     durationSeconds: 3,
     mode: "illFull",
-    captionStyle: "card",
     caption: [
       { text: "Siga para ver " },
       { text: "mais", highlight: true },
