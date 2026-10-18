@@ -16,6 +16,10 @@ export const HAS_VIDEO = false;
 // Narração (a voz dela, gravada por último). null = sem narração ainda.
 // Coloque o arquivo em public/hering/ e escreva o nome, ex.: "narracao.wav".
 // NARRACAO_INICIO = segundo do VÍDEO FINAL em que a narração começa.
+// Legenda da narração na base (y = 1440). Desligada a pedido do Marcos, até o
+// texto novo ficar pronto. As páginas de cada trecho continuam em SEGMENTS.
+export const MOSTRAR_LEGENDA = false;
+
 export const NARRACAO_FILE: string | null = null;
 export const NARRACAO_INICIO = 0;
 
@@ -50,9 +54,6 @@ export type Framing = {
   scale?: number;
   x?: number;
   y?: number;
-  // Fração do topo (0 a 1) que fica desfocada, para esconder objetos de outras
-  // marcas na prateleira do guarda-roupa (briefing: nenhum logo de outra marca).
-  blurTop?: number;
 };
 
 export type Segment = {
@@ -81,11 +82,9 @@ export type Segment = {
 // `src` = ponto do bruto (video.mp4) de onde o take começa. Pontos escolhidos
 // pelo contato do bruto de 18/10 (64 s): ver docs/hering-direcao.md.
 
-// Corpo inteiro em pé: um pouco menor e mais baixo, para a cabeça ficar abaixo
-// da faixa dos motions (de y 250 a ~560). O fundo vira cópia desfocada.
-const EM_PE: Framing = { scale: 0.88, y: 120 };
-// Guarda-roupa: topo desfocado para esconder objetos de outras marcas.
-const GUARDA: Framing = { blurTop: 0.36 };
+// Sem enquadramento especial por enquanto: os takes entram em tela cheia, sem
+// desfoque nem redução (o Marcos não gostou do desfoque). `framing` continua
+// disponível por trecho (zoom e deslocamento) se precisar.
 
 type Draft = Omit<Segment, "from" | "to"> & { dur: number };
 
@@ -93,7 +92,7 @@ const DRAFTS: Draft[] = [
   {
     id: "abertura",
     src: 0,
-    framing: GUARDA,
+
     kind: "abertura",
     dur: 3,
     pages: [],
@@ -103,7 +102,7 @@ const DRAFTS: Draft[] = [
     // não fui eu. Foi ela, a camiseta. Calça de alfaiataria."
     id: "g1",
     src: 6,
-    framing: GUARDA,
+
     kind: "guarda",
     dur: 5.2,
     pages: [
@@ -117,7 +116,7 @@ const DRAFTS: Draft[] = [
     // Em pé de calça bege, encosta na porta, ajeita a barra, olha para a lente.
     id: "e1",
     src: 20.6,
-    framing: EM_PE,
+
     kind: "espelho",
     dur: 5.2,
     pages: [
@@ -134,7 +133,7 @@ const DRAFTS: Draft[] = [
     // Volta ao guarda-roupa e troca a calça.
     id: "g2",
     src: 30,
-    framing: GUARDA,
+
     kind: "guarda",
     dur: 3.4,
     pages: [
@@ -147,7 +146,7 @@ const DRAFTS: Draft[] = [
     // De jogger azul-marinho, mãos nos bolsos, vira de lado.
     id: "e2",
     src: 36,
-    framing: EM_PE,
+
     kind: "espelho",
     dur: 3.4,
     pages: ["Olha esse caimento.", "Se ela se acha,", "eu entendo."],
@@ -167,7 +166,7 @@ const DRAFTS: Draft[] = [
     // Guarda-roupa de novo: troca para a bermuda.
     id: "g3",
     src: 42,
-    framing: GUARDA,
+
     kind: "guarda",
     dur: 3,
     pages: ["Aí decidiu: hora de treinar.", "Bermuda."],
@@ -176,7 +175,7 @@ const DRAFTS: Draft[] = [
     // De bermuda preta, parado e de perfil.
     id: "e3",
     src: 46.2,
-    framing: EM_PE,
+
     kind: "espelho",
     dur: 4.8,
     pages: [
@@ -191,7 +190,7 @@ const DRAFTS: Draft[] = [
   {
     id: "fecho",
     src: 14.5,
-    framing: EM_PE,
+
     kind: "fecho",
     dur: 6.5,
     pages: [

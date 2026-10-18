@@ -19,6 +19,7 @@ import {
   PALMAS_FILE,
   RISADA_FILES,
   HAS_VIDEO,
+  MOSTRAR_LEGENDA,
   NARRACAO_FILE,
   NARRACAO_INICIO,
   Segment,
@@ -113,16 +114,6 @@ const Take: React.FC<{ seg: Segment }> = ({ seg }) => {
   );
   return (
     <AbsoluteFill>
-      {scale < 1 ? (
-        <AbsoluteFill
-          style={{
-            transform: "scale(1.4)",
-            filter: "blur(40px) brightness(0.7)",
-          }}
-        >
-          {video()}
-        </AbsoluteFill>
-      ) : null}
       <AbsoluteFill
         style={{
           transform: `translate(${f.x ?? 0}px, ${f.y ?? 0}px) scale(${scale})`,
@@ -130,19 +121,6 @@ const Take: React.FC<{ seg: Segment }> = ({ seg }) => {
       >
         {video()}
       </AbsoluteFill>
-      {f.blurTop ? (
-        <AbsoluteFill
-          style={{
-            height: HEIGHT * f.blurTop,
-            backdropFilter: "blur(30px)",
-            WebkitBackdropFilter: "blur(30px)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 72%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to bottom, black 72%, transparent 100%)",
-          }}
-        />
-      ) : null}
     </AbsoluteFill>
   );
 };
@@ -265,22 +243,24 @@ export const HeringVideo: React.FC<HeringProps> = ({
         })}
 
         {/* Legenda da narração (padrão do perfil: uma linha, faixa preta 40%) */}
-        {SEGMENTS.flatMap((s) =>
-          pageRanges(s).map((page, i) => (
-            <Sequence
-              key={`leg-${s.id}-${i}`}
-              from={sec(page.from)}
-              durationInFrames={Math.max(6, sec(page.to - page.from))}
-              name={`legenda ${s.id} ${i + 1}`}
-            >
-              <Caption
-                parts={[{ text: page.text }]}
-                y={CAPTION_BOTTOM}
-                onPanel={false}
-              />
-            </Sequence>
-          )),
-        )}
+        {MOSTRAR_LEGENDA
+          ? SEGMENTS.flatMap((s) =>
+              pageRanges(s).map((page, i) => (
+                <Sequence
+                  key={`leg-${s.id}-${i}`}
+                  from={sec(page.from)}
+                  durationInFrames={Math.max(6, sec(page.to - page.from))}
+                  name={`legenda ${s.id} ${i + 1}`}
+                >
+                  <Caption
+                    parts={[{ text: page.text }]}
+                    y={CAPTION_BOTTOM}
+                    onPanel={false}
+                  />
+                </Sequence>
+              )),
+            )
+          : null}
 
         {/* Efeitos sonoros */}
         {SFX.map(([at, file, volume], i) => (
@@ -289,7 +269,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
           </Sequence>
         ))}
 
-        {/* Narração: a voz dela, gravada por último */}
+        {/* Narração do Marcos, gravada por último */}
         {NARRACAO_FILE ? (
           <Sequence from={sec(NARRACAO_INICIO)} layout="none">
             <Html5Audio src={staticFile(`hering/${NARRACAO_FILE}`)} />
