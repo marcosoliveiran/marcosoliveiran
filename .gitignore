@@ -6,3 +6,12 @@ build
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# Material de trabalho local (não vai para o Git)
+bruto/
+whisper.cpp/
+transcricao/*.wav
+*.MOV
+*.mov
+public/creep/fala.mp4
+public/creep/filtro.txt

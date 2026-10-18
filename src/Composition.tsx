@@ -2,6 +2,35 @@ import { Composition } from "remotion";
 import { Background } from "./Background";
 import { Scene } from "./Scene";
 import { TalkingHead } from "./TalkingHead";
+import {
+  CreepVideo,
+  CREEP_DURATION_IN_FRAMES,
+  CREEP_FPS,
+  CREEP_SIZE,
+} from "./creep/CreepVideo";
+import {
+  VoomCaptionOptions,
+  VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
+  VOOM_CAPTION_OPTIONS_SIZE,
+} from "./VoomCaptionOptions";
+import {
+  VoomBase,
+  VOOM_BASE_DURATION_IN_FRAMES,
+  VOOM_BASE_FPS,
+  VOOM_BASE_SIZE,
+} from "./VoomBase";
+import {
+  InnovaVideo,
+  INNOVA_VIDEO_DURATION_IN_FRAMES,
+  INNOVA_VIDEO_FPS,
+  INNOVA_VIDEO_SIZE,
+} from "./InnovaVideo";
+import {
+  UGCVideo,
+  UGC_VIDEO_DURATION_IN_FRAMES,
+  UGC_VIDEO_FPS,
+  UGC_VIDEO_SIZE,
+} from "./UGCVideo";
 
 const FPS = 30;
 const DURATION_IN_SECONDS = 10;
@@ -82,6 +111,48 @@ export const TalkingHeadComposition = () => {
         width={STORY_WIDTH}
         height={STORY_HEIGHT}
         defaultProps={{ characterFolder: "faces", seed: "talking-head" }}
+      />
+      <Composition
+        id="UGC-30s"
+        component={UGCVideo}
+        durationInFrames={UGC_VIDEO_DURATION_IN_FRAMES}
+        fps={UGC_VIDEO_FPS}
+        width={UGC_VIDEO_SIZE.width}
+        height={UGC_VIDEO_SIZE.height}
+        defaultProps={{ characterFolder: "faces-marcos", seed: "ugc" }}
+      />
+      <Composition
+        id="Innova-Reels"
+        component={InnovaVideo}
+        durationInFrames={INNOVA_VIDEO_DURATION_IN_FRAMES}
+        fps={INNOVA_VIDEO_FPS}
+        width={INNOVA_VIDEO_SIZE.width}
+        height={INNOVA_VIDEO_SIZE.height}
+        defaultProps={{}}
+      />
+      <Composition
+        id="Voom-Base"
+        component={VoomBase}
+        durationInFrames={VOOM_BASE_DURATION_IN_FRAMES}
+        fps={VOOM_BASE_FPS}
+        width={VOOM_BASE_SIZE.width}
+        height={VOOM_BASE_SIZE.height}
+      />
+      <Composition
+        id="Voom-Legendas"
+        component={VoomCaptionOptions}
+        durationInFrames={VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES}
+        fps={VOOM_BASE_FPS}
+        width={VOOM_CAPTION_OPTIONS_SIZE.width}
+        height={VOOM_CAPTION_OPTIONS_SIZE.height}
+      />
+      <Composition
+        id="Creep"
+        component={CreepVideo}
+        durationInFrames={CREEP_DURATION_IN_FRAMES}
+        fps={CREEP_FPS}
+        width={CREEP_SIZE.width}
+        height={CREEP_SIZE.height}
       />
     </>
   );

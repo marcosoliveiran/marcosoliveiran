@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "4.0.525",
+    "@remotion/install-whisper-cpp": "4.0.525",
     "@types/react": "19.2.7",
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
@@ -25,7 +26,14 @@
     "dev": "remotion studio",
     "build": "remotion bundle",
     "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "lint": "eslint src && tsc",
+    "transcrever": "node tools/transcrever.mjs",
+    "silencios": "node tools/silencios.mjs",
+    "compactar": "node tools/compactar.mjs",
+    "cortar": "node tools/cortar.mjs",
+    "quadros": "node tools/quadros.mjs",
+    "previa": "remotion render Creep out/creep-previa.mp4 --scale=0.4 --crf=30",
+    "render:creep": "remotion render Creep out/creep.mp4 --codec=h264 --crf=18"
   },
   "sideEffects": [
     "*.css"
