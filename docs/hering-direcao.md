@@ -145,3 +145,16 @@ Para usar no PC do Marcos:
 3. Risada e palmas: colocar `palmas.wav` e `risada.wav` em `public/sfx/` e
    ligar `HAS_PALMAS` / `HAS_RISADA`.
 4. `npm run previa:hering` (rápido) e `npm run render:hering` (final).
+
+## Referência de sitcom (enviada pelo Marcos)
+
+Print de tela de um TikTok em formato de sitcom: abertura com **título grande
+em script retrô e número do episódio pequeno embaixo**, sobre uma tomada de
+"estabelecimento" (fachada do prédio à noite), seguida de cortes entre os
+personagens. Adaptado aqui: título em Lobster (OFL, `public/fonts`) com relevo
+em azul Hering e "EPISÓDIO 01 · O GUARDA-ROUPA". Sem copiar nome, logo ou
+cartela do original. A referência usa gradação quente de cinema: **não aplicar**
+(briefing proíbe filtro/edição excessiva).
+
+Sugestão de gravação: uma tomada de estabelecimento de ~2 s (fachada, janela ou
+porta do quarto, sem logo) antes do guarda-roupa, para a cartela entrar em cima.

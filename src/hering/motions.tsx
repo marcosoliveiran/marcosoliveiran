@@ -1,12 +1,7 @@
 import { CSSProperties } from "react";
-import {
-  interpolate,
-  spring,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
+import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { SAFE } from "../kit";
-import { HERING } from "../themes/hering";
+import { HERING, HERING_SCRIPT_FONT } from "../themes/hering";
 import { VOOM_TEXT_FONT, VOOM_TITLE_FONT } from "../themes/voom";
 
 // Motions da publi Hering. Sem painel de fundo: cada recurso é pequeno,
@@ -189,7 +184,9 @@ export const Preco: React.FC = () => {
       >
         R$ 49,99
       </div>
-      <div style={{ opacity: sub, transform: `translateY(${(1 - sub) * 20}px)` }}>
+      <div
+        style={{ opacity: sub, transform: `translateY(${(1 - sub) * 20}px)` }}
+      >
         <Pill text="custo-benefício" delay={16} size={46} />
       </div>
     </Column>
@@ -221,62 +218,64 @@ export const SeloCta: React.FC = () => {
   );
 };
 
-// Cartela da abertura: "Episódio 1 · A síndrome de protagonista".
+// Cartela da abertura, no clima de abertura de sitcom: título grande em
+// script retrô, com relevo, e o número do episódio pequeno embaixo. Entra
+// sobre a primeira cena (de preferência uma tomada de "estabelecimento").
 export const CartelaEpisodio: React.FC = () => {
   const frame = useCurrentFrame();
   const { durationInFrames } = useVideoConfig();
-  const kicker = useIn(2);
-  const title = useIn(8);
+  const title = useIn(4);
+  const sub = useIn(16);
   const out = interpolate(
     frame,
     [durationInFrames - 8, durationInFrames],
     [1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
+  const relief = [1, 2, 3, 4, 5, 6]
+    .map((n) => `${n}px ${n * 1.4}px 0 ${HERING.navy}`)
+    .join(", ");
   return (
     <div
       style={{
         position: "absolute",
         left: CENTER_X - 440,
         width: 880,
-        top: 640,
+        top: 560,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 28,
+        gap: 64,
         opacity: out,
       }}
     >
       <div
         style={{
-          transform: `scale(${kicker})`,
-          padding: "8px 34px 12px",
-          borderRadius: 999,
-          backgroundColor: HERING.blue,
-          color: HERING.white,
-          fontFamily: VOOM_TITLE_FONT,
-          fontWeight: 700,
-          fontSize: 54,
-          letterSpacing: 4,
-          boxShadow: SHADOW,
-        }}
-      >
-        EPISÓDIO 1
-      </div>
-      <div
-        style={{
-          transform: `translateY(${(1 - title) * 60}px) scale(${0.9 + 0.1 * title})`,
+          transform: `translateY(${(1 - title) * 70}px) scale(${0.85 + 0.15 * title}) rotate(-4deg)`,
           opacity: Math.min(1, title * 2),
-          color: HERING.white,
-          fontFamily: VOOM_TITLE_FONT,
-          fontWeight: 700,
-          fontSize: 132,
-          lineHeight: 1.02,
+          color: "#FFF8EC",
+          fontFamily: HERING_SCRIPT_FONT,
+          fontSize: 168,
+          lineHeight: 0.98,
           textAlign: "center",
-          textShadow: "0 10px 34px rgba(10, 20, 40, 0.7)",
+          textShadow: `${relief}, 0 24px 40px rgba(10, 20, 40, 0.6)`,
         }}
       >
         A síndrome de protagonista
+      </div>
+      <div
+        style={{
+          opacity: sub,
+          transform: `translateY(${(1 - sub) * 24}px)`,
+          color: HERING.white,
+          fontFamily: VOOM_TEXT_FONT,
+          fontWeight: 900,
+          fontSize: 34,
+          letterSpacing: 8,
+          textShadow: "0 4px 16px rgba(10, 20, 40, 0.8)",
+        }}
+      >
+        EPISÓDIO 01 · O GUARDA-ROUPA
       </div>
     </div>
   );
