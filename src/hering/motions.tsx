@@ -172,7 +172,11 @@ const QUERY = "síndrome de protagonista";
 
 export const DefinicaoBusca: React.FC = () => {
   const { t, ramp, pop, out } = useClock();
-  const typed = QUERY.slice(0, Math.floor(ramp(0.14, 1.75) * QUERY.length));
+  // Digitação linear (uma letra a cada 67 ms) para os toques de tecla baterem.
+  const typed = QUERY.slice(
+    0,
+    Math.floor(Math.min(1, Math.max(0, (t - 0.14) / 1.61)) * QUERY.length),
+  );
   const cursor = t < 2.4 && Math.floor(t * 2.4) % 2 === 0;
   const bar = pop(0);
   const card = pop(1.95);

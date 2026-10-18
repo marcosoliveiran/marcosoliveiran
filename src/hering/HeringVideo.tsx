@@ -55,11 +55,42 @@ const MOTIONS: Record<
   cta: { node: <M.SeloCta /> },
 };
 
-// Efeitos sonoros: [segundos, arquivo em public/sfx, volume].
-const SFX: [number, string, number][] = [
-  [segmentById("cartela").from + 0.1, "impact.wav", 0.6],
-  [segmentById("f1").from + 0.1, "pop.wav", 0.5],
-  [segmentById("cta").from, "whoosh.wav", 0.4],
+// Efeitos sonoros: [segundos, arquivo em public/sfx, volume]. Cada um cai no
+// momento de um motion; a cartela "Marcos & Hering" fica sem som.
+type Sfx = [number, string, number];
+const at = (id: string, rel: number) => segmentById(id).from + rel;
+
+const SFX: Sfx[] = [
+  // Busca digitando "síndrome de protagonista" (24 letras) e o cartão abrindo.
+  ...Array.from(
+    { length: 24 },
+    (_, i): Sfx => [at("def", 0.14 + (i * 1.61) / 24), "h-tecla.wav", 0.22],
+  ),
+  [at("def", 1.95), "h-suave.wav", 0.3],
+  // O nome "Camiseta Brasil" aparecendo.
+  [at("e1", 3.65), "h-nome.wav", 0.3],
+  // A camiseta fixa e as trocas de peça.
+  [at("m1", 0.1), "h-suave.wav", 0.25],
+  [at("m2", 0), "h-suave.wav", 0.3],
+  [at("m1", 3.3), "h-ping.wav", 0.28],
+  [at("m1", 4.95), "h-ping.wav", 0.2],
+  [at("m1", 5.25), "h-ping.wav", 0.2],
+  [at("m1", 5.55), "h-ping.wav", 0.2],
+  // Os três diferenciais e a gola esticando.
+  [at("gola", 0.25), "h-ping.wav", 0.3],
+  [at("gola", 1.5), "h-ping.wav", 0.3],
+  [at("gola", 2.75), "h-ping.wav", 0.3],
+  [at("gola", 3.0), "h-esticar.wav", 0.22],
+  // O preço: cartão, contagem, ping final e a claquete fechando.
+  [at("f1", 0.9), "h-suave.wav", 0.3],
+  ...Array.from(
+    { length: 14 },
+    (_, i): Sfx => [at("f1", 1.15 + i * 0.09), "h-tecla.wav", 0.2],
+  ),
+  [at("f1", 2.4), "h-ping.wav", 0.32],
+  [at("f1", 3.7), "h-claquete.wav", 0.4],
+  // O nome do produto no final.
+  [at("cta", 0.1), "h-nome.wav", 0.28],
 ];
 
 // Placeholder do vídeo: camiseta branca num fundo escuro, só para conferir
