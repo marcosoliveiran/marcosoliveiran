@@ -125,32 +125,40 @@ const DRAFTS: Draft[] = [
       "tem que ser sobre ela.",
     ],
   },
-  // Close no rosto olhando para a lente (silêncio).
-  { id: "r1", src: 27.4, kind: "reacao", dur: 1, pages: [] },
+  // Depois de "tem que ser sobre ela": silêncio. Ele encosta na parede com a
+  // mão na cabeça (pose dramática) e olha para a lente em close (bruto 24–28,7 s).
+  { id: "beat", src: 24.2, kind: "reacao", dur: 4.5, pages: [] },
+  // BLOCO 3 (texto do Marcos): "Posso mudar a calça, combinar com bermuda, mas
+  // ela nunca sai de cena. O básico que funciona com tudo!" A frase passa pelas
+  // duas trocas de look; cada pedaço cai no look que ele cita.
   {
-    // Volta ao guarda-roupa e troca a calça.
-    id: "g2",
-    src: 30,
-
-    kind: "guarda",
-    dur: 3.4,
-    pages: [
-      "Cinco minutos depois,",
-      "ela quis trocar.",
-      "Agora, calça jogger.",
-    ],
-  },
-  {
-    // De jogger azul-marinho, mãos nos bolsos, vira de lado.
-    id: "e2",
-    src: 36,
-
+    id: "m1", // jogger azul-marinho
+    src: 34.2,
     kind: "espelho",
-    dur: 3.4,
-    pages: ["Olha esse caimento.", "Se ela se acha,", "eu entendo."],
+    dur: 2.2,
+    pages: ["Posso mudar a calça,"],
   },
-  // De perfil, sorrindo para a lente.
-  { id: "r2", src: 39.6, kind: "reacao", dur: 1, pages: [] },
+  {
+    id: "m2", // trocando para a bermuda
+    src: 44.4,
+    kind: "guarda",
+    dur: 2,
+    pages: ["combinar com bermuda,"],
+  },
+  {
+    id: "m3", // de bermuda, de perfil
+    src: 46.6,
+    kind: "espelho",
+    dur: 2.4,
+    pages: ["mas ela nunca", "sai de cena."],
+  },
+  {
+    id: "m4", // abre os braços para a lente
+    src: 49.4,
+    kind: "espelho",
+    dur: 2.6,
+    pages: ["O básico que funciona", "com tudo!"],
+  },
   {
     // Insert do close na gola (52–55 s do bruto). Depois de 55 s a etiqueta
     // aparece: nunca usar.
@@ -160,31 +168,6 @@ const DRAFTS: Draft[] = [
     dur: 3,
     pages: ["A gola? Puxo, estico", "e ela não deforma."],
   },
-  {
-    // Guarda-roupa de novo: troca para a bermuda.
-    id: "g3",
-    src: 42,
-
-    kind: "guarda",
-    dur: 3,
-    pages: ["Aí decidiu: hora de treinar.", "Bermuda."],
-  },
-  {
-    // De bermuda preta, parado e de perfil.
-    id: "e3",
-    src: 46.2,
-
-    kind: "espelho",
-    dur: 4.8,
-    pages: [
-      "Cem por cento algodão",
-      "e zero transparência.",
-      "Pode suar:",
-      "ela não entrega nada.",
-    ],
-  },
-  // Abre os braços olhando para a lente.
-  { id: "r3", src: 51, kind: "reacao", dur: 1, pages: [] },
   {
     id: "fecho",
     src: 14.5,

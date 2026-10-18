@@ -1,5 +1,11 @@
 import { CSSProperties } from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import {
+  Sequence,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { SAFE } from "../kit";
 import { HERING, HERING_SCRIPT_FONT } from "../themes/hering";
 import { VOOM_TEXT_FONT, VOOM_TITLE_FONT } from "../themes/voom";
@@ -160,6 +166,35 @@ export const NomeProduto: React.FC = () => (
     <Note text="da Hering" delay={10} />
   </Column>
 );
+
+// blocos 3: a camiseta fica fixa no topo e só a peça de baixo muda, como na fala
+// "posso mudar a calça, combinar com bermuda, mas ela nunca sai de cena".
+// `items.at` = segundos desde o início do motion.
+export const LookTicker: React.FC<{
+  items: { text: string; at: number; until: number }[];
+}> = ({ items }) => {
+  const { fps } = useVideoConfig();
+  return (
+    <Column>
+      <Pill text="CAMISETA BRASIL" delay={2} strong />
+      <div style={{ display: "flex", justifyContent: "center", minHeight: 76 }}>
+        {items.map((item) => (
+          <Sequence
+            key={item.text}
+            from={Math.round(item.at * fps)}
+            durationInFrames={Math.max(
+              1,
+              Math.round((item.until - item.at) * fps),
+            )}
+            layout="none"
+          >
+            <Pill text={item.text} delay={2} />
+          </Sequence>
+        ))}
+      </div>
+    </Column>
+  );
+};
 
 // insert · close na gola
 export const Gola: React.FC = () => (

@@ -41,12 +41,32 @@ const CAPTION_BOTTOM = 1440;
 const sec = (s: number) => Math.round(s * FPS);
 
 // Motions por trecho (id do trecho em SEGMENTS).
-const MOTIONS: Record<string, { node: ReactNode; offset?: number }> = {
+const MOTIONS: Record<
+  string,
+  { node: ReactNode; offset?: number; until?: string }
+> = {
   cartela: { node: <M.CartelaEpisodio /> },
   e1: { node: <M.NomeProduto />, offset: 4.4 },
   gola: { node: <M.Gola /> },
-  e2: { node: <M.Caimento /> },
-  e3: { node: <M.AlgodaoOpaca /> },
+  m1: {
+    node: (
+      <M.LookTicker
+        items={[
+          {
+            text: "JOGGER",
+            at: 0,
+            until: segmentById("m2").from - segmentById("m1").from,
+          },
+          {
+            text: "BERMUDA",
+            at: segmentById("m2").from - segmentById("m1").from,
+            until: segmentById("m4").to - segmentById("m1").from,
+          },
+        ]}
+      />
+    ),
+    until: "m4",
+  },
   fecho: { node: <M.Preco /> },
   cta: { node: <M.SeloCta /> },
 };
@@ -54,11 +74,6 @@ const MOTIONS: Record<string, { node: ReactNode; offset?: number }> = {
 // Efeitos sonoros: [segundos, arquivo em public/sfx, volume].
 const SFX: [number, string, number][] = [
   [segmentById("cartela").from + 0.1, "impact.wav", 0.6],
-  [segmentById("e1").from, "ding.wav", 0.35],
-  [segmentById("g2").from, "whoosh.wav", HAS_VINHETA ? 0.15 : 0.4],
-  [segmentById("e2").from, "ding.wav", 0.35],
-  [segmentById("g3").from, "whoosh.wav", HAS_VINHETA ? 0.15 : 0.4],
-  [segmentById("e3").from, "ding.wav", 0.35],
   [segmentById("fecho").from + 0.1, "pop.wav", 0.5],
   [segmentById("cta").from, "whoosh.wav", 0.4],
 ];
@@ -130,9 +145,12 @@ const Take: React.FC<{ seg: Segment }> = ({ seg }) => {
 const TopScrim: React.FC = () => {
   const frame = useCurrentFrame();
   const t = frame / FPS;
-  const ranges = Object.keys(MOTIONS).map((id) => {
+  const ranges = Object.entries(MOTIONS).map(([id, motion]) => {
     const s = segmentById(id);
-    return [s.from, s.to] as const;
+    return [
+      s.from + (motion.offset ?? 0),
+      segmentById(motion.until ?? id).to,
+    ] as const;
   });
   const opacity = Math.max(
     ...ranges.map(([from, to]) =>
@@ -241,7 +259,11 @@ export const HeringVideo: React.FC<HeringProps> = ({
               from={sec(s.from + (motion.offset ?? 0))}
               durationInFrames={Math.max(
                 8,
-                sec(s.to - s.from - (motion.offset ?? 0)),
+                sec(
+                  segmentById(motion.until ?? id).to -
+                    s.from -
+                    (motion.offset ?? 0),
+                ),
               )}
               name={`motion ${id}`}
             >
@@ -298,7 +320,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
                 volume={() => 0.4}
               />
             </Sequence>
-            {["g2", "g3"].map((id) => (
+            {["m1", "m2"].map((id) => (
               <Sequence
                 key={`vinheta-${id}`}
                 from={sec(segmentById(id).from - 0.1)}
