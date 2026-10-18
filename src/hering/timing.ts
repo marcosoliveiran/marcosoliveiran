@@ -11,16 +11,16 @@ export const HAS_VIDEO = false;
 
 // Efeitos de sitcom (do CapCut ou banco livre de uso comercial). Coloque em
 // public/sfx/ e mude para true. Volume sempre abaixo da fala (briefing).
-// vinheta.wav, vinheta-curta.wav e palmas.wav são sintetizados por
-// tools/make-vinheta.py (sem direitos autorais). Risada não: tem que ser do
-// CapCut/banco livre.
+// vinheta.wav e vinheta-curta.wav são sintetizadas por tools/make-vinheta.py.
 export const HAS_VINHETA = true; // public/sfx/vinheta*.wav
-export const HAS_PALMAS = true; // public/sfx/palmas.wav
-export const HAS_RISADA = false; // public/sfx/risada.wav
 
-// Gradação quente de cinema (teste pedido pelo Marcos). "off" = cor natural.
-// O briefing proíbe filtro/edição excessiva e a camiseta tem que seguir
-// branca: conferir o branco no frame real e comparar com "off" antes de postar.
+// Palmas e risada têm que ser arquivos REAIS (sintético soa falso): do CapCut
+// ou de banco livre de uso comercial, salvos em public/sfx/. Lista vazia =
+// desligado. Várias risadas: o código alterna entre elas a cada fala, para
+// não repetir. Se o Marcos colocar palmas/risada no CapCut, deixar vazio aqui.
+export const PALMAS_FILE: string | null = null; // ex.: "palmas.wav"
+export const RISADA_FILES: string[] = []; // ex.: ["risada-1.wav", "risada-2.wav"]
+
 export type Grade = "off" | "leve" | "cinema";
 export const DEFAULT_GRADE: Grade = "leve";
 

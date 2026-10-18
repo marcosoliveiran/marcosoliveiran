@@ -16,9 +16,9 @@ import {
   DEFAULT_GRADE,
   FPS,
   Grade,
-  HAS_PALMAS,
-  HAS_RISADA,
   HAS_VINHETA,
+  PALMAS_FILE,
+  RISADA_FILES,
   HAS_VIDEO,
   SEGMENTS,
   TOTAL_FRAMES,
@@ -268,25 +268,27 @@ export const HeringVideo: React.FC<HeringProps> = ({
             ))}
           </>
         ) : null}
-        {HAS_PALMAS ? (
+        {PALMAS_FILE ? (
           <Sequence from={sec(0.2)} layout="none">
             <Html5Audio
-              src={staticFile("sfx/palmas.wav")}
+              src={staticFile(`sfx/${PALMAS_FILE}`)}
               volume={() => 0.35}
             />
           </Sequence>
         ) : null}
-        {HAS_RISADA
+        {RISADA_FILES.length > 0
           ? SEGMENTS.filter(
-              (s) => s.who === "ela" && s.kind !== "abertura",
-            ).map((s) => (
+              (s) => s.kind === "espelho" || s.kind === "fecho",
+            ).map((s, i) => (
               <Sequence
                 key={`risada-${s.id}`}
                 from={sec(s.to - 0.3)}
                 layout="none"
               >
                 <Html5Audio
-                  src={staticFile("sfx/risada.wav")}
+                  src={staticFile(
+                    `sfx/${RISADA_FILES[i % RISADA_FILES.length]}`,
+                  )}
                   volume={() => 0.25}
                 />
               </Sequence>

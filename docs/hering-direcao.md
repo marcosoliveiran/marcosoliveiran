@@ -142,8 +142,10 @@ Para usar no PC do Marcos:
 2. Em `src/hering/timing.ts`: `HAS_VIDEO = true`; ajustar `from`/`to` de cada
    trecho pelos tempos reais (`npm run transcrever` ajuda); ajustar a posição
    da boca (`PEITO`) e a seta da gola (`target` em `motions.tsx`) vendo o frame.
-3. Risada e palmas: colocar `palmas.wav` e `risada.wav` em `public/sfx/` e
-   ligar `HAS_PALMAS` / `HAS_RISADA`.
+3. Risada e palmas: **arquivos reais** (as palmas sintéticas ficaram com cara de
+   chiado e foram removidas). Colocar em `public/sfx/` e preencher
+   `PALMAS_FILE` / `RISADA_FILES` em `timing.ts`; ou, mais simples, colocar
+   direto no CapCut e deixar vazio.
 4. `npm run previa:hering` (rápido) e `npm run render:hering` (final).
 
 ## Referência de sitcom (enviada pelo Marcos)
@@ -203,6 +205,7 @@ Aplicação na publi Hering:
   look (g2 e g3), como as vinhetas de troca de cena da referência.
 - Pausa de ~0,4–0,8 s depois da fala dela, antes da próxima fala, para a
   reação e para a risada (se houver).
-- Vinheta, palmas e vinheta curta foram sintetizadas em `tools/make-vinheta.py`.
-  Risada de plateia: usar arquivo do CapCut/banco livre (`public/sfx/risada.wav`
-  e `HAS_RISADA = true`).
+- As duas vinhetas foram sintetizadas em `tools/make-vinheta.py`. Palmas e
+  risada de plateia: arquivos reais (a referência tem risada; o Marcos ouviu).
+  A risada entra depois das falas dela **no espelho e no fecho** (as piadas),
+  não depois das de guarda-roupa (as deixas).

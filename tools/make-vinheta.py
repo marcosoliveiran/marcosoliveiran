@@ -1,14 +1,13 @@
-"""Gera a vinheta de sitcom e as palmas da publi Hering em public/sfx (WAV,
+"""Gera as vinhetas de sitcom da publi Hering em public/sfx (WAV,
 44,1 kHz, mono, 16 bits). Tudo sintetizado do zero, sem direitos autorais.
 
 Uso: python3 tools/make-vinheta.py      (precisa de numpy)
 
   vinheta.wav        ~2,3 s, melodia alegre tipo marimba (abertura da "série")
   vinheta-curta.wav  ~0,9 s, passagem entre cenas
-  palmas.wav         ~3,2 s, aplausos de plateia
 
-Risada de plateia não é gerada aqui (sintética soa falsa): usar arquivo do
-CapCut ou de banco livre de uso comercial e salvar como risada.wav.
+Palmas e risada de plateia não são geradas aqui (sintético soa falso, testado):
+usar arquivos reais do CapCut ou de banco livre de uso comercial.
 """
 import wave
 from pathlib import Path
@@ -77,32 +76,6 @@ def vinheta_curta():
     finish(buf, "vinheta-curta.wav")
 
 
-def palmas():
-    seconds = 3.2
-    n = int(SR * seconds)
-    buf = np.zeros(n)
-    t = np.arange(n) / SR
-    density = 900 * np.minimum(1, t / 0.25) * np.exp(-np.maximum(0, t - 1.6) * 1.1)
-    hits = RNG.random(n) < density / SR
-    idx = np.nonzero(hits)[0]
-    for i in idx:
-        length = int(SR * RNG.uniform(0.004, 0.012))
-        burst = RNG.standard_normal(length) * np.exp(-np.arange(length) / (length / 4))
-        amp = RNG.uniform(0.3, 1.0)
-        end = min(n, i + length)
-        buf[i:end] += amp * burst[: end - i]
-    # tira o grave e o chiado agudo: fica só o "palmas"
-    low = np.zeros_like(buf)
-    acc = 0.0
-    a = 1 - np.exp(-2 * np.pi * 400 / SR)
-    for i, v in enumerate(buf):
-        acc += a * (v - acc)
-        low[i] = acc
-    buf = buf - low
-    finish(buf, "palmas.wav")
-
-
 if __name__ == "__main__":
     vinheta()
     vinheta_curta()
-    palmas()
