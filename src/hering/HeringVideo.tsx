@@ -47,7 +47,7 @@ const MOTIONS: Record<
 > = {
   cartela: { node: <M.CartelaEpisodio /> },
   e1: { node: <M.NomeProduto />, offset: 4.4 },
-  gola: { node: <M.Gola /> },
+  gola: { node: <M.Diferenciais /> },
   m1: {
     node: (
       <M.LookTicker
@@ -67,14 +67,14 @@ const MOTIONS: Record<
     ),
     until: "m4",
   },
-  fecho: { node: <M.Preco /> },
+  f1: { node: <M.Preco />, until: "f2" },
   cta: { node: <M.SeloCta /> },
 };
 
 // Efeitos sonoros: [segundos, arquivo em public/sfx, volume].
 const SFX: [number, string, number][] = [
   [segmentById("cartela").from + 0.1, "impact.wav", 0.6],
-  [segmentById("fecho").from + 0.1, "pop.wav", 0.5],
+  [segmentById("f1").from + 0.1, "pop.wav", 0.5],
   [segmentById("cta").from, "whoosh.wav", 0.4],
 ];
 
@@ -122,6 +122,7 @@ const Take: React.FC<{ seg: Segment }> = ({ seg }) => {
     <OffthreadVideo
       src={staticFile("hering/video.mp4")}
       startFrom={sec(seg.src ?? 0)}
+      playbackRate={seg.rate ?? 1}
       volume={seg.keepAudio ? 1 : 0}
       muted={!seg.keepAudio}
       style={{ width: WIDTH, height: HEIGHT, objectFit: "cover", ...extra }}
@@ -343,14 +344,15 @@ export const HeringVideo: React.FC<HeringProps> = ({
           </Sequence>
         ) : null}
         {RISADA_FILES.length > 0
-          ? SEGMENTS.filter(
-              (s) => s.kind === "espelho" || s.kind === "fecho",
-            ).map((s, i) => (
-              <Sequence
-                key={`risada-${s.id}`}
-                from={sec(s.to - 0.3)}
-                layout="none"
-              >
+          ? // Risada nas piadas: depois de "tem que ser sobre ela" (o silêncio
+            // "beat") e no fim de "protagonista por preço de coadjuvante".
+            (
+              [
+                ["beat", segmentById("beat").from + 0.1],
+                ["f2", segmentById("f2").to - 0.3],
+              ] as const
+            ).map(([id, at], i) => (
+              <Sequence key={`risada-${id}`} from={sec(at)} layout="none">
                 <Html5Audio
                   src={staticFile(
                     `sfx/${RISADA_FILES[i % RISADA_FILES.length]}`,

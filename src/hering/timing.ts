@@ -66,6 +66,8 @@ export type Segment = {
   framing?: Framing;
   // Só o CTA: usa o áudio original do vídeo (os outros são mudos).
   keepAudio?: boolean;
+  // Velocidade do take (1 = normal). Menos que 1 estica o trecho do bruto.
+  rate?: number;
   // Páginas da legenda: linha única, até ~28 letras cada.
   pages: string[];
 };
@@ -160,30 +162,32 @@ const DRAFTS: Draft[] = [
     pages: ["O básico que funciona", "com tudo!"],
   },
   {
-    // Insert do close na gola (52–55 s do bruto). Depois de 55 s a etiqueta
-    // aparece: nunca usar.
+    // BLOCO 4 (texto do Marcos): "100% algodão, não fica transparente e a gola
+    // não deforma." Close na gola (bruto 52–55 s, a 0,85x para durar 3,5 s).
+    // Depois de 55,4 s a etiqueta aparece: nunca usar.
     id: "gola",
     src: 52,
+    rate: 0.85,
     kind: "insert",
-    dur: 3,
-    pages: ["A gola? Puxo, estico", "e ela não deforma."],
+    dur: 3.5,
+    pages: ["100% algodão,", "não fica transparente", "e a gola não deforma."],
   },
   {
-    id: "fecho",
-    src: 14.5,
-
+    // BLOCO 5 (texto do Marcos): o preço. ATENÇÃO: o preço do briefing é
+    // R$ 49,99 (o texto original dizia 49,90).
+    id: "f1", // jogger, mãos nos bolsos
+    src: 36.4,
     kind: "fecho",
-    dur: 6.5,
-    pages: [
-      "Tudo isso por",
-      "quarenta e nove",
-      "e noventa e nove.",
-      "Pra quem tem síndrome",
-      "de protagonista,",
-      "é até barato.",
-    ],
+    dur: 3.2,
+    pages: ["E o melhor:", "R$ 49,99!"],
   },
-  { id: "r4", src: 28.4, kind: "reacao", dur: 1, pages: [] },
+  {
+    id: "f2", // de perfil, sorrindo para a lente
+    src: 39.9,
+    kind: "fecho",
+    dur: 2.4,
+    pages: ["Protagonista por preço", "de coadjuvante."],
+  },
   {
     // Único trecho falando ao vivo, com a sacola da Hering (áudio original).
     id: "cta",

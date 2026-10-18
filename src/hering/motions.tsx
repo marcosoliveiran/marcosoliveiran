@@ -196,6 +196,15 @@ export const LookTicker: React.FC<{
   );
 };
 
+// bloco 4 · os três diferenciais, na ordem em que o Marcos fala
+export const Diferenciais: React.FC = () => (
+  <Column>
+    <Pill text="100% ALGODÃO" delay={2} />
+    <Pill text="NÃO FICA TRANSPARENTE" delay={34} size={52} />
+    <Pill text="GOLA QUE NÃO DEFORMA" delay={68} strong size={52} />
+  </Column>
+);
+
 // insert · close na gola
 export const Gola: React.FC = () => (
   <Column>
