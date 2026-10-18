@@ -42,7 +42,7 @@ const sec = (s: number) => Math.round(s * FPS);
 
 // Motions por trecho (id do trecho em SEGMENTS).
 const MOTIONS: Record<string, { node: ReactNode; extra?: number }> = {
-  abertura: { node: <M.CartelaEpisodio /> },
+  cartela: { node: <M.CartelaEpisodio /> },
   e1: { node: <M.MantemACor /> },
   gola: { node: <M.Gola /> },
   e2: { node: <M.Caimento /> },
@@ -53,7 +53,7 @@ const MOTIONS: Record<string, { node: ReactNode; extra?: number }> = {
 
 // Efeitos sonoros: [segundos, arquivo em public/sfx, volume].
 const SFX: [number, string, number][] = [
-  [0.1, "impact.wav", 0.6],
+  [segmentById("cartela").from + 0.1, "impact.wav", 0.6],
   [segmentById("e1").from, "ding.wav", 0.35],
   [segmentById("g2").from, "whoosh.wav", HAS_VINHETA ? 0.15 : 0.4],
   [segmentById("e2").from, "ding.wav", 0.35],
@@ -224,7 +224,12 @@ export const HeringVideo: React.FC<HeringProps> = ({
         <TopScrim />
 
         {/* Abertura: o fundo escurece um pouco para a cartela ler */}
-        <Sequence durationInFrames={sec(segmentById("abertura").to)}>
+        <Sequence
+          from={sec(segmentById("cartela").from)}
+          durationInFrames={sec(
+            segmentById("cartela").to - segmentById("cartela").from,
+          )}
+        >
           <AbsoluteFill style={{ backgroundColor: "rgba(22,38,63,0.55)" }} />
         </Sequence>
 
@@ -281,7 +286,10 @@ export const HeringVideo: React.FC<HeringProps> = ({
             risada ao fim de cada fala dela */}
         {HAS_VINHETA ? (
           <>
-            <Sequence from={sec(0.1)} layout="none">
+            <Sequence
+              from={sec(segmentById("cartela").from + 0.1)}
+              layout="none"
+            >
               <Html5Audio
                 src={staticFile("sfx/vinheta.wav")}
                 volume={() => 0.4}

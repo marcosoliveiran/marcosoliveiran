@@ -90,28 +90,24 @@ type Draft = Omit<Segment, "from" | "to"> & { dur: number };
 
 const DRAFTS: Draft[] = [
   {
-    id: "abertura",
+    // BLOCO 1 (texto do Marcos): ele define a síndrome de protagonista, em voz
+    // off, sobre o guarda-roupa abrindo e a escolha da primeira calça (bruto
+    // 0–11,5 s). Ritmo calmo, tom sério, pausa depois de "protagonista".
+    id: "def",
     src: 0,
-
-    kind: "abertura",
-    dur: 3,
-    pages: [],
-  },
-  {
-    // Ele pega a calça (bege) no cabide. Fala: "Hoje, quem escolheu o meu look
-    // não fui eu. Foi ela, a camiseta. Calça de alfaiataria."
-    id: "g1",
-    src: 6,
-
     kind: "guarda",
-    dur: 5.2,
+    dur: 11.5,
     pages: [
-      "Hoje, quem escolheu",
-      "o meu look não fui eu.",
-      "Foi ela, a camiseta.",
-      "Calça de alfaiataria.",
+      "Síndrome de protagonista.",
+      "Condição da pessoa que acredita",
+      "que é o centro de todas as cenas,",
+      "que a vida é um filme",
+      "e que ela é o personagem principal.",
     ],
   },
+  // Cartela depois da definição: "Marcos & Hering · Episódio 1 · A síndrome de
+  // protagonista" (a definição prepara o título). Sobre a calça levantada.
+  { id: "cartela", src: 11.5, kind: "abertura", dur: 3, pages: [] },
   {
     // Em pé de calça bege, encosta na porta, ajeita a barra, olha para a lente.
     id: "e1",
