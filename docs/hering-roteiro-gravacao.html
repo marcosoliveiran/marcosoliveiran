@@ -1,0 +1,399 @@
+<title>Roteiro Marcos & Hering</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Layout: ficha de set, uma coluna no celular. Cada take é um cartão com a
+     ação, a fala, o enquadramento e o que aparece na tela. Paleta: azul-marinho
+     e azul da Hering, coral só para alerta e preço. */
+  :root {
+    --bg: #F3F6FB;
+    --card: #FFFFFF;
+    --fg: #14223A;
+    --muted: #55637A;
+    --line: #D6DFEC;
+    --navy: #2F4D78;
+    --blue: #4F7BC9;
+    --blue-soft: #E4ECFA;
+    --coral: #C8453D;
+    --coral-soft: #FBE8E6;
+    --ok: #2E7D5B;
+    --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+    --body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0E1727; --card: #16233A; --fg: #E8EEF9; --muted: #9DACC4;
+      --line: #2A3A57; --navy: #8FB0E6; --blue: #6F9AE6; --blue-soft: #1E3256;
+      --coral: #FF8A80; --coral-soft: #3A2024; --ok: #6FD3A3;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0E1727; --card: #16233A; --fg: #E8EEF9; --muted: #9DACC4;
+    --line: #2A3A57; --navy: #8FB0E6; --blue: #6F9AE6; --blue-soft: #1E3256;
+    --coral: #FF8A80; --coral-soft: #3A2024; --ok: #6FD3A3;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg);
+    font-family: var(--body); font-size: 16px; line-height: 1.5;
+    padding-block: 20px 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { max-width: 760px; margin: 0 auto; display: grid; gap: 28px; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.12; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(30px, 8vw, 44px); font-weight: 800; letter-spacing: -0.02em; }
+  h2 { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; }
+  h3 { font-size: 18px; font-weight: 800; }
+  p { margin: 0; }
+  .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); }
+  .muted { color: var(--muted); }
+  header { display: grid; gap: 10px; }
+  .sub { font-size: 18px; color: var(--muted); }
+  .deadline { display: inline-flex; gap: 8px; align-items: center; font-weight: 700; color: var(--coral); background: var(--coral-soft); padding: 6px 12px; border-radius: 8px; width: fit-content; }
+
+  .progress { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: grid; gap: 6px; border-bottom: 1px solid var(--line); }
+  .bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+  .bar i { display: block; height: 100%; width: 0; background: var(--blue); transition: width .25s; }
+  .progress-label { font-size: 14px; font-weight: 600; display: flex; justify-content: space-between; }
+
+  section { display: grid; gap: 14px; }
+  .lead { color: var(--muted); max-width: 62ch; }
+
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; }
+  .box.alert { border-color: var(--coral); }
+  ul.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  ul.checks li label { display: grid; grid-template-columns: 24px 1fr; gap: 10px; align-items: start; cursor: pointer; }
+  input[type=checkbox] { width: 22px; height: 22px; margin: 1px 0 0; accent-color: var(--blue); }
+  input[type=checkbox]:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+
+  .take { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .take-head { display: grid; grid-template-columns: 24px 1fr auto; gap: 10px; align-items: center; padding: 14px 16px; background: var(--blue-soft); }
+  .take-head .id { font-family: var(--display); font-weight: 800; font-size: 18px; }
+  .take-head .dur { font-size: 13px; font-weight: 700; color: var(--navy); white-space: nowrap; }
+  .take-body { padding: 14px 16px 16px; display: grid; gap: 12px; }
+  dl { margin: 0; display: grid; gap: 10px; }
+  dl > div { display: grid; grid-template-columns: 96px 1fr; gap: 10px; }
+  dt { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); padding-top: 3px; }
+  dd { margin: 0; min-width: 0; }
+  @media (max-width: 460px) { dl > div { grid-template-columns: 1fr; gap: 2px; } }
+  .say { background: var(--blue-soft); border-left: 4px solid var(--blue); padding: 10px 12px; border-radius: 0 8px 8px 0; font-weight: 600; }
+  .say.me { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--navy); }
+  .say small { display: block; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 11px; color: var(--navy); margin-bottom: 2px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; background: var(--blue-soft); color: var(--navy); margin-right: 4px; }
+  .tag.warn { background: var(--coral-soft); color: var(--coral); }
+
+  .look { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+  .look .pill { font-family: var(--display); font-weight: 800; background: var(--navy); color: var(--bg); padding: 2px 12px; border-radius: 999px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--navy); }
+  .scroll { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 12px; }
+  .scroll table { min-width: 560px; }
+  td.n { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 700; }
+
+  figure { margin: 0; display: grid; gap: 10px; justify-items: center; }
+  figure svg { width: min(100%, 300px); height: auto; }
+  figcaption { font-size: 14px; color: var(--muted); text-align: center; max-width: 52ch; }
+  .frame-grid { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 20px; align-items: center; }
+  @media (max-width: 640px) { .frame-grid { grid-template-columns: 1fr; } }
+  .legend { display: grid; gap: 6px; font-size: 15px; }
+  .legend span { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-items: baseline; }
+  .legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; transform: translateY(2px); }
+  ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+  @media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Roteiro de gravação · Episódio 1</span>
+    <h1>Marcos &amp; Hering</h1>
+    <p class="sub">A síndrome de protagonista. A camiseta manda no seu guarda-roupa, e você obedece.</p>
+    <span class="deadline">Postar hoje, 18/10, até 23:59</span>
+  </header>
+
+  <div class="progress" aria-live="polite">
+    <div class="progress-label"><span id="plabel">0 de 0 gravados</span><span class="muted">toque na caixa para marcar</span></div>
+    <div class="bar"><i id="pbar"></i></div>
+  </div>
+
+  <section>
+    <h2>Como vai funcionar</h2>
+    <p class="lead">Você grava <b>imagem sem falar</b> e, no fim, <b>a voz dela num áudio só</b>. A fala e a imagem se juntam no CapCut. Cada take abaixo tem a ação, o enquadramento e o que eu vou colocar por cima na edição.</p>
+    <div class="box">
+      <p><b>A fórmula que se repete 3 vezes:</b> guarda-roupa (de costas, ela manda) → espelho (de frente, ela se elogia) → reação sua para a câmera.</p>
+      <p class="muted">A camiseta fala. Você é quem reage, em silêncio, com olhar resignado. É o papel do cachorro de óculos da referência.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Antes de apertar REC</h2>
+    <div class="box">
+      <h3>Câmera</h3>
+      <ul class="checks">
+        <li><label><input type="checkbox" data-take="pre-cam1"><span>Celular na <b>vertical</b>, 4K em 30 fps, tripé na altura do peito. Trave foco e exposição tocando na camiseta.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-cam2"><span>Câmera <b>1x</b>, sem zoom digital. Grade de 3×3 ligada. Se o quarto for pequeno, use a 0,5x com você <b>centralizado</b>, para não distorcer.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-cam3"><span><b>Mesmo ponto e mesma altura</b> nos três looks. A edição fica colada só se o fundo não mudar.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-cam4"><span>Luz natural de frente ou de lado. <b>Janela nunca atrás de você.</b> Sem filtro e sem modo retrato.</span></label></li>
+      </ul>
+    </div>
+    <div class="box alert">
+      <h3>Regras do briefing (o que reprova a publi)</h3>
+      <ul class="checks">
+        <li><label><input type="checkbox" data-take="pre-b1"><span>Só a <b>Camiseta Brasil branca</b>, <b>bem passada</b> a ferro. Passe de novo entre os looks.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-b2"><span><b>Nenhum logo de outra marca</b> em lugar nenhum: calças, bermuda, <b>tênis de academia</b>, sapatos, cabides, etiquetas penduradas, TV, caixas, objetos ao fundo. Cubra com fita preta ou troque a peça.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-b3"><span><b>Etiqueta da camiseta</b> escondida ou cortada. Confira a nuca, por dentro, nas imagens de costas.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-b4"><span>Sem boné, chapéu, óculos de sol ou acessório grande. <b>Barriga nunca à mostra</b>: no treino, a camiseta cobre o cós e os braços não sobem.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-b5"><span>Guarda-roupa e fundo <b>organizados e silenciosos</b>. Tire o que for bagunça ou marca.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-b6"><span>Atuação <b>alegre e leve, sem exagero</b>. Nada de pose ou olhar sensual.</span></label></li>
+        <li><label><input type="checkbox" data-take="pre-b7"><span>A sacola da Hering, se aparecer, fica <b>sem amassar</b>.</span></label></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Enquadramento</h2>
+    <p class="lead">O vídeo é 1080×1920. O Instagram e o TikTok cobrem o topo, o fundo e a direita. Eu coloco texto em cima da sua cabeça e a legenda embaixo, então você precisa deixar esses espaços livres.</p>
+    <div class="box frame-grid">
+      <figure>
+        <svg viewBox="0 0 270 480" role="img" aria-label="Quadro vertical com as zonas livres e o lugar do corpo">
+          <rect x="0" y="0" width="270" height="480" rx="10" fill="var(--card)" stroke="var(--line)"/>
+          <rect x="0" y="0" width="270" height="62" fill="var(--coral-soft)"/>
+          <rect x="0" y="360" width="270" height="120" fill="var(--coral-soft)"/>
+          <rect x="235" y="62" width="35" height="298" fill="var(--coral-soft)"/>
+          <rect x="15" y="64" width="218" height="68" rx="8" fill="var(--blue-soft)" stroke="var(--blue)" stroke-dasharray="4 3"/>
+          <text x="124" y="102" text-anchor="middle" font-size="11" font-weight="700" fill="var(--navy)" font-family="Figtree, sans-serif">motions entram aqui</text>
+          <rect x="30" y="344" width="190" height="16" rx="4" fill="var(--navy)" opacity=".85"/>
+          <text x="124" y="356" text-anchor="middle" font-size="9" font-weight="700" fill="var(--card)" font-family="Figtree, sans-serif">LEGENDA</text>
+          <circle cx="125" cy="140" r="17" fill="var(--blue)"/>
+          <rect x="102" y="160" width="46" height="95" rx="10" fill="var(--blue)"/>
+          <rect x="106" y="252" width="16" height="86" rx="5" fill="var(--blue)"/>
+          <rect x="128" y="252" width="16" height="86" rx="5" fill="var(--blue)"/>
+          <text x="124" y="30" text-anchor="middle" font-size="10" font-weight="700" fill="var(--coral)" font-family="Figtree, sans-serif">TOPO: interface</text>
+          <text x="135" y="412" text-anchor="middle" font-size="10" font-weight="700" fill="var(--coral)" font-family="Figtree, sans-serif">FUNDO: interface</text>
+        </svg>
+        <figcaption>Quadro 9:16. Vermelho: zonas que a plataforma cobre.</figcaption>
+      </figure>
+      <div class="legend">
+        <span><i style="background:var(--blue)"></i><b>Corpo inteiro:</b> cabeça um pouco abaixo de 1/4 do topo (28% da altura), pés até ~71%. Os pés <b>não</b> ficam na faixa da legenda.</span>
+        <span><i style="background:var(--blue-soft);border:1px dashed var(--blue)"></i><b>Em cima da cabeça fica livre</b> (até ~28%): ali entram os motions.</span>
+        <span><i style="background:var(--coral-soft)"></i><b>Nada importante</b> no topo (13%), no fundo (25%) e na direita (13%).</span>
+        <span><i style="background:var(--navy)"></i>Distância: uns <b>3 m</b> com a lente 1x, ou uns 1,5 m com a 0,5x. Ajuste olhando a grade da câmera.</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ordem de gravação</h2>
+    <p class="lead">Você se veste três vezes. Em cada look, grave os takes na ordem abaixo. No guarda-roupa e no espelho, <b>só atue, sem falar</b>: a voz dela entra depois.</p>
+
+    <div class="look"><span class="pill">Take 0</span><h3>Abertura (opcional)</h3></div>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="t0"></label><span class="id">T0 · Estabelecimento</span><span class="dur">2–3 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Imagem</dt><dd>Fachada do prédio, janela ou a porta do seu quarto. Sem gente, sem logo. Câmera parada.</dd></div>
+        <div><dt>Na edição</dt><dd>A cartela "Marcos &amp; Hering · Episódio 1 · A síndrome de protagonista" entra em cima, com a vinheta musical. Corte seco para o guarda-roupa.</dd></div>
+        <div><dt>Se faltar</dt><dd>Sem este take, a cartela entra sobre você no guarda-roupa. Funciona do mesmo jeito.</dd></div>
+      </dl></div>
+    </article>
+
+    <div class="look"><span class="pill">Look A</span><h3>Calça de alfaiataria + sapato de couro</h3></div>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="a1"></label><span class="id">A1 · Guarda-roupa</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>Atrás de você, de lado (3/4), corpo inteiro, vendo as portas do guarda-roupa. A camiseta aparece de costas.</dd></div>
+        <div><dt>Ação</dt><dd>Abra as portas. Passe a mão por dois cabides, hesite, pegue a <b>calça de alfaiataria</b> e levante para a câmera como quem foi mandado. Sem falar.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 1</small>"Reunião importante. Calça de alfaiataria."</div></dd></div>
+        <div><dt>Cuidado</dt><dd><span class="tag warn">etiqueta</span> nuca da camiseta sem aparecer · <span class="tag warn">logo</span> nada de marca no cabide ou nas outras roupas</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="a2"></label><span class="id">A2 · Espelho</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>De frente, corpo inteiro, no ponto fixo. Olhe <b>para a lente</b> como se fosse o espelho (mais limpo que um espelho de verdade, que mostra o celular). Se preferir espelho real, tudo bem.</dd></div>
+        <div><dt>Ação</dt><dd>Parado de frente, 2 s. Ajeite a gola sem puxar a etiqueta. Gire de lado. Uma mão no bolso. Fim da pose parado 1 s. Peito livre e sem braço na frente.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 2</small>"Incrível como o tempo só me valoriza."</div></dd></div>
+        <div><dt>Na tela</dt><dd>A boca da camiseta no peito, e os selos "MANTÉM A COR" e "NÃO FORMA BOLINHA*" (*segundo a Hering) em cima da cabeça.</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="a3"></label><span class="id">A3 · Reação</span><span class="dur">3 s × 3</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>Mesmo enquadramento, mas pode fechar: do quadril para cima.</dd></div>
+        <div><dt>Ação</dt><dd>Olhe direto para a lente, em silêncio. Faça 3 versões: (1) olhar resignado e suspiro, (2) sobrancelha levantada, (3) meio sorriso de quem desistiu de discutir. Segure 2–3 s cada.</dd></div>
+        <div><dt>Na edição</dt><dd>Entra 0,5–1 s depois da fala dela, com pausa e risada. É a "reação do cachorro".</dd></div>
+      </dl></div>
+    </article>
+
+    <div class="look"><span class="pill">Look B</span><h3>Calça jogger + sapato de couro preto</h3></div>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="b1"></label><span class="id">B1 · Guarda-roupa</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>Igual ao A1: atrás de você, de lado, corpo inteiro.</dd></div>
+        <div><dt>Ação</dt><dd>Devolva a alfaiataria ao cabide, pegue a <b>jogger</b> e levante para a câmera, dessa vez mais contente. Sem falar.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 3</small>"Agora algo pra combinar com meu caimento. Calça jogger."</div></dd></div>
+        <div><dt>Na tela</dt><dd>Selo "GOLA QUE NÃO DEFORMA" em cima e uma seta desenhada apontando para a gola. Por isso o próximo take precisa existir.</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="b1b"></label><span class="id">B1b · Close na gola</span><span class="dur">3 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>De costas ou de lado, bem perto: nuca, gola e costura do ombro. <b>Sem etiqueta aparecendo.</b></dd></div>
+        <div><dt>Ação</dt><dd>Mova o pescoço devagar e puxe a gola de leve para a frente (não para trás) e solte: ela volta ao lugar. Só vale se voltar mesmo.</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="b2"></label><span class="id">B2 · Espelho</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Ação</dt><dd>Mesmo enquadramento do A2. Pose mais solta: passo para frente, as duas mãos nos bolsos, balanço de ombros. Fim parado 1 s.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 4</small>"Maravilhosa. Com esse caimento então…"</div></dd></div>
+        <div><dt>Na tela</dt><dd>Boca no peito e selo "CAIMENTO PERFEITO" em cima.</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="b3"></label><span class="id">B3 · Reação</span><span class="dur">3 s × 3</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Ação</dt><dd>Mesma ideia do A3, com outra expressão: dessa vez você cede, meio vencido, meio orgulhoso.</dd></div>
+      </dl></div>
+    </article>
+
+    <div class="look"><span class="pill">Look C</span><h3>Bermuda de academia + tênis de academia</h3></div>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="c1"></label><span class="id">C1 · Guarda-roupa</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Ação</dt><dd>Igual aos anteriores: pegue a <b>bermuda de treino</b> e mostre para a câmera. O tênis aparece depois, no espelho.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 5</small>"Algo pra combinar com meu algodão cem por cento. Bermuda de treino."</div></dd></div>
+        <div><dt>Na tela</dt><dd>Selo "100% ALGODÃO" em cima.</dd></div>
+        <div><dt>Cuidado</dt><dd><span class="tag warn">logo</span> bermuda e tênis de academia costumam ter logo: cubra com fita preta ou troque por um liso.</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="c2"></label><span class="id">C2 · Espelho</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Ação</dt><dd>Pose de quem vai treinar: alongue o pescoço, gire os ombros, uma passada curta. <b>Não levante os braços acima do ombro</b> (a barriga não pode aparecer). Fim parado 1 s.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 6</small>"Pode suar: eu continuo intacta. Zero transparência: opaca e orgulhosa."</div></dd></div>
+        <div><dt>Na tela</dt><dd>Boca no peito e selo "NÃO FICA TRANSPARENTE".</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="c3"></label><span class="id">C3 · Reação</span><span class="dur">3 s × 3</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Ação</dt><dd>Variação final: olhe para a lente e dê de ombros, como quem concorda porque não tem escolha.</dd></div>
+      </dl></div>
+    </article>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="c4"></label><span class="id">C4 · Fecho no espelho</span><span class="dur">6–8 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>De frente, corpo inteiro, ainda no look C.</dd></div>
+        <div><dt>Ação</dt><dd>Fique de frente, bem parado, cabeça um pouco inclinada, como quem escuta algo tão absurdo e tão verdadeiro. 3 s de pose, 3 s da reação final.</dd></div>
+        <div><dt>Voz dela</dt><dd><div class="say"><small>Ela, fala 7</small>"Quarenta e nove e noventa e nove. Barato? Eu sou investimento, querida."</div></dd></div>
+        <div><dt>Na tela</dt><dd>Boca no peito e o preço "R$ 49,99" grande em coral, com "custo-benefício".</dd></div>
+      </dl></div>
+    </article>
+
+    <div class="look"><span class="pill">Fim</span><h3>Você fala com a câmera</h3></div>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="d1"></label><span class="id">D1 · Chamada final</span><span class="dur">8–10 s</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Câmera</dt><dd>No seu formato de sempre: do peito para cima, olhando para a lente. <b>Cabelo abaixo de 1/3 do topo</b>, a parede limpa em cima (aí entram o selo e o texto).</dd></div>
+        <div><dt>Você fala</dt><dd><div class="say me"><small>Você, a câmera</small>"Camiseta Brasil da <b>éringui</b>, feita no Brasil para os brasileiros. Ela vai ser a protagonista do seu guarda-roupa."</div></dd></div>
+        <div><dt>Tom</dt><dd>Leve, simpático, quase um sorriso de quem aprendeu a lição. Diga "éringui" (como a marca manda). Grave 3 vezes e escolha a melhor.</dd></div>
+        <div><dt>Na tela</dt><dd>Selo "CAMISETA BRASIL" e "site e lojas participantes" em cima de você, sobre a parede.</dd></div>
+      </dl></div>
+    </article>
+  </section>
+
+  <section>
+    <h2>A voz dela: um áudio só</h2>
+    <p class="lead">Faça depois de gravar as imagens, num quarto silencioso, com o celular a uns 20 cm da boca. Leia as sete falas em ordem, três vezes cada, com um segundo de silêncio entre elas. No CapCut você escolhe a melhor e aplica um leve efeito de voz.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>#</th><th>Fala</th><th>Como dizer</th></tr></thead>
+        <tbody>
+          <tr><td class="n">1</td><td>"Reunião importante. Calça de alfaiataria."</td><td>Seca, mandona, ordem dada sem olhar.</td></tr>
+          <tr><td class="n">2</td><td>"Incrível como o tempo só me valoriza."</td><td>Um suspiro de vaidade, falando sozinha.</td></tr>
+          <tr><td class="n">3</td><td>"Agora algo pra combinar com meu caimento. Calça jogger."</td><td>"Meu caimento" com orgulho exagerado.</td></tr>
+          <tr><td class="n">4</td><td>"Maravilhosa. Com esse caimento então…"</td><td>Derretida. "Maravilhosa" devagar.</td></tr>
+          <tr><td class="n">5</td><td>"Algo pra combinar com meu algodão cem por cento. Bermuda de treino."</td><td>Chique, estufando em "cem por cento".</td></tr>
+          <tr><td class="n">6</td><td>"Pode suar: eu continuo intacta. Zero transparência: opaca e orgulhosa."</td><td>Desafiadora. Pausa curta antes de "zero transparência".</td></tr>
+          <tr><td class="n">7</td><td>"Quarenta e nove e noventa e nove. Barato? Eu sou investimento, querida."</td><td>Esnobe. "Querida" doce e venenoso.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <article class="take">
+      <div class="take-head"><label><input type="checkbox" data-take="v1"></label><span class="id">V1 · Voz dela</span><span class="dur">~1 min</span></div>
+      <div class="take-body"><dl>
+        <div><dt>Voz</dt><dd>Diva, um pouco mais aguda que a sua, claro e devagar. Não distorça muito: a legenda e o público precisam entender cada palavra.</dd></div>
+        <div><dt>Áudio</dt><dd>Sem música e sem eco. Mantenha o volume constante.</dd></div>
+        <div><dt>Número</dt><dd>Diga o preço por extenso: "quarenta e nove e noventa e nove".</dd></div>
+      </dl></div>
+    </article>
+  </section>
+
+  <section>
+    <h2>Como vai ficar na tela</h2>
+    <p class="lead">Ordem final do vídeo, com os motions e os sons. Os tempos são estimados: eu acerto com o seu vídeo editado.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Tempo</th><th>Imagem</th><th>Motion e som</th></tr></thead>
+        <tbody>
+          <tr><td class="n">0–3 s</td><td>T0 ou guarda-roupa A1</td><td>Cartela "Marcos &amp; Hering", vinheta musical.</td></tr>
+          <tr><td class="n">3–6 s</td><td>A1</td><td>Legenda azul: a voz dela.</td></tr>
+          <tr><td class="n">6–9 s</td><td>A2 + A3</td><td>Boca, "Mantém a cor / Não forma bolinha*", risada.</td></tr>
+          <tr><td class="n">9–13 s</td><td>B1 + B1b</td><td>Vinheta curta, "Gola que não deforma" com seta.</td></tr>
+          <tr><td class="n">13–17 s</td><td>B2 + B3</td><td>Boca, "Caimento perfeito", risada.</td></tr>
+          <tr><td class="n">17–22 s</td><td>C1</td><td>Vinheta curta, "100% algodão".</td></tr>
+          <tr><td class="n">22–27 s</td><td>C2 + C3</td><td>Boca, "Não fica transparente", risada.</td></tr>
+          <tr><td class="n">27–32 s</td><td>C4</td><td>Boca, "R$ 49,99 · custo-benefício", risada.</td></tr>
+          <tr><td class="n">32–41 s</td><td>D1</td><td>Selo "Camiseta Brasil" e "site e lojas participantes".</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="box">
+      <p><b>Cor e som:</b> a imagem leva uma gradação quente leve (teste seu). Eu confiro se a camiseta continua branca. A risada e as palmas você coloca no CapCut, com arquivos reais.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Depois de gravar</h2>
+    <ol class="steps">
+      <li><b>No CapCut,</b> monte na ordem da tabela acima: cada fala dela sobre a imagem certa, com a reação em seguida. Deixe uns 3 s iniciais sem fala dela e uma pausa de 0,5 a 1 s depois de cada fala.</li>
+      <li><b>Exporte</b> em 1080×1920, 30 fps, <b>sem legenda, sem motion e sem música</b>, com a voz dela e a sua já no áudio.</li>
+      <li><b>Mande para mim</b> aqui: uma versão leve do vídeo (720p, uns 30–50 MB) ou 3–4 prints, e a transcrição: <code>npm run transcrever -- "caminho\do\video.mp4"</code>, e cole o texto do <code>.txt</code>.</li>
+      <li><b>Eu acerto</b> os tempos, a posição da boca e dos selos e devolvo. Você renderiza no PC (<code>npm run render:hering</code>) e confere o checklist.</li>
+      <li><b>Poste</b> com <code>@hering_oficial #NovaCamisetaHering #publi</code> no Instagram e <code>@heringoficial #NovaCamisetaHering #publi</code> no TikTok. Nenhuma outra hashtag e nenhum emoji de bandeira ou das cores dela.</li>
+    </ol>
+    <div class="box alert">
+      <p><b>Se o tempo apertar:</b> corte primeiro o Look C (treino) e a seta da gola. O vídeo continua completo com os looks A e B, o fecho e a chamada final.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  var KEY = "marcos-hering-roteiro-v1";
+  var boxes = Array.prototype.slice.call(document.querySelectorAll("input[type=checkbox][data-take]"));
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+  var takes = boxes.filter(function (b) { return /^(t0|a|b|c|d|v)/.test(b.dataset.take) && !/^pre-/.test(b.dataset.take); });
+  function render() {
+    var done = takes.filter(function (b) { return b.checked; }).length;
+    document.getElementById("plabel").textContent = done + " de " + takes.length + " gravados";
+    document.getElementById("pbar").style.width = (takes.length ? done / takes.length * 100 : 0) + "%";
+  }
+  boxes.forEach(function (b) {
+    b.checked = !!state[b.dataset.take];
+    b.addEventListener("change", function () {
+      state[b.dataset.take] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+      render();
+    });
+  });
+  render();
+})();
+</script>

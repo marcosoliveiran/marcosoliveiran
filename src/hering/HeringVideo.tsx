@@ -43,7 +43,9 @@ const MOTIONS: Record<string, { node: ReactNode; extra?: number }> = {
   abertura: { node: <M.CartelaEpisodio /> },
   e1: { node: <M.MantemACor /> },
   g2: { node: <M.GolaSeta /> },
-  e3: { node: <M.AlgodaoOpaca /> },
+  e2: { node: <M.Caimento /> },
+  g3: { node: <M.Algodao /> },
+  e3: { node: <M.NaoTransparente /> },
   fecho: { node: <M.Preco /> },
   cta: { node: <M.SeloCta /> },
 };

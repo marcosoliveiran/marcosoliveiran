@@ -46,7 +46,8 @@ export type Segment = {
 };
 
 // Posição da boca no peito, para o Marcos parado no espelho (ajustar por take).
-const PEITO: MouthPlacement = { x: 500, y: 880, size: 300, rot: -4 };
+// Corpo inteiro (cabeça ~y 480, pés ~y 1360): peito perto de y 740, ~230 px.
+const PEITO: MouthPlacement = { x: 500, y: 740, size: 230, rot: -4 };
 
 export const SEGMENTS: Segment[] = [
   {

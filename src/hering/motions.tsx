@@ -153,11 +153,24 @@ export const GolaSeta: React.FC<{ target?: { x: number; y: number } }> = ({
   );
 };
 
-// 3 · espelho: algodão e não fica transparente
-export const AlgodaoOpaca: React.FC = () => (
+// e2 · espelho: "com esse caimento então"
+export const Caimento: React.FC = () => (
   <Column>
-    <Pill text="100% ALGODÃO" delay={4} />
-    <Pill text="NÃO FICA TRANSPARENTE" delay={16} strong size={52} />
+    <Pill text="CAIMENTO PERFEITO" delay={4} strong />
+  </Column>
+);
+
+// g3 · guarda-roupa: "meu algodão cem por cento"
+export const Algodao: React.FC = () => (
+  <Column>
+    <Pill text="100% ALGODÃO" delay={4} strong />
+  </Column>
+);
+
+// e3 · espelho: "zero transparência"
+export const NaoTransparente: React.FC = () => (
+  <Column>
+    <Pill text="NÃO FICA TRANSPARENTE" delay={4} strong size={52} />
   </Column>
 );
 
