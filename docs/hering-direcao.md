@@ -35,11 +35,11 @@ ELA = voz da camiseta. EU = Marcos. ~36 s.
 | 2 · guarda-roupa | ELA: "Agora algo pra combinar com meu caimento. Calça jogger." | de costas/lado; close na gola |
 | 2 · espelho | ELA: "Maravilhosa. Com esse caimento então…" | de frente; boca |
 | 3 · guarda-roupa | ELA: "Algo pra combinar com meu algodão cem por cento. Bermuda de treino." | de costas/lado |
-| 3 · espelho | ELA: "Pode suar: eu não entrego nada. Opaca e orgulhosa." | de frente; boca |
+| 3 · espelho | ELA: "Pode suar: eu continuo intacta. Zero transparência: opaca e orgulhosa." | de frente; boca |
 | Fecho | ELA: "Quarenta e nove e noventa e nove. Barato? Eu sou investimento, querida." | espelho; boca |
 | CTA | EU, pra câmera, no formato de sempre: "Camiseta Brasil da éringui, feita no Brasil para os brasileiros. Ela vai ser a protagonista do seu guarda-roupa." | rosto + espaço livre para motion |
 
-Pendentes: a fala da cena 3 e as reações do EU (reescrever do jeito do Marcos).
+Pendentes: as reações do EU (se houver).
 
 ## Sitcom (som e câmera)
 
@@ -69,7 +69,7 @@ guia.
 | Base escura | azul-marinho `#2F4D78` | fundos, sombras |
 | Destaque | azul `#4F7BC9` | o mais importante da peça |
 | Texto | branco `#FFFFFF` | títulos e legenda |
-| Preço | coral `#E8625A` | só R$ 49,99 |
+| Preço e boca | coral `#E8625A` | R$ 49,99 e a boca da camiseta |
 
 Fontes do perfil (Fredoka nos títulos, Nunito nos textos). Sem verde nem
 amarelo (evita lembrar a bandeira).
@@ -129,3 +129,18 @@ Nenhuma outra hashtag.
    num arquivo só.
 4. No PC do Marcos: transcrever o vídeo final, ajustar tempos, renderizar.
 5. Conferir o checklist e postar antes das 23:59.
+
+## Composição `Hering` (montada)
+
+Código em `src/hering/` (`timing.ts` = roteiro e tempos, `motions.tsx`,
+`Mouth.tsx`, `HeringVideo.tsx`) e tema em `src/themes/hering.ts`.
+Estado: roda com quadro de reserva (camiseta) enquanto não há vídeo.
+
+Para usar no PC do Marcos:
+1. Colocar o vídeo do CapCut (sem legenda, 1080×1920) em `public/hering/video.mp4`.
+2. Em `src/hering/timing.ts`: `HAS_VIDEO = true`; ajustar `from`/`to` de cada
+   trecho pelos tempos reais (`npm run transcrever` ajuda); ajustar a posição
+   da boca (`PEITO`) e a seta da gola (`target` em `motions.tsx`) vendo o frame.
+3. Risada e palmas: colocar `palmas.wav` e `risada.wav` em `public/sfx/` e
+   ligar `HAS_PALMAS` / `HAS_RISADA`.
+4. `npm run previa:hering` (rápido) e `npm run render:hering` (final).

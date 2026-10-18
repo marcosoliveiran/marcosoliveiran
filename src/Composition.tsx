@@ -9,6 +9,12 @@ import {
   CREEP_SIZE,
 } from "./creep/CreepVideo";
 import {
+  HERING_DURATION_IN_FRAMES,
+  HERING_FPS,
+  HERING_SIZE,
+  HeringVideo,
+} from "./hering/HeringVideo";
+import {
   VoomCaptionOptions,
   VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
   VOOM_CAPTION_OPTIONS_SIZE,
@@ -153,6 +159,14 @@ export const TalkingHeadComposition = () => {
         fps={CREEP_FPS}
         width={CREEP_SIZE.width}
         height={CREEP_SIZE.height}
+      />
+      <Composition
+        id="Hering"
+        component={HeringVideo}
+        durationInFrames={HERING_DURATION_IN_FRAMES}
+        fps={HERING_FPS}
+        width={HERING_SIZE.width}
+        height={HERING_SIZE.height}
       />
     </>
   );

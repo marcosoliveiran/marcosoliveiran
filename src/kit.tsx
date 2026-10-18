@@ -475,12 +475,18 @@ const MinimalCaption: React.FC<{
 // uppercase on a 40% black strip, entering whole with a short pop. The font
 // shrinks to keep the line inside the safe width (keep chunks to ~28 letters;
 // longer ones get small, and below CLEAN_MIN_FONT they would overflow).
+// "accent": faixa na cor de destaque da marca, para diferenciar outra voz.
+export type CaptionTone = "dark" | "accent";
+
 const CLEAN_FONT = 56;
 const CLEAN_MIN_FONT = 36;
 const CLEAN_PAD_X = 32;
 const CLEAN_CHAR_WIDTH = 0.68; // average Nunito 900 uppercase width, in em
 
-const CleanCaption: React.FC<{ words: Part[] }> = ({ words }) => {
+const CleanCaption: React.FC<{ words: Part[]; tone: CaptionTone }> = ({
+  words,
+  tone,
+}) => {
   const theme = useTheme();
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -502,7 +508,8 @@ const CleanCaption: React.FC<{ words: Part[] }> = ({ words }) => {
         whiteSpace: "nowrap",
         padding: `10px ${CLEAN_PAD_X}px 14px`,
         borderRadius: 18,
-        backgroundColor: "rgba(0, 0, 0, 0.4)",
+        backgroundColor:
+          tone === "accent" ? theme.accent : "rgba(0, 0, 0, 0.4)",
         color: "white",
         fontFamily: theme.font,
         fontWeight: 900,
@@ -530,7 +537,8 @@ export const Caption: React.FC<{
   // 1 = tamanho padrão; menos que 1 encolhe a legenda inteira (e ela cabe em
   // menos linhas, porque a largura útil continua a mesma).
   size?: number;
-}> = ({ parts, y, onPanel, variant: variantProp, size = 1 }) => {
+  tone?: CaptionTone;
+}> = ({ parts, y, onPanel, variant: variantProp, size = 1, tone = "dark" }) => {
   const theme = useTheme();
   const variant = variantProp ?? theme.captionVariant ?? "default";
   const frame = useCurrentFrame();
@@ -560,7 +568,7 @@ export const Caption: React.FC<{
     >
       <div style={{ zoom: size }}>
         {variant === "clean" ? (
-          <CleanCaption words={words} />
+          <CleanCaption words={words} tone={tone} />
         ) : variant === "card" ? (
           <CardCaption words={words} maxWidth={SAFE_WIDTH / size} />
         ) : variant === "minimal" ? (

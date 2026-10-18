@@ -33,6 +33,8 @@
     "cortar": "node tools/cortar.mjs",
     "quadros": "node tools/quadros.mjs",
     "previa": "remotion render Creep out/creep-previa.mp4 --scale=0.4 --crf=30",
+    "previa:hering": "remotion render Hering out/hering-previa.mp4 --scale=0.4 --crf=30",
+    "render:hering": "remotion render Hering out/hering.mp4 --codec=h264 --crf=18",
     "render:creep": "remotion render Creep out/creep.mp4 --codec=h264 --crf=18"
   },
   "sideEffects": [
