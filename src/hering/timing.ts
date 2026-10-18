@@ -109,18 +109,20 @@ const DRAFTS: Draft[] = [
   // protagonista" (a definição prepara o título). Sobre a calça levantada.
   { id: "cartela", src: 11.5, kind: "abertura", dur: 3, pages: [] },
   {
-    // Em pé de calça bege, encosta na porta, ajeita a barra, olha para a lente.
+    // BLOCO 2 (texto do Marcos): liga a síndrome à camiseta. Em pé de calça
+    // bege, encosta na porta, ajeita a barra, olha para a lente (bruto 14,5–24 s).
+    // "Camiseta Brasil" aparece como selo na tela por volta de 4,6 s.
     id: "e1",
-    src: 20.6,
-
+    src: 14.5,
     kind: "espelho",
-    dur: 5.2,
+    dur: 9.5,
     pages: [
-      "Eu só obedeci.",
-      "Ela é toda convencida:",
-      "mantém a cor,",
-      "não forma bolinha,",
-      "segundo a Hering.",
+      "Eu achava que isso só",
+      "acontecia com gente.",
+      "Mas aí eu conheci a",
+      "Camiseta Brasil, da Hering,",
+      "e agora todo look",
+      "tem que ser sobre ela.",
     ],
   },
   // Close no rosto olhando para a lente (silêncio).

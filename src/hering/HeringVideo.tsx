@@ -41,9 +41,9 @@ const CAPTION_BOTTOM = 1440;
 const sec = (s: number) => Math.round(s * FPS);
 
 // Motions por trecho (id do trecho em SEGMENTS).
-const MOTIONS: Record<string, { node: ReactNode; extra?: number }> = {
+const MOTIONS: Record<string, { node: ReactNode; offset?: number }> = {
   cartela: { node: <M.CartelaEpisodio /> },
-  e1: { node: <M.MantemACor /> },
+  e1: { node: <M.NomeProduto />, offset: 4.4 },
   gola: { node: <M.Gola /> },
   e2: { node: <M.Caimento /> },
   e3: { node: <M.AlgodaoOpaca /> },
@@ -238,8 +238,11 @@ export const HeringVideo: React.FC<HeringProps> = ({
           return (
             <Sequence
               key={id}
-              from={sec(s.from)}
-              durationInFrames={Math.max(8, sec(s.to - s.from))}
+              from={sec(s.from + (motion.offset ?? 0))}
+              durationInFrames={Math.max(
+                8,
+                sec(s.to - s.from - (motion.offset ?? 0)),
+              )}
               name={`motion ${id}`}
             >
               {motion.node}

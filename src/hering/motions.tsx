@@ -153,6 +153,14 @@ export const GolaSeta: React.FC<{ target?: { x: number; y: number } }> = ({
   );
 };
 
+// bloco 2 · o nome do produto, no momento em que o Marcos o fala
+export const NomeProduto: React.FC = () => (
+  <Column>
+    <Pill text="CAMISETA BRASIL" delay={2} strong />
+    <Note text="da Hering" delay={10} />
+  </Column>
+);
+
 // insert · close na gola
 export const Gola: React.FC = () => (
   <Column>
