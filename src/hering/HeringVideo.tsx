@@ -10,7 +10,6 @@ import {
 } from "remotion";
 import { Caption, HEIGHT, ThemeProvider, WIDTH } from "../kit";
 import { HERING, HERING_THEME } from "../themes/hering";
-import { TalkingMouth } from "./Mouth";
 import * as M from "./motions";
 import {
   DEFAULT_GRADE,
@@ -20,11 +19,13 @@ import {
   PALMAS_FILE,
   RISADA_FILES,
   HAS_VIDEO,
+  NARRACAO_FILE,
+  NARRACAO_INICIO,
+  Segment,
   SEGMENTS,
   TOTAL_FRAMES,
   pageRanges,
   segmentById,
-  syllablesOf,
 } from "./timing";
 
 // Publi Hering (Camiseta Brasil): sitcom "Episódio 1: A síndrome de
@@ -42,10 +43,9 @@ const sec = (s: number) => Math.round(s * FPS);
 const MOTIONS: Record<string, { node: ReactNode; extra?: number }> = {
   abertura: { node: <M.CartelaEpisodio /> },
   e1: { node: <M.MantemACor /> },
-  g2: { node: <M.GolaSeta /> },
+  gola: { node: <M.Gola /> },
   e2: { node: <M.Caimento /> },
-  g3: { node: <M.Algodao /> },
-  e3: { node: <M.NaoTransparente /> },
+  e3: { node: <M.AlgodaoOpaca /> },
   fecho: { node: <M.Preco /> },
   cta: { node: <M.SeloCta /> },
 };
@@ -64,7 +64,7 @@ const SFX: [number, string, number][] = [
 
 // Placeholder do vídeo: camiseta branca num fundo escuro, só para conferir
 // motions e a boca antes de existir public/hering/video.mp4.
-const Placeholder: React.FC = () => (
+const Placeholder: React.FC<{ label?: string }> = ({ label }) => (
   <AbsoluteFill
     style={{
       background: `radial-gradient(circle at 50% 45%, ${HERING.navy}, ${HERING.navyDark} 75%)`,
@@ -88,10 +88,64 @@ const Placeholder: React.FC = () => (
         fontSize: 34,
       }}
     >
-      quadro de reserva: public/hering/video.mp4 + HAS_VIDEO = true
+      {label ?? "quadro de reserva: public/hering/video.mp4 + HAS_VIDEO = true"}
     </div>
   </AbsoluteFill>
 );
+
+// Um take do bruto: ponto de início (`src`), enquadramento (zoom e deslocamento)
+// e, se pedido, o topo desfocado para esconder a prateleira do guarda-roupa. Só
+// o CTA mantém o áudio original; os demais são mudos (a voz é a narração).
+const Take: React.FC<{ seg: Segment }> = ({ seg }) => {
+  if (seg.src === undefined) {
+    return <Placeholder label={`take ${seg.id}: defina src em timing.ts`} />;
+  }
+  const f = seg.framing ?? {};
+  const scale = f.scale ?? 1;
+  const video = (extra?: React.CSSProperties) => (
+    <OffthreadVideo
+      src={staticFile("hering/video.mp4")}
+      startFrom={sec(seg.src ?? 0)}
+      volume={seg.keepAudio ? 1 : 0}
+      muted={!seg.keepAudio}
+      style={{ width: WIDTH, height: HEIGHT, objectFit: "cover", ...extra }}
+    />
+  );
+  return (
+    <AbsoluteFill>
+      {scale < 1 ? (
+        <AbsoluteFill
+          style={{
+            transform: "scale(1.4)",
+            filter: "blur(40px) brightness(0.7)",
+          }}
+        >
+          {video()}
+        </AbsoluteFill>
+      ) : null}
+      <AbsoluteFill
+        style={{
+          transform: `translate(${f.x ?? 0}px, ${f.y ?? 0}px) scale(${scale})`,
+        }}
+      >
+        {video()}
+      </AbsoluteFill>
+      {f.blurTop ? (
+        <AbsoluteFill
+          style={{
+            height: HEIGHT * f.blurTop,
+            backdropFilter: "blur(30px)",
+            WebkitBackdropFilter: "blur(30px)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 72%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 72%, transparent 100%)",
+          }}
+        />
+      ) : null}
+    </AbsoluteFill>
+  );
+};
 
 // Degradê escuro no topo, só enquanto há motion, para o texto ler sobre
 // qualquer cena sem criar bloco de fundo.
@@ -174,10 +228,16 @@ export const HeringVideo: React.FC<HeringProps> = ({
       <AbsoluteFill style={{ backgroundColor: HERING.navyDark }}>
         <Graded grade={grade}>
           {HAS_VIDEO ? (
-            <OffthreadVideo
-              src={staticFile("hering/video.mp4")}
-              style={{ width: WIDTH, height: HEIGHT, objectFit: "cover" }}
-            />
+            SEGMENTS.map((seg) => (
+              <Sequence
+                key={`take-${seg.id}`}
+                from={sec(seg.from)}
+                durationInFrames={Math.max(1, sec(seg.to - seg.from))}
+                name={`take ${seg.id}`}
+              >
+                <Take seg={seg} />
+              </Sequence>
+            ))
           ) : (
             <Placeholder />
           )}
@@ -204,22 +264,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
           );
         })}
 
-        {/* Boca da camiseta: só de frente para o espelho */}
-        {SEGMENTS.filter((s) => s.mouth).map((s) => (
-          <Sequence
-            key={`boca-${s.id}`}
-            from={sec(s.from)}
-            durationInFrames={Math.max(8, sec(s.to - s.from))}
-            name={`boca ${s.id}`}
-          >
-            <TalkingMouth
-              place={s.mouth!}
-              syllables={syllablesOf(s.pages.join(" "))}
-            />
-          </Sequence>
-        ))}
-
-        {/* Legenda: a voz dela em azul Hering, a do Marcos no padrão */}
+        {/* Legenda da narração (padrão do perfil: uma linha, faixa preta 40%) */}
         {SEGMENTS.flatMap((s) =>
           pageRanges(s).map((page, i) => (
             <Sequence
@@ -232,7 +277,6 @@ export const HeringVideo: React.FC<HeringProps> = ({
                 parts={[{ text: page.text }]}
                 y={CAPTION_BOTTOM}
                 onPanel={false}
-                tone={s.who === "ela" ? "accent" : "dark"}
               />
             </Sequence>
           )),
@@ -244,6 +288,13 @@ export const HeringVideo: React.FC<HeringProps> = ({
             <Html5Audio src={staticFile(`sfx/${file}`)} volume={() => volume} />
           </Sequence>
         ))}
+
+        {/* Narração: a voz dela, gravada por último */}
+        {NARRACAO_FILE ? (
+          <Sequence from={sec(NARRACAO_INICIO)} layout="none">
+            <Html5Audio src={staticFile(`hering/${NARRACAO_FILE}`)} />
+          </Sequence>
+        ) : null}
 
         {/* Sitcom: vinheta musical na abertura e entre os looks (como as
             vinhetas de troca de cena da referência), palmas na abertura e

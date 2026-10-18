@@ -39,25 +39,25 @@ export type Kind =
   | "guarda"
   | "espelho"
   | "reacao"
+  | "insert"
   | "fecho"
   | "cta";
 
 // Enquadramento do take dentro do quadro 1080×1920: zoom e deslocamento em
 // pixels. Serve para pôr cabeça e pés nas faixas livres (cabeça ~y 540, pés até
 // ~y 1360 no corpo inteiro; cabelo ~y 620 no CTA) sem regravar.
-export type Framing = { scale?: number; x?: number; y?: number };
-
-export type MouthPlacement = {
-  x: number;
-  y: number;
-  size: number;
-  rot: number;
+export type Framing = {
+  scale?: number;
+  x?: number;
+  y?: number;
+  // Fração do topo (0 a 1) que fica desfocada, para esconder objetos de outras
+  // marcas na prateleira do guarda-roupa (briefing: nenhum logo de outra marca).
+  blurTop?: number;
 };
 
 export type Segment = {
   id: string;
   kind: Kind;
-  who: "ela" | "eu";
   from: number; // início no vídeo final (calculado a partir de `dur`)
   to: number;
   // Ponto do bruto (segundos em video.mp4) de onde o take começa.
@@ -67,98 +67,149 @@ export type Segment = {
   keepAudio?: boolean;
   // Páginas da legenda: linha única, até ~28 letras cada.
   pages: string[];
-  // Boca da camiseta (só quando o Marcos está de frente para o espelho).
-  mouth?: MouthPlacement;
 };
 
-// Posição da boca no peito, para o Marcos parado no espelho (ajustar por take).
-// Corpo inteiro (cabeça ~y 480, pés ~y 1360): peito perto de y 745, ~150 px.
-const PEITO: MouthPlacement = { x: 500, y: 745, size: 150, rot: -4 };
-
+// Tudo é a voz do Marcos em off (narração gravada por último), em primeira
+// pessoa, ajustada ao que acontece na imagem de cada take. A graça mantém a
+// ideia da "síndrome de protagonista": a camiseta é a estrela, ele só obedece.
+//
 // Cada trecho tem `dur` (segundos no vídeo final); `from`/`to` saem da soma.
-// As durações abaixo são estimativas do roteiro: com a narração gravada, acertar
-// `dur` pelo tempo real de cada fala. Os trechos "reacao" são os planos
-// silenciosos do Marcos olhando para a lente depois de cada piada dela.
+// As durações são estimativas (~2,7 palavras por segundo): com a narração
+// gravada, acertar `dur` pelo tempo real de cada fala. Os trechos "reacao" são
+// planos silenciosos do Marcos olhando para a lente, sem fala.
+//
+// `src` = ponto do bruto (video.mp4) de onde o take começa. Pontos escolhidos
+// pelo contato do bruto de 18/10 (64 s): ver docs/hering-direcao.md.
+
+// Corpo inteiro em pé: um pouco menor e mais baixo, para a cabeça ficar abaixo
+// da faixa dos motions (de y 250 a ~560). O fundo vira cópia desfocada.
+const EM_PE: Framing = { scale: 0.88, y: 120 };
+// Guarda-roupa: topo desfocado para esconder objetos de outras marcas.
+const GUARDA: Framing = { blurTop: 0.36 };
+
 type Draft = Omit<Segment, "from" | "to"> & { dur: number };
 
 const DRAFTS: Draft[] = [
-  { id: "abertura", kind: "abertura", who: "ela", dur: 3, pages: [] },
   {
+    id: "abertura",
+    src: 0,
+    framing: GUARDA,
+    kind: "abertura",
+    dur: 3,
+    pages: [],
+  },
+  {
+    // Ele pega a calça (bege) no cabide. Fala: "Hoje, quem escolheu o meu look
+    // não fui eu. Foi ela, a camiseta. Calça de alfaiataria."
     id: "g1",
+    src: 6,
+    framing: GUARDA,
     kind: "guarda",
-    who: "ela",
-    dur: 3.2,
-    pages: ["Reunião importante.", "Calça de alfaiataria."],
+    dur: 5.2,
+    pages: [
+      "Hoje, quem escolheu",
+      "o meu look não fui eu.",
+      "Foi ela, a camiseta.",
+      "Calça de alfaiataria.",
+    ],
   },
   {
+    // Em pé de calça bege, encosta na porta, ajeita a barra, olha para a lente.
     id: "e1",
+    src: 20.6,
+    framing: EM_PE,
     kind: "espelho",
-    who: "ela",
-    dur: 3.2,
-    pages: ["Incrível como o tempo", "só me valoriza."],
-    mouth: PEITO,
+    dur: 5.2,
+    pages: [
+      "Eu só obedeci.",
+      "Ela é toda convencida:",
+      "mantém a cor,",
+      "não forma bolinha,",
+      "segundo a Hering.",
+    ],
   },
-  { id: "r1", kind: "reacao", who: "eu", dur: 1, pages: [] },
+  // Close no rosto olhando para a lente (silêncio).
+  { id: "r1", src: 27.4, kind: "reacao", dur: 1, pages: [] },
   {
+    // Volta ao guarda-roupa e troca a calça.
     id: "g2",
+    src: 30,
+    framing: GUARDA,
     kind: "guarda",
-    who: "ela",
-    dur: 4,
-    pages: ["Agora algo pra combinar", "com meu caimento.", "Calça jogger."],
-  },
-  {
-    id: "e2",
-    kind: "espelho",
-    who: "ela",
     dur: 3.4,
-    pages: ["Maravilhosa.", "Com esse caimento então…"],
-    mouth: PEITO,
+    pages: [
+      "Cinco minutos depois,",
+      "ela quis trocar.",
+      "Agora, calça jogger.",
+    ],
   },
-  { id: "r2", kind: "reacao", who: "eu", dur: 1, pages: [] },
   {
+    // De jogger azul-marinho, mãos nos bolsos, vira de lado.
+    id: "e2",
+    src: 36,
+    framing: EM_PE,
+    kind: "espelho",
+    dur: 3.4,
+    pages: ["Olha esse caimento.", "Se ela se acha,", "eu entendo."],
+  },
+  // De perfil, sorrindo para a lente.
+  { id: "r2", src: 39.6, kind: "reacao", dur: 1, pages: [] },
+  {
+    // Insert do close na gola (52–55 s do bruto). Depois de 55 s a etiqueta
+    // aparece: nunca usar.
+    id: "gola",
+    src: 52,
+    kind: "insert",
+    dur: 3,
+    pages: ["A gola? Puxo, estico", "e ela não deforma."],
+  },
+  {
+    // Guarda-roupa de novo: troca para a bermuda.
     id: "g3",
+    src: 42,
+    framing: GUARDA,
     kind: "guarda",
-    who: "ela",
+    dur: 3,
+    pages: ["Aí decidiu: hora de treinar.", "Bermuda."],
+  },
+  {
+    // De bermuda preta, parado e de perfil.
+    id: "e3",
+    src: 46.2,
+    framing: EM_PE,
+    kind: "espelho",
     dur: 4.8,
     pages: [
-      "Algo pra combinar com meu",
-      "algodão cem por cento.",
-      "Bermuda de treino.",
-    ],
-  },
-  {
-    id: "e3",
-    kind: "espelho",
-    who: "ela",
-    dur: 5,
-    pages: [
+      "Cem por cento algodão",
+      "e zero transparência.",
       "Pode suar:",
-      "eu continuo intacta.",
-      "Zero transparência:",
-      "opaca e orgulhosa.",
+      "ela não entrega nada.",
     ],
-    mouth: PEITO,
   },
-  { id: "r3", kind: "reacao", who: "eu", dur: 1, pages: [] },
+  // Abre os braços olhando para a lente.
+  { id: "r3", src: 51, kind: "reacao", dur: 1, pages: [] },
   {
     id: "fecho",
+    src: 14.5,
+    framing: EM_PE,
     kind: "fecho",
-    who: "ela",
-    dur: 4.8,
+    dur: 6.5,
     pages: [
-      "Quarenta e nove",
+      "Tudo isso por",
+      "quarenta e nove",
       "e noventa e nove.",
-      "Barato? Eu sou investimento,",
-      "querida.",
+      "Pra quem tem síndrome",
+      "de protagonista,",
+      "é até barato.",
     ],
-    mouth: PEITO,
   },
-  { id: "r4", kind: "reacao", who: "eu", dur: 1, pages: [] },
+  { id: "r4", src: 28.4, kind: "reacao", dur: 1, pages: [] },
   {
+    // Único trecho falando ao vivo, com a sacola da Hering (áudio original).
     id: "cta",
+    src: 58.84, // corte seco: antes de 58,83 s aparece a etiqueta (proibida)
     kind: "cta",
-    who: "eu",
-    dur: 8.6,
+    dur: 5.6, // do corte até o fim do bruto (64,4 s)
     keepAudio: true,
     pages: [
       "Camiseta Brasil da Hering,",

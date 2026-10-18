@@ -153,6 +153,13 @@ export const GolaSeta: React.FC<{ target?: { x: number; y: number } }> = ({
   );
 };
 
+// insert · close na gola
+export const Gola: React.FC = () => (
+  <Column>
+    <Pill text="GOLA QUE NÃO DEFORMA" delay={4} strong size={52} />
+  </Column>
+);
+
 // e2 · espelho: "com esse caimento então"
 export const Caimento: React.FC = () => (
   <Column>
@@ -160,17 +167,11 @@ export const Caimento: React.FC = () => (
   </Column>
 );
 
-// g3 · guarda-roupa: "meu algodão cem por cento"
-export const Algodao: React.FC = () => (
+// e3 · "cem por cento algodão e zero transparência"
+export const AlgodaoOpaca: React.FC = () => (
   <Column>
-    <Pill text="100% ALGODÃO" delay={4} strong />
-  </Column>
-);
-
-// e3 · espelho: "zero transparência"
-export const NaoTransparente: React.FC = () => (
-  <Column>
-    <Pill text="NÃO FICA TRANSPARENTE" delay={4} strong size={52} />
+    <Pill text="100% ALGODÃO" delay={4} />
+    <Pill text="NÃO FICA TRANSPARENTE" delay={22} strong size={52} />
   </Column>
 );
 

@@ -209,3 +209,51 @@ Aplicação na publi Hering:
   risada de plateia: arquivos reais (a referência tem risada; o Marcos ouviu).
   A risada entra depois das falas dela **no espelho e no fecho** (as piadas),
   não depois das de guarda-roupa (as deixas).
+
+## Mudança de rumo (18/10, noite): voz em off do Marcos, sem boca
+
+O Marcos gravou **só o final com áudio** (com a sacola da Hering) e o resto vai
+em **narração na própria voz**, gravada por último. Saem a boca da camiseta e a
+voz distorcida (a camiseta não fala mais). A "síndrome de protagonista" fica no
+texto: o Marcos narra que a camiseta escolhe os looks e ele só obedece.
+
+Texto da narração: página "Narração Marcos & Hering" (artefato) e `DRAFTS` em
+`src/hering/timing.ts` (legenda e tempos saem de lá). Legenda única no padrão do
+perfil (uma linha, faixa preta 40%).
+
+### Mapa do bruto (video.mp4, 64,4 s; tempos conferidos por extração exata)
+
+| Bruto | Plano | Uso |
+|---|---|---|
+| 0–4 s | portas fechadas, ele abre o guarda-roupa | abertura (cartela) |
+| 6–11 s | pega a calça bege no cabide | g1 |
+| 20,6–26 s | em pé, calça bege, encosta na porta | e1 e fecho (14,5 s) |
+| 27,4 s | close olhando para a lente | reação 1 |
+| 30–33 s | troca a calça no guarda-roupa | g2 |
+| 36–40 s | jogger azul-marinho, mãos nos bolsos, de lado | e2 |
+| 39,6 s | de perfil, sorrindo | reação 2 |
+| 42–46 s | guarda-roupa, bermuda | g3 |
+| 46,2–51 s | bermuda e sandália, de perfil | e3 |
+| 51 s | abre os braços para a lente | reação 3 |
+| 52–55 s | close esticando a gola | insert da gola |
+| **55,5–58,8 s** | **etiqueta da Hering em close** | **NUNCA usar** (briefing) |
+| 58,84–64,4 s | CTA ao vivo, com a sacola | cta (único com áudio original) |
+
+### Problemas vistos no bruto
+- Etiqueta em close (55,5–58,8 s): cortada.
+- Prateleira do guarda-roupa com caixa de videogame com texto (marca) e objetos:
+  topo desfocado nos takes de guarda-roupa (`blurTop`). Conferir o resultado.
+- Calçados: sandália na bermuda; tênis branco e preto. Conferir logo.
+- Microfone de lapela visível na camiseta no CTA.
+- Camiseta com vincos em alguns planos.
+- Os pés ficam na zona coberta pela interface (tela cheia). Em pé, o quadro foi
+  reduzido a 88% e desceu 120 px (`EM_PE`), com fundo desfocado, para a cabeça
+  não ficar sob os motions. Alternativas (tela cheia ou 58%) na imagem de opções.
+
+### Antes de renderizar no PC
+`npm run hering:preparar` ainda não existe. Gere o `public/hering/video.mp4`
+(1080 de largura, 30 fps, com áudio) com:
+`ffmpeg -i "Bruto.mov" -vf "scale=1080:-2,fps=30" -c:v libx264 -crf 18 -c:a aac public/hering/video.mp4`
+Depois: `HAS_VIDEO = true` em `timing.ts`, narração em `public/hering/` e
+`NARRACAO_FILE`. Os pontos de corte (`src`) foram medidos no proxy de 24 fps;
+em 30 fps batem pelo tempo, mas confira o corte da etiqueta (58,84 s).
