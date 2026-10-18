@@ -158,3 +158,14 @@ cartela do original. A referência usa gradação quente de cinema: **não aplic
 
 Sugestão de gravação: uma tomada de estabelecimento de ~2 s (fachada, janela ou
 porta do quarto, sem logo) antes do guarda-roupa, para a cartela entrar em cima.
+
+## Gradação quente (teste do Marcos)
+
+Ligada por padrão em `leve` (`DEFAULT_GRADE` em `src/hering/timing.ts`).
+Opções: `off` (cor natural), `leve`, `cinema`. O briefing proíbe filtro e
+edição excessiva e a camiseta tem que seguir branca: **comparar com `off`
+no vídeo real antes de postar**.
+
+- `npm run render:hering` (leve), `npm run render:hering-cinema`,
+  `npm run render:hering-limpo` (sem gradação).
+- Se for aplicar a gradação no CapCut em vez daqui, usar `off` aqui.

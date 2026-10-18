@@ -13,7 +13,9 @@ import { HERING, HERING_THEME } from "../themes/hering";
 import { TalkingMouth } from "./Mouth";
 import * as M from "./motions";
 import {
+  DEFAULT_GRADE,
   FPS,
+  Grade,
   HAS_PALMAS,
   HAS_RISADA,
   HAS_VIDEO,
@@ -116,18 +118,67 @@ const TopScrim: React.FC = () => {
   );
 };
 
-export const HeringVideo: React.FC = () => {
+// Gradação por CSS: tom quente suave, contraste um pouco maior, vinheta leve.
+const GRADES: Record<
+  Exclude<Grade, "off">,
+  { filter: string; warm: number; vignette: number }
+> = {
+  leve: {
+    filter: "sepia(0.12) saturate(1.05) contrast(1.05) brightness(0.99)",
+    warm: 0.12,
+    vignette: 0.22,
+  },
+  cinema: {
+    filter: "sepia(0.28) saturate(1.12) contrast(1.12) brightness(0.96)",
+    warm: 0.22,
+    vignette: 0.4,
+  },
+};
+
+const Graded: React.FC<{ grade: Grade; children: ReactNode }> = ({
+  grade,
+  children,
+}) => {
+  if (grade === "off") {
+    return <AbsoluteFill>{children}</AbsoluteFill>;
+  }
+  const g = GRADES[grade];
+  return (
+    <AbsoluteFill>
+      <AbsoluteFill style={{ filter: g.filter }}>{children}</AbsoluteFill>
+      <AbsoluteFill
+        style={{
+          backgroundColor: `rgba(255, 170, 90, ${g.warm})`,
+          mixBlendMode: "soft-light",
+        }}
+      />
+      <AbsoluteFill
+        style={{
+          background: `radial-gradient(circle at 50% 46%, rgba(0,0,0,0) 45%, rgba(20,10,0,${g.vignette}) 100%)`,
+        }}
+      />
+    </AbsoluteFill>
+  );
+};
+
+export type HeringProps = { grade?: Grade };
+
+export const HeringVideo: React.FC<HeringProps> = ({
+  grade = DEFAULT_GRADE,
+}) => {
   return (
     <ThemeProvider value={HERING_THEME}>
       <AbsoluteFill style={{ backgroundColor: HERING.navyDark }}>
-        {HAS_VIDEO ? (
-          <OffthreadVideo
-            src={staticFile("hering/video.mp4")}
-            style={{ width: WIDTH, height: HEIGHT, objectFit: "cover" }}
-          />
-        ) : (
-          <Placeholder />
-        )}
+        <Graded grade={grade}>
+          {HAS_VIDEO ? (
+            <OffthreadVideo
+              src={staticFile("hering/video.mp4")}
+              style={{ width: WIDTH, height: HEIGHT, objectFit: "cover" }}
+            />
+          ) : (
+            <Placeholder />
+          )}
+        </Graded>
 
         <TopScrim />
 
@@ -194,20 +245,27 @@ export const HeringVideo: React.FC = () => {
         {/* Sitcom: palmas na abertura, risada ao fim de cada fala dela */}
         {HAS_PALMAS ? (
           <Sequence from={sec(0.2)} layout="none">
-            <Html5Audio src={staticFile("sfx/palmas.wav")} volume={() => 0.35} />
+            <Html5Audio
+              src={staticFile("sfx/palmas.wav")}
+              volume={() => 0.35}
+            />
           </Sequence>
         ) : null}
         {HAS_RISADA
-          ? SEGMENTS.filter((s) => s.who === "ela" && s.kind !== "abertura").map(
-              (s) => (
-                <Sequence key={`risada-${s.id}`} from={sec(s.to - 0.3)} layout="none">
-                  <Html5Audio
-                    src={staticFile("sfx/risada.wav")}
-                    volume={() => 0.25}
-                  />
-                </Sequence>
-              ),
-            )
+          ? SEGMENTS.filter(
+              (s) => s.who === "ela" && s.kind !== "abertura",
+            ).map((s) => (
+              <Sequence
+                key={`risada-${s.id}`}
+                from={sec(s.to - 0.3)}
+                layout="none"
+              >
+                <Html5Audio
+                  src={staticFile("sfx/risada.wav")}
+                  volume={() => 0.25}
+                />
+              </Sequence>
+            ))
           : null}
       </AbsoluteFill>
     </ThemeProvider>

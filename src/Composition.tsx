@@ -21,7 +21,12 @@ import {
   MouthSheet,
   MouthStill,
 } from "./hering/Mouth";
-import { FPS as HERING_CLIP_FPS, SEGMENTS, syllablesOf } from "./hering/timing";
+import {
+  DEFAULT_GRADE,
+  FPS as HERING_CLIP_FPS,
+  SEGMENTS,
+  syllablesOf,
+} from "./hering/timing";
 import {
   VoomCaptionOptions,
   VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
@@ -171,6 +176,7 @@ export const TalkingHeadComposition = () => {
       <Composition
         id="Hering"
         component={HeringVideo}
+        defaultProps={{ grade: DEFAULT_GRADE }}
         durationInFrames={HERING_DURATION_IN_FRAMES}
         fps={HERING_FPS}
         width={HERING_SIZE.width}

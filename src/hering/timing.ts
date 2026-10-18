@@ -14,6 +14,12 @@ export const HAS_VIDEO = false;
 export const HAS_PALMAS = false; // public/sfx/palmas.wav
 export const HAS_RISADA = false; // public/sfx/risada.wav
 
+// Gradação quente de cinema (teste pedido pelo Marcos). "off" = cor natural.
+// O briefing proíbe filtro/edição excessiva e a camiseta tem que seguir
+// branca: conferir o branco no frame real e comparar com "off" antes de postar.
+export type Grade = "off" | "leve" | "cinema";
+export const DEFAULT_GRADE: Grade = "leve";
+
 export type Kind = "abertura" | "guarda" | "espelho" | "fecho" | "cta";
 
 export type MouthPlacement = { x: number; y: number; size: number; rot: number };

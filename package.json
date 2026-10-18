@@ -35,6 +35,8 @@
     "previa": "remotion render Creep out/creep-previa.mp4 --scale=0.4 --crf=30",
     "previa:hering": "remotion render Hering out/hering-previa.mp4 --scale=0.4 --crf=30",
     "render:hering": "remotion render Hering out/hering.mp4 --codec=h264 --crf=18",
+    "render:hering-limpo": "remotion render Hering out/hering-limpo.mp4 --codec=h264 --crf=18 --props=src/hering/props/off.json",
+    "render:hering-cinema": "remotion render Hering out/hering-cinema.mp4 --codec=h264 --crf=18 --props=src/hering/props/cinema.json",
     "render:creep": "remotion render Creep out/creep.mp4 --codec=h264 --crf=18"
   },
   "sideEffects": [
