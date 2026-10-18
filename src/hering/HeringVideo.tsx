@@ -46,7 +46,7 @@ const MOTIONS: Record<
   { node: ReactNode; offset?: number; until?: string }
 > = {
   cartela: { node: <M.CartelaEpisodio /> },
-  e1: { node: <M.NomeProduto />, offset: 4.4 },
+  e1: { node: <M.NomeProduto />, offset: 3.8 },
   gola: { node: <M.Diferenciais /> },
   m1: {
     node: (
@@ -67,7 +67,7 @@ const MOTIONS: Record<
     ),
     until: "m4",
   },
-  f1: { node: <M.Preco />, until: "f2" },
+  f1: { node: <M.Preco />, offset: 0.9, until: "f2" },
   cta: { node: <M.SeloCta /> },
 };
 

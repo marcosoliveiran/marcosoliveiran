@@ -20,7 +20,7 @@ export const HAS_VIDEO = false;
 // texto novo ficar pronto. As páginas de cada trecho continuam em SEGMENTS.
 export const MOSTRAR_LEGENDA = false;
 
-export const NARRACAO_FILE: string | null = null;
+export const NARRACAO_FILE: string | null = "narracao-final.mp3";
 export const NARRACAO_INICIO = 0;
 
 // Efeitos de sitcom (do CapCut ou banco livre de uso comercial). Coloque em
@@ -92,13 +92,12 @@ type Draft = Omit<Segment, "from" | "to"> & { dur: number };
 
 const DRAFTS: Draft[] = [
   {
-    // BLOCO 1 (texto do Marcos): ele define a síndrome de protagonista, em voz
-    // off, sobre o guarda-roupa abrindo e a escolha da primeira calça (bruto
-    // 0–11,5 s). Ritmo calmo, tom sério, pausa depois de "protagonista".
+    // BLOCO 1 (narração raw 0,06–8,20 s): a definição. Sobre o guarda-roupa
+    // abrindo e a escolha da primeira calça.
     id: "def",
     src: 0,
     kind: "guarda",
-    dur: 11.5,
+    dur: 8.8,
     pages: [
       "Síndrome de protagonista.",
       "Condição da pessoa que acredita",
@@ -107,17 +106,15 @@ const DRAFTS: Draft[] = [
       "e que ela é o personagem principal.",
     ],
   },
-  // Cartela depois da definição: "Marcos & Hering · Episódio 1 · A síndrome de
-  // protagonista" (a definição prepara o título). Sobre a calça levantada.
-  { id: "cartela", src: 11.5, kind: "abertura", dur: 3, pages: [] },
+  // Cartela depois da definição (sem fala), com a vinheta.
+  { id: "cartela", src: 8.8, kind: "abertura", dur: 3, pages: [] },
   {
-    // BLOCO 2 (texto do Marcos): liga a síndrome à camiseta. Em pé de calça
-    // bege, encosta na porta, ajeita a barra, olha para a lente (bruto 14,5–24 s).
-    // "Camiseta Brasil" aparece como selo na tela por volta de 4,6 s.
+    // BLOCO 2 (narração raw 15,70–23,16 s): a ligação com a camiseta. Em pé de
+    // calça bege. O selo "Camiseta Brasil" entra quando ele diz o nome (~3,8 s).
     id: "e1",
-    src: 14.5,
+    src: 15.45,
     kind: "espelho",
-    dur: 9.5,
+    dur: 8.2,
     pages: [
       "Eu achava que isso só",
       "acontecia com gente.",
@@ -127,65 +124,66 @@ const DRAFTS: Draft[] = [
       "tem que ser sobre ela.",
     ],
   },
-  // Depois de "tem que ser sobre ela": silêncio. Ele encosta na parede com a
-  // mão na cabeça (pose dramática) e olha para a lente em close (bruto 24–28,7 s).
+  // Depois de "tem que ser sobre ela": silêncio. Pose dramática na parede e
+  // olhar para a lente em close (bruto 24,2–28,7 s).
   { id: "beat", src: 24.2, kind: "reacao", dur: 4.5, pages: [] },
-  // BLOCO 3 (texto do Marcos): "Posso mudar a calça, combinar com bermuda, mas
-  // ela nunca sai de cena. O básico que funciona com tudo!" A frase passa pelas
-  // duas trocas de look; cada pedaço cai no look que ele cita.
+  // BLOCO 3 (narração raw 35,96–42,98 s): cada pedaço cai no look que cita. Os
+  // cortes seguem as pausas da voz: "calça," (37,35 s), "bermuda," (39,0 s).
   {
     id: "m1", // jogger azul-marinho
     src: 34.2,
     kind: "espelho",
-    dur: 2.2,
+    dur: 1.6,
     pages: ["Posso mudar a calça,"],
   },
   {
     id: "m2", // trocando para a bermuda
-    src: 44.4,
+    src: 44.6,
     kind: "guarda",
-    dur: 2,
+    dur: 1.65,
     pages: ["combinar com bermuda,"],
   },
   {
     id: "m3", // de bermuda, de perfil
     src: 46.6,
     kind: "espelho",
-    dur: 2.4,
+    dur: 1.65,
     pages: ["mas ela nunca", "sai de cena."],
   },
   {
     id: "m4", // abre os braços para a lente
-    src: 49.4,
+    src: 49.3,
     kind: "espelho",
-    dur: 2.6,
+    dur: 2.7,
     pages: ["O básico que funciona", "com tudo!"],
   },
   {
-    // BLOCO 4 (texto do Marcos): "100% algodão, não fica transparente e a gola
-    // não deforma." Close na gola (bruto 52–55 s, a 0,85x para durar 3,5 s).
-    // Depois de 55,4 s a etiqueta aparece: nunca usar.
+    // BLOCO 4 (narração raw 45,92–49,76 s): os diferenciais. Close na gola
+    // (bruto 52–55 s) em câmera lenta 0,7x. Depois de 55,4 s a etiqueta aparece:
+    // nunca usar.
     id: "gola",
     src: 52,
-    rate: 0.85,
+    rate: 0.7,
     kind: "insert",
-    dur: 3.5,
+    dur: 4.4,
     pages: ["100% algodão,", "não fica transparente", "e a gola não deforma."],
   },
   {
-    // BLOCO 5 (texto do Marcos): o preço. ATENÇÃO: o preço do briefing é
-    // R$ 49,99 (o texto original dizia 49,90).
+    // BLOCO 5 (narração raw 50,44–55,88 s): o preço. Preço do briefing:
+    // R$ 49,99. Confirmar que a fala gravada diz "quarenta e nove e noventa e
+    // nove".
     id: "f1", // jogger, mãos nos bolsos
-    src: 36.4,
+    src: 36,
     kind: "fecho",
-    dur: 3.2,
+    dur: 3.4,
     pages: ["E o melhor:", "R$ 49,99!"],
   },
   {
-    id: "f2", // de perfil, sorrindo para a lente
-    src: 39.9,
+    id: "f2", // de perfil, sorrindo para a lente (0,8x)
+    src: 39.5,
+    rate: 0.8,
     kind: "fecho",
-    dur: 2.4,
+    dur: 2.7,
     pages: ["Protagonista por preço", "de coadjuvante."],
   },
   {
