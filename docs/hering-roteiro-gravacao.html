@@ -104,6 +104,7 @@
   @media (max-width: 640px) { .frame-grid { grid-template-columns: 1fr; } }
   .legend { display: grid; gap: 6px; font-size: 15px; }
   .legend span { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-items: baseline; }
+  .legend .t { font-style: normal; min-width: 0; }
   .legend i { width: 14px; height: 14px; border-radius: 3px; display: inline-block; transform: translateY(2px); }
   ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
   @media (prefers-reduced-motion: reduce) { .bar i { transition: none; } }
@@ -180,10 +181,10 @@
         <figcaption>Quadro 9:16. Vermelho: zonas que a plataforma cobre.</figcaption>
       </figure>
       <div class="legend">
-        <span><i style="background:var(--blue)"></i><b>Corpo inteiro:</b> cabeça um pouco abaixo de 1/4 do topo (28% da altura), pés até ~71%. Os pés <b>não</b> ficam na faixa da legenda.</span>
-        <span><i style="background:var(--blue-soft);border:1px dashed var(--blue)"></i><b>Em cima da cabeça fica livre</b> (até ~28%): ali entram os motions.</span>
-        <span><i style="background:var(--coral-soft)"></i><b>Nada importante</b> no topo (13%), no fundo (25%) e na direita (13%).</span>
-        <span><i style="background:var(--navy)"></i>Distância: uns <b>3 m</b> com a lente 1x, ou uns 1,5 m com a 0,5x. Ajuste olhando a grade da câmera.</span>
+        <span><i style="background:var(--blue)"></i><em class="t"><b>Corpo inteiro:</b> cabeça um pouco abaixo de 1/4 do topo (28% da altura), pés até ~71%. Os pés <b>não</b> ficam na faixa da legenda.</em></span>
+        <span><i style="background:var(--blue-soft);border:1px dashed var(--blue)"></i><em class="t"><b>Em cima da cabeça fica livre</b> (até ~28%): ali entram os motions.</em></span>
+        <span><i style="background:var(--coral-soft)"></i><em class="t"><b>Nada importante</b> no topo (13%), no fundo (25%) e na direita (13%).</em></span>
+        <span><i style="background:var(--navy)"></i><em class="t">Distância: uns <b>3 m</b> com a lente 1x, ou uns 1,5 m com a 0,5x. Ajuste olhando a grade da câmera.</em></span>
       </div>
     </div>
   </section>
