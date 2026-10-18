@@ -317,6 +317,8 @@ export const HolofoteProtagonista: React.FC = () => {
         top: SAFE.top + 12,
         width: 330,
         height: 360,
+        transformOrigin: "100% 0",
+        transform: "scale(1.18)",
       }}
     >
       <svg
@@ -420,6 +422,8 @@ export const LookCarousel: React.FC = () => {
         top: SAFE.top + 12,
         width: 310,
         height: 360,
+        transformOrigin: "100% 0",
+        transform: "scale(1.18)",
       }}
     >
       <At
