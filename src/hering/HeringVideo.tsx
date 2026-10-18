@@ -48,7 +48,7 @@ const MOTIONS: Record<
 > = {
   def: { node: <M.DefinicaoBusca /> },
   cartela: { node: <M.CartelaEpisodio /> },
-  e1: { node: <M.HolofoteProtagonista /> },
+  e1: { node: <M.NomeProduto /> },
   m1: { node: <M.LookCarousel />, until: "m4" },
   gola: { node: <M.Diferenciais /> },
   f1: { node: <M.Preco />, until: "f2" },

@@ -45,6 +45,9 @@ export type Theme = {
   // Caption layout used when a scene does not choose one. Personal profile
   // (voom) uses "clean"; brands keep the kinetic "default".
   captionVariant?: CaptionStyle;
+  // Estilo "clean": cor da faixa (padrão preto 40%) e caixa-alta (padrão sim).
+  captionBackground?: string;
+  captionUppercase?: boolean;
   shadow: string; // rgb triplet used for soft shadows, e.g. "80, 60, 50"
 };
 
@@ -509,13 +512,15 @@ const CleanCaption: React.FC<{ words: Part[]; tone: CaptionTone }> = ({
         padding: `10px ${CLEAN_PAD_X}px 14px`,
         borderRadius: 18,
         backgroundColor:
-          tone === "accent" ? theme.accent : "rgba(0, 0, 0, 0.4)",
+          tone === "accent"
+            ? theme.accent
+            : (theme.captionBackground ?? "rgba(0, 0, 0, 0.4)"),
         color: "white",
         fontFamily: theme.font,
         fontWeight: 900,
         fontSize,
         lineHeight: 1.15,
-        textTransform: "uppercase",
+        textTransform: theme.captionUppercase === false ? "none" : "uppercase",
         textAlign: "center",
         opacity: Math.min(1, pop * 2),
         transform: `scale(${0.82 + 0.18 * pop})`,

@@ -16,9 +16,15 @@ export const HAS_VIDEO = false;
 // Narração (a voz dela, gravada por último). null = sem narração ainda.
 // Coloque o arquivo em public/hering/ e escreva o nome, ex.: "narracao.wav".
 // NARRACAO_INICIO = segundo do VÍDEO FINAL em que a narração começa.
-// Legenda da narração na base (y = 1440). Desligada a pedido do Marcos, até o
-// texto novo ficar pronto. As páginas de cada trecho continuam em SEGMENTS.
-export const MOSTRAR_LEGENDA = false;
+// Legenda da narração na base (y = 1440), no estilo da marca (faixa azul-marinho,
+// texto em caixa mista). Cada trecho distribui as páginas dentro da janela em
+// que o Marcos fala (`speech`) ou nos tempos exatos de `pageTimes`.
+export const MOSTRAR_LEGENDA = true;
+
+// Cartela de abertura: "hering" (tipografia limpa da marca) ou "retro" (script de
+// abertura de sitcom, como na referência).
+export type CartelaEstilo = "hering" | "retro";
+export const CARTELA_ESTILO: CartelaEstilo = "hering";
 
 export const NARRACAO_FILE: string | null = "narracao-final.mp3";
 export const NARRACAO_INICIO = 0;
@@ -73,6 +79,11 @@ export type Segment = {
   rate?: number;
   // Páginas da legenda: linha única, até ~28 letras cada.
   pages: string[];
+  // Janela (segundos desde o início do trecho) em que a voz fala. Sem ela, as
+  // páginas se espalham pelo trecho todo.
+  speech?: [number, number];
+  // Tempos exatos de cada página (segundos desde o início do trecho).
+  pageTimes?: [number, number][];
 };
 
 // Tudo é a voz do Marcos em off (narração gravada por último), em primeira
@@ -98,6 +109,7 @@ const DRAFTS: Draft[] = [
     // BLOCO 1 (narração raw 0,06–8,20 s): a definição. Sobre o guarda-roupa
     // abrindo e a escolha da primeira calça.
     id: "def",
+    speech: [0.14, 8.26],
     src: 0,
     kind: "guarda",
     dur: 8.8,
@@ -115,6 +127,7 @@ const DRAFTS: Draft[] = [
     // BLOCO 2 (narração raw 15,70–23,16 s): a ligação com a camiseta. Em pé de
     // calça bege. O selo "Camiseta Brasil" entra quando ele diz o nome (~3,8 s).
     id: "e1",
+    speech: [0.25, 7.71],
     src: 15.45,
     kind: "espelho",
     dur: 8.2,
@@ -133,28 +146,32 @@ const DRAFTS: Draft[] = [
   // BLOCO 3 (narração raw 35,96–42,98 s): cada pedaço cai no look que cita. Os
   // cortes seguem as pausas da voz: "calça," (37,35 s), "bermuda," (39,0 s).
   {
-    id: "m1", // jogger azul-marinho
+    id: "m1",
+    speech: [0.2, 1.59], // jogger azul-marinho
     src: 34.2,
     kind: "espelho",
     dur: 1.6,
     pages: ["Posso mudar a calça,"],
   },
   {
-    id: "m2", // trocando para a bermuda
+    id: "m2",
+    speech: [0.0, 1.6], // trocando para a bermuda
     src: 44.6,
     kind: "guarda",
     dur: 1.65,
     pages: ["combinar com bermuda,"],
   },
   {
-    id: "m3", // de bermuda, de perfil
+    id: "m3",
+    speech: [0.0, 1.4], // de bermuda, de perfil
     src: 46.6,
     kind: "espelho",
     dur: 1.65,
     pages: ["mas ela nunca", "sai de cena."],
   },
   {
-    id: "m4", // abre os braços para a lente
+    id: "m4",
+    speech: [0.28, 2.32], // abre os braços para a lente
     src: 49.3,
     kind: "espelho",
     dur: 2.7,
@@ -165,6 +182,7 @@ const DRAFTS: Draft[] = [
     // (bruto 52–55 s) em câmera lenta 0,7x. Depois de 55,4 s a etiqueta aparece:
     // nunca usar.
     id: "gola",
+    speech: [0.2, 4.04],
     src: 52,
     rate: 0.7,
     kind: "insert",
@@ -175,14 +193,16 @@ const DRAFTS: Draft[] = [
     // BLOCO 5 (narração raw 50,44–55,88 s): o preço. Preço do briefing:
     // R$ 49,99. Confirmar que a fala gravada diz "quarenta e nove e noventa e
     // nove".
-    id: "f1", // jogger, mãos nos bolsos
+    id: "f1",
+    speech: [0.2, 3.26], // jogger, mãos nos bolsos
     src: 36,
     kind: "fecho",
     dur: 3.4,
     pages: ["E o melhor:", "R$ 49,99!"],
   },
   {
-    id: "f2", // de perfil, sorrindo para a lente (0,8x)
+    id: "f2",
+    speech: [0.0, 2.24], // de perfil, sorrindo para a lente (0,8x)
     src: 39.5,
     rate: 0.8,
     kind: "fecho",
@@ -192,6 +212,13 @@ const DRAFTS: Draft[] = [
   {
     // Único trecho falando ao vivo, com a sacola da Hering (áudio original).
     id: "cta",
+    pageTimes: [
+      [0, 0.95],
+      [0.95, 1.8],
+      [1.8, 2.62],
+      [3.04, 4.2],
+      [4.3, 5.2],
+    ],
     src: 58.84, // corte seco: antes de 58,83 s aparece a etiqueta (proibida)
     kind: "cta",
     dur: 5.6, // do corte até o fim do bruto (64,4 s)
@@ -228,17 +255,21 @@ export const segmentById = (id: string): Segment => {
 export const pageRanges = (
   segment: Segment,
 ): { text: string; from: number; to: number }[] => {
+  if (segment.pageTimes) {
+    return segment.pages.map((text, i) => ({
+      text,
+      from: segment.from + segment.pageTimes![i][0],
+      to: segment.from + segment.pageTimes![i][1],
+    }));
+  }
+  const [start, end] = segment.speech ?? [0, segment.to - segment.from];
   const lengths = segment.pages.map((p) => p.length);
   const total = lengths.reduce((a, b) => a + b, 0);
-  const span = segment.to - segment.from;
+  const span = end - start;
   let before = 0;
   return segment.pages.map((text, i) => {
-    const from = segment.from + (before / total) * span;
+    const from = segment.from + start + (before / total) * span;
     before += lengths[i];
-    return { text, from, to: segment.from + (before / total) * span };
+    return { text, from, to: segment.from + start + (before / total) * span };
   });
 };
-
-// Sílabas aproximadas (grupos de vogais), para mexer a boca no ritmo da fala.
-export const syllablesOf = (text: string): number =>
-  Math.max(1, (text.match(/[aeiouáàâãéêíóôõúü]+/gi) ?? []).length);

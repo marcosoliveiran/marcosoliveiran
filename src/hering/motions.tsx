@@ -1,3 +1,4 @@
+import { CSSProperties } from "react";
 import {
   Easing,
   interpolate,
@@ -6,99 +7,40 @@ import {
   useVideoConfig,
 } from "remotion";
 import { SAFE } from "../kit";
-import { HERING, HERING_SCRIPT_FONT } from "../themes/hering";
+import { HERING, HERING_FONT, HERING_SCRIPT_FONT } from "../themes/hering";
 import {
+  ClapperIcon,
   CollarIcon,
   CottonIcon,
   EyeSlashIcon,
   PantsIcon,
-  PersonIcon,
   SearchIcon,
   ShirtIcon,
   ShortsIcon,
   SneakerIcon,
-  SparkleIcon,
-  StarIcon,
 } from "./icons";
-import { VOOM_TEXT_FONT, VOOM_TITLE_FONT } from "../themes/voom";
+import { CARTELA_ESTILO } from "./timing";
 
-// Motions da publi Hering. Sem painel de fundo: cada recurso é pequeno,
-// flutua sobre o vídeo do Marcos e carrega a própria sombra leve. Tudo fica
-// dentro da área segura (topo 250, esquerda 60, direita 140).
+// Motions da publi Hering. Linguagem da marca: tipografia geométrica e limpa
+// (Plus Jakarta Sans, "Camiseta Brasil" leve e "Hering" em negrito), azul-marinho,
+// traços finos e muito espaço. Sem painel de fundo grande: cada recurso é pequeno,
+// flutua sobre o vídeo e fica dentro da área segura (topo 250, esquerda 60,
+// direita 140). O rosto do Marcos fica livre: os recursos ocupam os cantos.
 
-const CENTER_X = SAFE.left + (1080 - SAFE.left - SAFE.right) / 2;
-const SHADOW = "0 10px 26px rgba(10, 20, 40, 0.38)";
-
-const useIn = (delay = 0) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  return spring({
-    frame: frame - delay,
-    fps,
-    config: { damping: 12, stiffness: 170 },
-  });
-};
-
-const Column: React.FC<{ children: React.ReactNode; top?: number }> = ({
-  children,
-  top = SAFE.top + 40,
-}) => (
-  <div
-    style={{
-      position: "absolute",
-      left: CENTER_X - 440,
-      width: 880,
-      top,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 22,
-    }}
-  >
-    {children}
-  </div>
-);
-
-// Pílula pequena: `strong` usa o azul de destaque, as demais o azul-marinho.
-const Pill: React.FC<{
-  text: string;
-  delay: number;
-  strong?: boolean;
-  size?: number;
-}> = ({ text, delay, strong, size = 58 }) => {
-  const pop = useIn(delay);
-  return (
-    <div
-      style={{
-        opacity: Math.min(1, pop * 2),
-        transform: `translateY(${(1 - pop) * 40}px) scale(${0.85 + 0.15 * pop}) rotate(${(1 - pop) * -3}deg)`,
-        padding: "8px 30px 12px",
-        borderRadius: 999,
-        backgroundColor: strong ? HERING.blue : "rgba(47, 77, 120, 0.92)",
-        color: HERING.white,
-        fontFamily: VOOM_TITLE_FONT,
-        fontWeight: 700,
-        fontSize: size,
-        lineHeight: 1.1,
-        whiteSpace: "nowrap",
-        boxShadow: SHADOW,
-      }}
-    >
-      {text}
-    </div>
-  );
-};
+const SHADOW = "0 10px 30px rgba(10, 20, 40, 0.35)";
+const TEXT_SHADOW = "0 3px 18px rgba(10, 20, 40, 0.7)";
+const GLASS = "rgba(22, 38, 63, 0.84)";
 
 // --- Relógio dos motions ----------------------------------------------------
-// Os tempos abaixo são em segundos desde o início do trecho do motion e foram
-// medidos na narração do Marcos (cada fala tem o seu momento).
+// Tempos em segundos desde o início do trecho do motion, medidos na narração.
 
 const EASE = Easing.bezier(0.2, 0.8, 0.2, 1);
 
 const useClock = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
   const t = frame / fps;
+  const total = durationInFrames / fps;
   const ramp = (a: number, b: number) =>
     interpolate(t, [a, b], [0, 1], {
       extrapolateLeft: "clamp",
@@ -109,17 +51,21 @@ const useClock = () => {
     spring({
       frame: frame - at * fps,
       fps,
-      config: { damping: 11, stiffness: 160 },
+      config: { damping: 15, stiffness: 150 },
     });
-  return { t, ramp, pop };
+  // 1 durante o motion, caindo a 0 nos últimos 0,35 s.
+  const out = interpolate(t, [total - 0.35, total], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return { t, total, ramp, pop, out };
 };
 
-// Posiciona o centro de um elemento num ponto de um contêiner.
 const At: React.FC<{
   x: number;
   y: number;
   children: React.ReactNode;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }> = ({ x, y, children, style }) => (
   <div
     style={{
@@ -134,16 +80,72 @@ const At: React.FC<{
   </div>
 );
 
-const LABEL: React.CSSProperties = {
-  color: HERING.white,
-  fontFamily: VOOM_TEXT_FONT,
-  fontWeight: 900,
-  textShadow: "0 3px 14px rgba(10, 20, 40, 0.75)",
-  textAlign: "center",
-};
+// Painel azul-marinho translúcido, para o traço branco dos ícones ler sobre
+// qualquer parede (é o mesmo material do cartão do preço).
+const Tile: React.FC<{
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  opacity?: number;
+}> = ({ x, y, w, h, opacity = 1 }) => (
+  <At
+    x={x}
+    y={y}
+    style={{
+      width: w,
+      height: h,
+      borderRadius: 28,
+      backgroundColor: GLASS,
+      boxShadow: SHADOW,
+      opacity,
+    }}
+  >
+    <span />
+  </At>
+);
+
+// "Camiseta Brasil" leve e "Hering" em negrito, como no briefing da marca.
+const Lockup: React.FC<{
+  size: number;
+  align?: "left" | "center";
+  progress?: number;
+}> = ({ size, align = "left", progress = 1 }) => (
+  <div
+    style={{
+      fontFamily: HERING_FONT,
+      color: HERING.white,
+      textShadow: TEXT_SHADOW,
+      lineHeight: 1.02,
+      textAlign: align,
+      opacity: progress,
+      transform: `translateX(${(1 - progress) * -40}px)`,
+    }}
+  >
+    <div style={{ fontWeight: 300, fontSize: size, letterSpacing: -1 }}>
+      Camiseta Brasil
+    </div>
+    <div
+      style={{ fontWeight: 800, fontSize: size * 1.08, letterSpacing: -1.5 }}
+    >
+      Hering
+    </div>
+    <div
+      style={{
+        marginTop: size * 0.2,
+        height: 4,
+        width: size * 2.4 * progress,
+        backgroundColor: HERING.blue,
+        borderRadius: 2,
+        marginLeft: align === "center" ? "auto" : 0,
+        marginRight: align === "center" ? "auto" : 0,
+      }}
+    />
+  </div>
+);
 
 // --- Bloco 1 · a definição, como uma pesquisa -------------------------------
-// Uma barra de busca digita "síndrome de protagonista" e o resultado mostra a
+// A barra de busca digita "síndrome de protagonista" e o resultado mostra a
 // definição, com a palavra que o Marcos está falando destacada.
 
 const DEF_A =
@@ -169,18 +171,11 @@ const DEF_WORDS = [...spread(DEF_A, 2.28, 5.32), ...spread(DEF_B, 5.52, 8.26)];
 const QUERY = "síndrome de protagonista";
 
 export const DefinicaoBusca: React.FC = () => {
-  const { t, ramp, pop } = useClock();
-  const { durationInFrames, fps } = useVideoConfig();
+  const { t, ramp, pop, out } = useClock();
   const typed = QUERY.slice(0, Math.floor(ramp(0.14, 1.75) * QUERY.length));
   const cursor = t < 2.4 && Math.floor(t * 2.4) % 2 === 0;
   const bar = pop(0);
   const card = pop(1.95);
-  const out = interpolate(
-    t,
-    [durationInFrames / fps - 0.45, durationInFrames / fps],
-    [1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
 
   return (
     <div style={{ position: "absolute", inset: 0, opacity: out }}>
@@ -188,7 +183,7 @@ export const DefinicaoBusca: React.FC = () => {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: "rgba(16, 28, 48, 0.42)",
+          backgroundColor: "rgba(16, 28, 48, 0.3)",
           opacity: ramp(0, 0.5),
         }}
       />
@@ -196,26 +191,26 @@ export const DefinicaoBusca: React.FC = () => {
         style={{
           position: "absolute",
           left: SAFE.left,
-          top: SAFE.top + 24,
+          top: SAFE.top + 12,
           width: 880,
-          height: 104,
-          borderRadius: 52,
+          height: 88,
+          borderRadius: 44,
           backgroundColor: "#FFFFFF",
           boxShadow: SHADOW,
           display: "flex",
           alignItems: "center",
-          gap: 22,
-          padding: "0 34px",
-          transform: `translateY(${(1 - bar) * -60}px)`,
+          gap: 20,
+          padding: "0 32px",
+          transform: `translateY(${(1 - bar) * -50}px)`,
           opacity: Math.min(1, bar * 2),
         }}
       >
-        <SearchIcon size={56} />
+        <SearchIcon size={42} />
         <div
           style={{
-            fontFamily: VOOM_TEXT_FONT,
-            fontWeight: 800,
-            fontSize: 46,
+            fontFamily: HERING_FONT,
+            fontWeight: 600,
+            fontSize: 38,
             color: HERING.navyDark,
             whiteSpace: "nowrap",
           }}
@@ -229,49 +224,48 @@ export const DefinicaoBusca: React.FC = () => {
         style={{
           position: "absolute",
           left: SAFE.left,
-          top: SAFE.top + 160,
+          top: SAFE.top + 120,
           width: 880,
-          padding: "38px 44px 44px",
-          borderRadius: 36,
-          backgroundColor: "rgba(255, 255, 255, 0.97)",
+          padding: "26px 36px 30px",
+          borderRadius: 28,
+          backgroundColor: GLASS,
           boxShadow: SHADOW,
-          transform: `translateY(${(1 - card) * 70}px) scale(${0.93 + 0.07 * card})`,
+          transform: `translateY(${(1 - card) * 40}px)`,
           opacity: Math.min(1, card * 2),
         }}
       >
         <div
           style={{
-            fontFamily: VOOM_TEXT_FONT,
-            fontWeight: 900,
-            fontSize: 26,
+            fontFamily: HERING_FONT,
+            fontWeight: 700,
+            fontSize: 20,
             letterSpacing: 4,
-            color: HERING.blue,
+            color: "#8FB0E6",
           }}
         >
           DEFINIÇÃO
         </div>
         <div
           style={{
-            fontFamily: VOOM_TITLE_FONT,
-            fontWeight: 700,
-            fontSize: 62,
-            lineHeight: 1.1,
-            color: HERING.navyDark,
-            margin: "6px 0 22px",
+            fontFamily: HERING_FONT,
+            fontWeight: 800,
+            fontSize: 44,
+            lineHeight: 1.15,
+            color: HERING.white,
+            margin: "4px 0 14px",
           }}
         >
           síndrome de protagonista
         </div>
         <div
           style={{
-            fontFamily: VOOM_TEXT_FONT,
-            fontWeight: 800,
-            fontSize: 46,
-            lineHeight: 1.42,
-            color: HERING.navyDark,
+            fontFamily: HERING_FONT,
+            fontWeight: 500,
+            fontSize: 32,
+            lineHeight: 1.5,
             display: "flex",
             flexWrap: "wrap",
-            columnGap: 12,
+            columnGap: 9,
           }}
         >
           {DEF_WORDS.map((w, i) => {
@@ -281,11 +275,11 @@ export const DefinicaoBusca: React.FC = () => {
               <span
                 key={i}
                 style={{
-                  opacity: lit ? 1 : 0.22,
-                  padding: "0 8px",
-                  borderRadius: 10,
+                  opacity: lit ? 1 : 0.3,
+                  padding: "0 7px",
+                  borderRadius: 8,
                   backgroundColor: current ? HERING.blue : "transparent",
-                  color: current ? "#FFFFFF" : HERING.navyDark,
+                  color: HERING.white,
                 }}
               >
                 {w.word}
@@ -298,122 +292,38 @@ export const DefinicaoBusca: React.FC = () => {
   );
 };
 
-// --- Bloco 2 · "isso só acontecia com gente… agora todo look é sobre ela" ----
-// Um holofote ilumina uma pessoa; quando ele diz "Camiseta Brasil", a camiseta
-// cai no lugar dela e ganha a estrela de protagonista.
+// --- Bloco 2 · o nome do produto, em destaque --------------------------------
+// Entra quando o Marcos diz "Camiseta Brasil" (~3,65 s) e sai ao fim do trecho.
 
-export const HolofoteProtagonista: React.FC = () => {
-  const { t, ramp, pop } = useClock();
-  const spot = ramp(0.25, 0.8);
-  const personOut = ramp(3.45, 3.75);
-  const person = pop(0.35);
-  const shirt = pop(3.65);
-  const star = pop(6.5);
+export const NomeProduto: React.FC = () => {
+  const { ramp, out } = useClock();
   return (
     <div
       style={{
         position: "absolute",
-        left: 610,
-        top: SAFE.top + 12,
-        width: 330,
-        height: 360,
-        transformOrigin: "100% 0",
-        transform: "scale(1.18)",
+        left: SAFE.left,
+        top: SAFE.top + 20,
+        opacity: out,
       }}
     >
-      <svg
-        width={330}
-        height={360}
-        viewBox="0 0 330 360"
-        style={{ position: "absolute", inset: 0, opacity: spot }}
-      >
-        <defs>
-          <linearGradient id="holofote" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.55" />
-            <stop offset="1" stopColor="#FFFFFF" stopOpacity="0.06" />
-          </linearGradient>
-        </defs>
-        <polygon points="165,0 18,330 312,330" fill="url(#holofote)" />
-        <ellipse
-          cx={165}
-          cy={334}
-          rx={140}
-          ry={16}
-          fill="#FFFFFF"
-          opacity={0.4}
-        />
-      </svg>
-
-      <At
-        x={165}
-        y={232}
-        style={{
-          opacity: Math.min(1, person * 2) * (1 - personOut),
-          transform: `translate(-50%, -50%) translateY(${personOut * 50}px) scale(${(0.7 + 0.3 * person) * (1 - 0.2 * personOut)})`,
-        }}
-      >
-        <PersonIcon size={150} />
-      </At>
-
-      <At
-        x={165}
-        y={218}
-        style={{
-          opacity: Math.min(1, shirt * 2),
-          transform: `translate(-50%, -50%) translateY(${(1 - shirt) * -160}px) rotate(${(1 - shirt) * 18}deg)`,
-        }}
-      >
-        <ShirtIcon size={200} />
-      </At>
-
-      {[
-        { x: 60, y: 140, at: 4.15 },
-        { x: 285, y: 170, at: 4.3 },
-        { x: 250, y: 90, at: 4.45 },
-      ].map((sp, i) => {
-        const k = ramp(sp.at, sp.at + 0.3);
-        const twinkle = 0.75 + 0.25 * Math.sin((t - sp.at) * 9);
-        return (
-          <At
-            key={i}
-            x={sp.x}
-            y={sp.y}
-            style={{
-              opacity: k * (t > 5.5 ? Math.max(0, 1 - (t - 5.5)) : 1),
-              transform: `translate(-50%, -50%) scale(${k * twinkle})`,
-            }}
-          >
-            <SparkleIcon size={46} />
-          </At>
-        );
-      })}
-
-      <At
-        x={165}
-        y={64}
-        style={{
-          opacity: Math.min(1, star * 2),
-          transform: `translate(-50%, -50%) scale(${star}) rotate(${(1 - star) * -120}deg)`,
-        }}
-      >
-        <StarIcon size={84} color={HERING.blue} />
-      </At>
+      <Lockup size={68} progress={ramp(3.65, 4.4)} />
     </div>
   );
 };
 
-// --- Bloco 3 · "posso mudar a calça, combinar com bermuda, mas ela nunca sai" -
-// A camiseta fica fixa e a peça de baixo troca. Em "nunca sai de cena" ela ganha
-// a estrela; em "funciona com tudo" as peças giram ao redor dela.
+// --- Bloco 3 · a camiseta fica, a peça de baixo muda -------------------------
+// "Posso mudar a calça, combinar com bermuda, mas ela nunca sai de cena. O básico
+// que funciona com tudo!" Em "nunca sai de cena" um anel pulsa ao redor dela; em
+// "funciona com tudo" as peças giram à volta.
 
 export const LookCarousel: React.FC = () => {
-  const { t, ramp, pop } = useClock();
+  const { t, ramp, pop, out } = useClock();
   const shirt = pop(0.1);
   const pants = pop(0.35) * (1 - ramp(1.45, 1.7)) * (1 - ramp(4.85, 5.1));
   const shorts = pop(1.7) * (1 - ramp(4.85, 5.1));
-  const star = pop(3.3);
-  const pulse = ramp(3.3, 4.3);
-  const orbit = (4.9 + 0.0 <= t ? t - 4.9 : 0) * 22;
+  const pulse1 = ramp(3.3, 4.2);
+  const pulse2 = ramp(3.65, 4.55);
+  const orbit = t > 4.9 ? (t - 4.9) * 24 : 0;
   return (
     <div
       style={{
@@ -424,74 +334,51 @@ export const LookCarousel: React.FC = () => {
         height: 360,
         transformOrigin: "100% 0",
         transform: "scale(1.18)",
+        opacity: out,
       }}
     >
+      <Tile x={155} y={160} w={260} h={350} opacity={Math.min(1, shirt * 2)} />
+      {[pulse1, pulse2].map((k, i) => (
+        <At
+          key={i}
+          x={155}
+          y={112}
+          style={{
+            width: 210,
+            height: 210,
+            borderRadius: "50%",
+            border: "3px solid rgba(255,255,255,0.8)",
+            opacity: k > 0 ? 1 - k : 0,
+            transform: `translate(-50%, -50%) scale(${0.65 + k * 0.85})`,
+          }}
+        >
+          <span />
+        </At>
+      ))}
       <At
         x={155}
-        y={115}
-        style={{
-          width: 250,
-          height: 250,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(79,123,201,0.75), rgba(79,123,201,0) 68%)",
-          opacity: 0.5 + 0.2 * Math.sin(t * 3),
-        }}
-      >
-        <span />
-      </At>
-      <At
-        x={155}
-        y={115}
-        style={{
-          width: 210,
-          height: 210,
-          borderRadius: "50%",
-          border: "6px solid rgba(255,255,255,0.85)",
-          opacity: pulse > 0 ? 1 - pulse : 0,
-          transform: `translate(-50%, -50%) scale(${0.6 + pulse * 0.9})`,
-        }}
-      >
-        <span />
-      </At>
-
-      <At
-        x={155}
-        y={110}
+        y={112}
         style={{
           opacity: Math.min(1, shirt * 2),
-          transform: `translate(-50%, -50%) scale(${0.7 + 0.3 * shirt})`,
+          transform: `translate(-50%, -50%) scale(${0.75 + 0.25 * shirt})`,
         }}
       >
-        <ShirtIcon size={160} />
+        <ShirtIcon size={150} />
       </At>
-
       <At
         x={155}
-        y={258 + (1 - pants) * 40}
+        y={262 + (1 - pants) * 36}
         style={{ opacity: Math.max(0, pants) }}
       >
-        <PantsIcon size={120} />
+        <PantsIcon size={110} />
       </At>
       <At
         x={155}
-        y={258 + (1 - shorts) * 40}
+        y={262 + (1 - shorts) * 36}
         style={{ opacity: Math.max(0, shorts) }}
       >
-        <ShortsIcon size={120} />
+        <ShortsIcon size={110} />
       </At>
-
-      <At
-        x={248}
-        y={34}
-        style={{
-          opacity: Math.min(1, star * 2),
-          transform: `translate(-50%, -50%) scale(${star * (1 + 0.08 * Math.sin(t * 6))}) rotate(${(1 - star) * -90}deg)`,
-        }}
-      >
-        <StarIcon size={72} color={HERING.blue} />
-      </At>
-
       {[
         { Icon: PantsIcon, angle: 200, at: 4.95 },
         { Icon: SneakerIcon, angle: 340, at: 5.25 },
@@ -502,14 +389,14 @@ export const LookCarousel: React.FC = () => {
         return (
           <At
             key={i}
-            x={155 + Math.cos(rad) * 128}
-            y={118 + Math.sin(rad) * 128}
+            x={155 + Math.cos(rad) * 126}
+            y={118 + Math.sin(rad) * 126}
             style={{
               opacity: Math.min(1, k * 2),
               transform: `translate(-50%, -50%) scale(${k})`,
             }}
           >
-            <Icon size={70} />
+            <Icon size={64} />
           </At>
         );
       })}
@@ -517,58 +404,68 @@ export const LookCarousel: React.FC = () => {
   );
 };
 
-// --- Bloco 4 · algodão, não fica transparente, gola que não deforma ---------
-// Um ícone para cada diferencial, na hora em que o Marcos o fala. A gola estica
-// e volta ao lugar.
+// --- Bloco 4 · os diferenciais ---------------------------------------------
+// Um ícone para cada um, na hora em que o Marcos fala. A gola estica e volta.
 
 export const Diferenciais: React.FC = () => {
-  const { t, ramp, pop } = useClock();
+  const { t, ramp, pop, out } = useClock();
   const stretch = 1 + 0.38 * Math.sin(Math.PI * ramp(3.0, 3.95));
   const items = [
     {
       x: 215,
       at: 0.25,
       label: "100% algodão",
-      node: <CottonIcon size={180} />,
+      node: <CottonIcon size={170} />,
     },
     {
       x: 500,
       at: 1.5,
-      label: "não fica transparente",
-      node: <EyeSlashIcon size={180} />,
+      label: "Não fica transparente",
+      node: <EyeSlashIcon size={170} />,
     },
     {
       x: 785,
       at: 2.75,
-      label: "gola não deforma",
-      node: <CollarIcon size={180} stretch={stretch} />,
+      label: "Gola que não deforma",
+      node: <CollarIcon size={170} stretch={stretch} />,
     },
   ];
   return (
-    <div style={{ position: "absolute", inset: 0 }}>
+    <div style={{ position: "absolute", inset: 0, opacity: out }}>
       {items.map((it) => {
         const k = pop(it.at);
-        const float = Math.sin((t - it.at) * 3) * 6;
+        const float = Math.sin((t - it.at) * 3) * 5;
         return (
           <div key={it.label}>
+            <Tile
+              x={it.x}
+              y={SAFE.top + 140}
+              w={250}
+              h={300}
+              opacity={Math.min(1, k * 2)}
+            />
             <At
               x={it.x}
-              y={SAFE.top + 115 + float}
+              y={SAFE.top + 108 + float}
               style={{
                 opacity: Math.min(1, k * 2),
-                transform: `translate(-50%, -50%) scale(${0.6 + 0.4 * k})`,
+                transform: `translate(-50%, -50%) scale(${0.7 + 0.3 * k})`,
               }}
             >
               {it.node}
             </At>
             <At
               x={it.x}
-              y={SAFE.top + 262}
+              y={SAFE.top + 240}
               style={{
-                ...LABEL,
-                width: 280,
-                fontSize: 38,
-                lineHeight: 1.1,
+                width: 230,
+                textAlign: "center",
+                fontFamily: HERING_FONT,
+                fontWeight: 700,
+                fontSize: 34,
+                lineHeight: 1.15,
+                color: HERING.white,
+                textShadow: TEXT_SHADOW,
                 opacity: ramp(it.at + 0.15, it.at + 0.45),
               }}
             >
@@ -581,175 +478,194 @@ export const Diferenciais: React.FC = () => {
   );
 };
 
-// --- Bloco 5 · o preço e a estrela -----------------------------------------
-// Uma etiqueta de preço balança com "R$ 49,99". Em "protagonista" a estrela
-// grande aparece; em "coadjuvante", uma estrelinha ao lado.
+// --- Bloco 5 · o preço ------------------------------------------------------
+// O preço sobe contando até R$ 49,99 (único elemento em coral). Em
+// "protagonista" a claquete de cinema fecha: a vida é um filme.
+
+const fmt = (v: number) => v.toFixed(2).replace(".", ",");
 
 export const Preco: React.FC = () => {
-  const { t, ramp, pop } = useClock();
-  const tag = pop(1.0);
-  const swing =
-    Math.sin((t - 1.0) * 5.2) * 11 * Math.exp(-Math.max(0, t - 1.0) * 0.9);
-  const big = pop(3.45);
-  const small = pop(5.25);
+  const { ramp, pop, out } = useClock();
+  const card = pop(0.9);
+  const value = 49.99 * ramp(1.15, 2.4);
+  const clap = pop(3.45);
   return (
     <div
       style={{
         position: "absolute",
-        left: 520,
-        top: SAFE.top - 20,
-        width: 420,
-        height: 460,
+        left: 560,
+        top: SAFE.top + 20,
+        width: 380,
+        opacity: out,
       }}
     >
       <div
         style={{
-          position: "absolute",
-          left: 250,
-          top: 0,
-          width: 0,
-          height: 0,
-          transformOrigin: "0 0",
-          transform: `translateY(${(1 - Math.min(1, tag)) * -260}px) rotate(${swing}deg)`,
-          opacity: Math.min(1, tag * 3),
+          padding: "22px 30px 26px",
+          borderRadius: 26,
+          backgroundColor: GLASS,
+          boxShadow: SHADOW,
+          transform: `translateY(${(1 - Math.min(1, card)) * -50}px)`,
+          opacity: Math.min(1, card * 2),
         }}
       >
         <div
           style={{
-            position: "absolute",
-            left: -3,
-            top: 0,
-            width: 6,
-            height: 112,
-            borderRadius: 3,
-            backgroundColor: "rgba(255,255,255,0.9)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            left: -150,
-            top: 104,
-            width: 300,
-            height: 150,
-            backgroundColor: "#FFFFFF",
-            clipPath: "polygon(0 0, 84% 0, 100% 50%, 84% 100%, 0 100%)",
-            boxShadow: SHADOW,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            left: -126,
-            top: 166,
-            width: 26,
-            height: 26,
-            borderRadius: 13,
-            backgroundColor: HERING.navyDark,
-            opacity: 0.85,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            left: -88,
-            top: 128,
-            fontFamily: VOOM_TITLE_FONT,
+            fontFamily: HERING_FONT,
             fontWeight: 700,
-            fontSize: 74,
-            lineHeight: 1,
-            color: HERING.coral,
-            whiteSpace: "nowrap",
+            fontSize: 18,
+            letterSpacing: 4,
+            color: "#8FB0E6",
           }}
         >
-          R$ 49,99
+          CUSTO-BENEFÍCIO
         </div>
-      </div>
-
-      <At
-        x={150}
-        y={370}
-        style={{
-          opacity: Math.min(1, big * 2),
-          transform: `translate(-50%, -50%) scale(${big}) rotate(${(1 - big) * -140}deg)`,
-        }}
-      >
-        <StarIcon size={150} color={HERING.blue} />
-      </At>
-      {[0, 1, 2].map((i) => {
-        const k = ramp(3.7 + i * 0.12, 4.0 + i * 0.12);
-        const pos = [
-          { x: 60, y: 300 },
-          { x: 250, y: 330 },
-          { x: 215, y: 430 },
-        ][i];
-        return (
-          <At
-            key={i}
-            x={pos.x}
-            y={pos.y}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            gap: 10,
+            fontFamily: HERING_FONT,
+            color: HERING.coral,
+            marginTop: 4,
+          }}
+        >
+          <span style={{ fontWeight: 600, fontSize: 40 }}>R$</span>
+          <span
             style={{
-              opacity: k * Math.max(0, 1 - (t - 4.6) * 1.2),
-              transform: `translate(-50%, -50%) scale(${k * (0.8 + 0.2 * Math.sin(t * 10 + i))})`,
+              fontWeight: 800,
+              fontSize: 104,
+              letterSpacing: -3,
+              fontVariantNumeric: "tabular-nums",
             }}
           >
-            <SparkleIcon size={40} />
-          </At>
-        );
-      })}
+            {fmt(value)}
+          </span>
+        </div>
+        <div
+          style={{
+            height: 4,
+            borderRadius: 2,
+            width: `${ramp(1.2, 2.6) * 100}%`,
+            backgroundColor: HERING.blue,
+            marginTop: 6,
+          }}
+        />
+      </div>
+      <Tile x={190} y={292} w={190} h={150} opacity={Math.min(1, clap * 2)} />
       <At
-        x={345}
-        y={420}
+        x={190}
+        y={292}
         style={{
-          opacity: Math.min(1, small * 2),
-          transform: `translate(-50%, -50%) scale(${small})`,
+          opacity: Math.min(1, clap * 2),
+          transform: `translate(-50%, -50%) scale(${0.7 + 0.3 * Math.min(1, clap)})`,
         }}
       >
-        <StarIcon size={52} color="#8FB0E6" />
+        <ClapperIcon size={130} open={Math.max(0, (1 - clap) * 38)} />
       </At>
     </div>
   );
 };
 
-// CTA: espaço livre em cima do rosto do Marcos.
+// --- CTA: nome do produto em destaque, espaço livre em cima do rosto --------
+
 export const SeloCta: React.FC = () => {
-  const pop = useIn(4);
+  const { ramp, pop } = useClock();
+  const sub = pop(0.8);
   return (
-    <Column top={SAFE.top + 20}>
+    <div style={{ position: "absolute", left: SAFE.left, top: SAFE.top + 20 }}>
+      <Lockup size={92} progress={ramp(0.1, 0.8)} />
       <div
         style={{
-          transform: `translateY(${(1 - pop) * -50}px)`,
-          opacity: pop,
+          marginTop: 22,
+          fontFamily: HERING_FONT,
+          fontWeight: 600,
+          fontSize: 38,
           color: HERING.white,
-          fontFamily: VOOM_TITLE_FONT,
-          fontWeight: 700,
-          fontSize: 104,
-          lineHeight: 1,
-          textAlign: "center",
-          textShadow: "0 8px 26px rgba(10, 20, 40, 0.6)",
+          textShadow: TEXT_SHADOW,
+          opacity: Math.min(1, sub * 2),
+          transform: `translateY(${(1 - sub) * 20}px)`,
         }}
       >
-        CAMISETA BRASIL
+        Disponível no site e nas lojas participantes
       </div>
-      <Pill text="site e lojas participantes" delay={14} strong size={46} />
-    </Column>
+    </div>
   );
 };
 
-// Cartela da abertura, no clima de abertura de sitcom: título grande em
-// script retrô, com relevo, e o número do episódio pequeno embaixo. Entra
-// sobre a primeira cena (de preferência uma tomada de "estabelecimento").
-export const CartelaEpisodio: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { durationInFrames } = useVideoConfig();
-  const title = useIn(4);
-  const sub = useIn(16);
-  const out = interpolate(
-    frame,
-    [durationInFrames - 8, durationInFrames],
-    [1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+// --- Cartela de abertura ----------------------------------------------------
+
+const CartelaHering: React.FC = () => {
+  const { ramp, pop, out } = useClock();
+  const title = pop(0.15);
+  const sub = pop(0.55);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: SAFE.left,
+        width: 880,
+        top: 620,
+        textAlign: "center",
+        color: HERING.white,
+        fontFamily: HERING_FONT,
+        textShadow: TEXT_SHADOW,
+        opacity: out,
+      }}
+    >
+      <div
+        style={{
+          fontWeight: 600,
+          fontSize: 30,
+          letterSpacing: 10,
+          color: "#8FB0E6",
+          opacity: ramp(0, 0.5),
+        }}
+      >
+        EPISÓDIO 1
+      </div>
+      <div
+        style={{
+          marginTop: 26,
+          fontSize: 150,
+          lineHeight: 1.02,
+          letterSpacing: -3,
+          opacity: Math.min(1, title * 2),
+          transform: `translateY(${(1 - title) * 50}px)`,
+        }}
+      >
+        <div style={{ fontWeight: 300 }}>Marcos &amp;</div>
+        <div style={{ fontWeight: 800 }}>Hering</div>
+      </div>
+      <div
+        style={{
+          margin: "30px auto 0",
+          height: 4,
+          width: 220 * ramp(0.3, 1),
+          backgroundColor: HERING.blue,
+          borderRadius: 2,
+        }}
+      />
+      <div
+        style={{
+          marginTop: 28,
+          fontWeight: 600,
+          fontSize: 40,
+          letterSpacing: 1,
+          opacity: Math.min(1, sub * 2),
+        }}
+      >
+        A síndrome de protagonista
+      </div>
+    </div>
   );
+};
+
+// Variante retrô (script de abertura de sitcom, como na referência).
+const CartelaRetro: React.FC = () => {
+  const { pop, out } = useClock();
+  const title = pop(0.15);
+  const sub = pop(0.55);
   const relief = [1, 2, 3, 4, 5, 6]
     .map((n) => `${n}px ${n * 1.4}px 0 ${HERING.navy}`)
     .join(", ");
@@ -757,7 +673,7 @@ export const CartelaEpisodio: React.FC = () => {
     <div
       style={{
         position: "absolute",
-        left: CENTER_X - 440,
+        left: SAFE.left,
         width: 880,
         top: 560,
         display: "flex",
@@ -784,21 +700,20 @@ export const CartelaEpisodio: React.FC = () => {
       <div
         style={{
           opacity: sub,
-          transform: `translateY(${(1 - sub) * 24}px)`,
           color: HERING.white,
-          fontFamily: VOOM_TEXT_FONT,
-          fontWeight: 900,
-          fontSize: 30,
+          fontFamily: HERING_FONT,
+          fontWeight: 800,
+          fontSize: 34,
           letterSpacing: 6,
           textAlign: "center",
           textShadow: "0 4px 16px rgba(10, 20, 40, 0.8)",
         }}
       >
-        <div>EPISÓDIO 1</div>
-        <div style={{ marginTop: 10, fontSize: 38 }}>
-          A SÍNDROME DE PROTAGONISTA
-        </div>
+        EPISÓDIO 1 · A SÍNDROME DE PROTAGONISTA
       </div>
     </div>
   );
 };
+
+export const CartelaEpisodio: React.FC = () =>
+  CARTELA_ESTILO === "retro" ? <CartelaRetro /> : <CartelaHering />;

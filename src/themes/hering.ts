@@ -1,9 +1,20 @@
 import { Theme } from "../kit";
 import { loadLocalFont } from "./fonts";
-import { VOOM_TEXT_FONT, VOOM_TITLE_FONT } from "./voom";
 
 // Script retrô da cartela de abertura (sitcom), só nesta publi.
 loadLocalFont("Lobster", "lobster-latin-400-normal.woff2", "400");
+
+// Tipografia da publi: Plus Jakarta Sans, geométrica e limpa, parecida com a
+// que o briefing da Hering usa nos títulos ("Camiseta Brasil" leve, "Hering"
+// em negrito).
+for (const weight of ["300", "400", "600", "700", "800"]) {
+  loadLocalFont(
+    "Plus Jakarta Sans",
+    `plus-jakarta-sans-latin-${weight}-normal.woff2`,
+    weight,
+  );
+}
+export const HERING_FONT = "'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif";
 export const HERING_SCRIPT_FONT = "'Lobster', 'Fredoka', cursive";
 
 // Paleta da Hering (Camiseta Brasil), usada no lugar da voom só na publi.
@@ -26,10 +37,13 @@ export const HERING_THEME: Theme = {
   panel: "transparent",
   panelInk: HERING.white,
   panelOutline: HERING.navyDark,
-  font: VOOM_TEXT_FONT,
-  serif: VOOM_TITLE_FONT,
+  font: HERING_FONT,
+  serif: HERING_FONT,
   highlightStyle: "marker",
   highlightInk: HERING.white,
   captionVariant: "clean",
+  // Legenda no estilo da marca: faixa azul-marinho e texto em caixa mista.
+  captionBackground: "rgba(47, 77, 120, 0.92)",
+  captionUppercase: false,
   shadow: "10, 20, 40",
 };
