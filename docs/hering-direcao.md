@@ -69,7 +69,8 @@ guia.
 | Base escura | azul-marinho `#2F4D78` | fundos, sombras |
 | Destaque | azul `#4F7BC9` | o mais importante da peça |
 | Texto | branco `#FFFFFF` | títulos e legenda |
-| Preço e boca | coral `#E8625A` | R$ 49,99 e a boca da camiseta |
+| Preço | coral `#E8625A` | R$ 49,99 |
+| Boca | rosa `#F2557E` | boca da camiseta (desenho "Diva rosa", escolha do Marcos; fora da paleta da marca) |
 
 Fontes do perfil (Fredoka nos títulos, Nunito nos textos). Sem verde nem
 amarelo (evita lembrar a bandeira).

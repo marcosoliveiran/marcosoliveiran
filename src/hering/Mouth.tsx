@@ -16,6 +16,11 @@ export const MOUTH_COLORS = {
 } as const;
 export type MouthColor = keyof typeof MOUTH_COLORS;
 
+// Desenho escolhido pelo Marcos: "Diva rosa". Usado em todos os clipes e no
+// vídeo; as outras opções ficam em MouthSheet (composição Boca-opcoes).
+export const MOUTH_DESIGN: MouthDesign = "brilhosa";
+export const MOUTH_COLOR: MouthColor = "rosa";
+
 // Sorriso: boca larga de desenho animado, com dentes grandes.
 const SmileShape: React.FC<{
   open: number;
@@ -217,7 +222,12 @@ export const TalkingMouth: React.FC<{
         filter: "drop-shadow(0 10px 14px rgba(10, 20, 40, 0.35))",
       }}
     >
-      <MouthShape open={open} width={place.size} />
+      <MouthShape
+        open={open}
+        width={place.size}
+        design={MOUTH_DESIGN}
+        color={MOUTH_COLOR}
+      />
     </div>
   );
 };
@@ -243,7 +253,12 @@ export const MouthClip: React.FC<{ syllables: number }> = ({ syllables }) => {
         transform: `rotate(${-4 + wobble}deg) scale(${pop * (1 + open * 0.05)})`,
       }}
     >
-      <MouthShape open={open} width={MOUTH_CLIP_SIZE.width - 80} />
+      <MouthShape
+        open={open}
+        width={MOUTH_CLIP_SIZE.width - 80}
+        design={MOUTH_DESIGN}
+        color={MOUTH_COLOR}
+      />
     </div>
   );
 };
@@ -259,7 +274,12 @@ export const MouthStill: React.FC<{ open: number }> = ({ open }) => (
       justifyContent: "center",
     }}
   >
-    <MouthShape open={open} width={MOUTH_CLIP_SIZE.width - 80} />
+    <MouthShape
+      open={open}
+      width={MOUTH_CLIP_SIZE.width - 80}
+      design={MOUTH_DESIGN}
+      color={MOUTH_COLOR}
+    />
   </div>
 );
 
