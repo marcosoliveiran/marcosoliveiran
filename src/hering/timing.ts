@@ -26,6 +26,9 @@ export const NARRACAO_INICIO = 0;
 // Efeitos de sitcom (do CapCut ou banco livre de uso comercial). Coloque em
 // public/sfx/ e mude para true. Volume sempre abaixo da fala (briefing).
 // vinheta.wav e vinheta-curta.wav são sintetizadas por tools/make-vinheta.py.
+// Efeitos sonoros (vinhetas, impacto, risada, palmas) ficam DESLIGADOS: o Marcos
+// faz o som no CapCut, na edição final. Ligue para ouvir uma prévia com som.
+export const EFEITOS_SONOROS = false;
 export const HAS_VINHETA = true; // public/sfx/vinheta*.wav
 
 // Palmas e risada têm que ser arquivos REAIS (sintético soa falso): do CapCut

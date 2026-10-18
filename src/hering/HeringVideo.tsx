@@ -15,6 +15,7 @@ import {
   DEFAULT_GRADE,
   FPS,
   Grade,
+  EFEITOS_SONOROS,
   HAS_VINHETA,
   PALMAS_FILE,
   RISADA_FILES,
@@ -45,29 +46,12 @@ const MOTIONS: Record<
   string,
   { node: ReactNode; offset?: number; until?: string }
 > = {
+  def: { node: <M.DefinicaoBusca /> },
   cartela: { node: <M.CartelaEpisodio /> },
-  e1: { node: <M.NomeProduto />, offset: 3.8 },
+  e1: { node: <M.HolofoteProtagonista /> },
+  m1: { node: <M.LookCarousel />, until: "m4" },
   gola: { node: <M.Diferenciais /> },
-  m1: {
-    node: (
-      <M.LookTicker
-        items={[
-          {
-            text: "JOGGER",
-            at: 0,
-            until: segmentById("m2").from - segmentById("m1").from,
-          },
-          {
-            text: "BERMUDA",
-            at: segmentById("m2").from - segmentById("m1").from,
-            until: segmentById("m4").to - segmentById("m1").from,
-          },
-        ]}
-      />
-    ),
-    until: "m4",
-  },
-  f1: { node: <M.Preco />, offset: 0.9, until: "f2" },
+  f1: { node: <M.Preco />, until: "f2" },
   cta: { node: <M.SeloCta /> },
 };
 
@@ -294,7 +278,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
           : null}
 
         {/* Efeitos sonoros */}
-        {SFX.map(([at, file, volume], i) => (
+        {(EFEITOS_SONOROS ? SFX : []).map(([at, file, volume], i) => (
           <Sequence key={`sfx-${i}`} from={sec(at)} layout="none">
             <Html5Audio src={staticFile(`sfx/${file}`)} volume={() => volume} />
           </Sequence>
@@ -310,7 +294,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
         {/* Sitcom: vinheta musical na abertura e entre os looks (como as
             vinhetas de troca de cena da referência), palmas na abertura e
             risada ao fim de cada fala dela */}
-        {HAS_VINHETA ? (
+        {EFEITOS_SONOROS && HAS_VINHETA ? (
           <>
             <Sequence
               from={sec(segmentById("cartela").from + 0.1)}
@@ -335,7 +319,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
             ))}
           </>
         ) : null}
-        {PALMAS_FILE ? (
+        {EFEITOS_SONOROS && PALMAS_FILE ? (
           <Sequence from={sec(0.2)} layout="none">
             <Html5Audio
               src={staticFile(`sfx/${PALMAS_FILE}`)}
@@ -343,7 +327,7 @@ export const HeringVideo: React.FC<HeringProps> = ({
             />
           </Sequence>
         ) : null}
-        {RISADA_FILES.length > 0
+        {EFEITOS_SONOROS && RISADA_FILES.length > 0
           ? // Risada nas piadas: depois de "tem que ser sobre ela" (o silêncio
             // "beat") e no fim de "protagonista por preço de coadjuvante".
             (
