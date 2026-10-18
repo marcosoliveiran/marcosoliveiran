@@ -1,4 +1,3 @@
-import { CSSProperties } from "react";
 import {
   Sequence,
   interpolate,
@@ -227,24 +226,33 @@ export const AlgodaoOpaca: React.FC = () => (
   </Column>
 );
 
-// Fecho: o preço, único elemento em coral.
+// Fecho: o preço, único elemento em coral. Fica no canto superior direito, onde
+// só tem parede, para não cobrir o rosto do Marcos (que fica à esquerda).
 export const Preco: React.FC = () => {
   const pop = useIn(4);
   const sub = useIn(16);
-  const style: CSSProperties = {
-    textShadow: "0 10px 30px rgba(10, 20, 40, 0.55)",
-  };
   return (
-    <Column top={SAFE.top + 60}>
+    <div
+      style={{
+        position: "absolute",
+        right: SAFE.right,
+        top: SAFE.top + 20,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-end",
+        gap: 14,
+      }}
+    >
       <div
         style={{
-          ...style,
+          textShadow: "0 10px 30px rgba(10, 20, 40, 0.55)",
           transform: `scale(${0.6 + 0.4 * pop}) rotate(${-4 + (1 - pop) * -8}deg)`,
+          transformOrigin: "100% 50%",
           opacity: Math.min(1, pop * 2),
           color: HERING.coral,
           fontFamily: VOOM_TITLE_FONT,
           fontWeight: 700,
-          fontSize: 210,
+          fontSize: 150,
           lineHeight: 1,
         }}
       >
@@ -253,9 +261,9 @@ export const Preco: React.FC = () => {
       <div
         style={{ opacity: sub, transform: `translateY(${(1 - sub) * 20}px)` }}
       >
-        <Pill text="custo-benefício" delay={16} size={46} />
+        <Pill text="custo-benefício" delay={16} size={40} />
       </div>
-    </Column>
+    </div>
   );
 };
 
