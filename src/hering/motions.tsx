@@ -261,7 +261,7 @@ export const CartelaEpisodio: React.FC = () => {
           textShadow: `${relief}, 0 24px 40px rgba(10, 20, 40, 0.6)`,
         }}
       >
-        A síndrome de protagonista
+        Marcos &amp; Hering
       </div>
       <div
         style={{
@@ -270,12 +270,16 @@ export const CartelaEpisodio: React.FC = () => {
           color: HERING.white,
           fontFamily: VOOM_TEXT_FONT,
           fontWeight: 900,
-          fontSize: 34,
-          letterSpacing: 8,
+          fontSize: 30,
+          letterSpacing: 6,
+          textAlign: "center",
           textShadow: "0 4px 16px rgba(10, 20, 40, 0.8)",
         }}
       >
-        EPISÓDIO 01 · O GUARDA-ROUPA
+        <div>EPISÓDIO 1</div>
+        <div style={{ marginTop: 10, fontSize: 38 }}>
+          A SÍNDROME DE PROTAGONISTA
+        </div>
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ ELA = voz da camiseta. EU = Marcos. ~36 s.
 
 | Bloco | Fala | Imagem |
 |---|---|---|
-| Abertura | cartela "Episódio 1: A síndrome de protagonista" + palmas | motion tipográfico, 2–3 s |
+| Abertura | cartela "Marcos & Hering · Episódio 1: A síndrome de protagonista" + palmas | motion tipográfico, 2–3 s |
 | 1 · guarda-roupa | ELA: "Reunião importante. Calça de alfaiataria." | de costas/lado; close na costura |
 | 1 · espelho | ELA: "Incrível como o tempo só me valoriza." | de frente; boca na camiseta |
 | 2 · guarda-roupa | ELA: "Agora algo pra combinar com meu caimento. Calça jogger." | de costas/lado; close na gola |
@@ -152,7 +152,7 @@ Print de tela de um TikTok em formato de sitcom: abertura com **título grande
 em script retrô e número do episódio pequeno embaixo**, sobre uma tomada de
 "estabelecimento" (fachada do prédio à noite), seguida de cortes entre os
 personagens. Adaptado aqui: título em Lobster (OFL, `public/fonts`) com relevo
-em azul Hering e "EPISÓDIO 01 · O GUARDA-ROUPA". Sem copiar nome, logo ou
+em azul Hering: "Marcos & Hering" grande e, embaixo, "EPISÓDIO 1 · A SÍNDROME DE PROTAGONISTA" (ideia do Marcos). Sem copiar nome, logo ou
 cartela do original. A referência usa gradação quente de cinema: **não aplicar**
 (briefing proíbe filtro/edição excessiva).
 
