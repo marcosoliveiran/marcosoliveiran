@@ -169,3 +169,40 @@ no vídeo real antes de postar**.
 - `npm run render:hering` (leve), `npm run render:hering-cinema`,
   `npm run render:hering-limpo` (sem gradação).
 - Se for aplicar a gradação no CapCut em vez daqui, usar `off` aqui.
+
+## Gramática de som da referência (transcrição do Marcos)
+
+Referência: série em formato sitcom no TikTok, diálogo de agência
+(personagens "Augusto" e uma colega, mais um cachorro de óculos que só reage).
+Transcrito com o Whisper no PC do Marcos (`referencia.mp4.txt`/`.json`). O
+Whisper marcou `[música de encerramento]` e `[risos]`, mas esses rótulos não
+são confiáveis: os `[risos]` caem em trechos quase silenciosos (por exemplo
+9,5–12,5 s, −48 dB), ou seja, são **pausas cômicas**, não necessariamente
+risada de plateia.
+
+Estrutura (tempos aproximados):
+
+| Tempo | O que acontece |
+|---|---|
+| 0–4,7 s | vinheta musical sobre a cartela do título |
+| 4,7–26,5 s | cena 1: diálogo com plano e contraplano; pausa de reação no cachorro (~9,5–12,5 s) |
+| 26,5–28,5 s | vinheta curta de transição (o cachorro bebe chá) |
+| 28,5–37,9 s | cena 2: diálogo; o slide "The Challenge" no notebook; cachorro reage de olhos fechados |
+| 37,9–39,4 s | vinheta curta de transição |
+| 39,4–46,4 s | cena 3: fala final com piada ("Por isso eu ainda gosto de publicidade") |
+| 46,4–48,3 s | vinheta final |
+
+Padrão de piada: **fala → corte seco para a reação silenciosa → pausa de
+~0,5–1 s**. Quem reage não fala (o cachorro).
+
+Aplicação na publi Hering:
+- A camiseta fala e **o Marcos é quem reage**, em silêncio, para a câmera (olhar
+  resignado, sobrancelha) por 0,5–1 s depois de cada fala dela. Gravar esses
+  takes de reação, de preferência olhando direto para a lente.
+- Vinheta musical longa na cartela (0–2,3 s) e curta (0,95 s) na troca de
+  look (g2 e g3), como as vinhetas de troca de cena da referência.
+- Pausa de ~0,4–0,8 s depois da fala dela, antes da próxima fala, para a
+  reação e para a risada (se houver).
+- Vinheta, palmas e vinheta curta foram sintetizadas em `tools/make-vinheta.py`.
+  Risada de plateia: usar arquivo do CapCut/banco livre (`public/sfx/risada.wav`
+  e `HAS_RISADA = true`).

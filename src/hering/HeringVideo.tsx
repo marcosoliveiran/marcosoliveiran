@@ -18,6 +18,7 @@ import {
   Grade,
   HAS_PALMAS,
   HAS_RISADA,
+  HAS_VINHETA,
   HAS_VIDEO,
   SEGMENTS,
   TOTAL_FRAMES,
@@ -51,9 +52,9 @@ const MOTIONS: Record<string, { node: ReactNode; extra?: number }> = {
 const SFX: [number, string, number][] = [
   [0.1, "impact.wav", 0.6],
   [segmentById("e1").from, "ding.wav", 0.35],
-  [segmentById("g2").from, "whoosh.wav", 0.4],
+  [segmentById("g2").from, "whoosh.wav", HAS_VINHETA ? 0.15 : 0.4],
   [segmentById("e2").from, "ding.wav", 0.35],
-  [segmentById("g3").from, "whoosh.wav", 0.4],
+  [segmentById("g3").from, "whoosh.wav", HAS_VINHETA ? 0.15 : 0.4],
   [segmentById("e3").from, "ding.wav", 0.35],
   [segmentById("fecho").from + 0.1, "pop.wav", 0.5],
   [segmentById("cta").from, "whoosh.wav", 0.4],
@@ -242,7 +243,31 @@ export const HeringVideo: React.FC<HeringProps> = ({
           </Sequence>
         ))}
 
-        {/* Sitcom: palmas na abertura, risada ao fim de cada fala dela */}
+        {/* Sitcom: vinheta musical na abertura e entre os looks (como as
+            vinhetas de troca de cena da referência), palmas na abertura e
+            risada ao fim de cada fala dela */}
+        {HAS_VINHETA ? (
+          <>
+            <Sequence from={sec(0.1)} layout="none">
+              <Html5Audio
+                src={staticFile("sfx/vinheta.wav")}
+                volume={() => 0.4}
+              />
+            </Sequence>
+            {["g2", "g3"].map((id) => (
+              <Sequence
+                key={`vinheta-${id}`}
+                from={sec(segmentById(id).from - 0.1)}
+                layout="none"
+              >
+                <Html5Audio
+                  src={staticFile("sfx/vinheta-curta.wav")}
+                  volume={() => 0.3}
+                />
+              </Sequence>
+            ))}
+          </>
+        ) : null}
         {HAS_PALMAS ? (
           <Sequence from={sec(0.2)} layout="none">
             <Html5Audio

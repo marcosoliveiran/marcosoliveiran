@@ -11,7 +11,11 @@ export const HAS_VIDEO = false;
 
 // Efeitos de sitcom (do CapCut ou banco livre de uso comercial). Coloque em
 // public/sfx/ e mude para true. Volume sempre abaixo da fala (briefing).
-export const HAS_PALMAS = false; // public/sfx/palmas.wav
+// vinheta.wav, vinheta-curta.wav e palmas.wav são sintetizados por
+// tools/make-vinheta.py (sem direitos autorais). Risada não: tem que ser do
+// CapCut/banco livre.
+export const HAS_VINHETA = true; // public/sfx/vinheta*.wav
+export const HAS_PALMAS = true; // public/sfx/palmas.wav
 export const HAS_RISADA = false; // public/sfx/risada.wav
 
 // Gradação quente de cinema (teste pedido pelo Marcos). "off" = cor natural.
@@ -22,7 +26,12 @@ export const DEFAULT_GRADE: Grade = "leve";
 
 export type Kind = "abertura" | "guarda" | "espelho" | "fecho" | "cta";
 
-export type MouthPlacement = { x: number; y: number; size: number; rot: number };
+export type MouthPlacement = {
+  x: number;
+  y: number;
+  size: number;
+  rot: number;
+};
 
 export type Segment = {
   id: string;
