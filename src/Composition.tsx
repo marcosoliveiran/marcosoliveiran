@@ -14,7 +14,13 @@ import {
   HERING_SIZE,
   HeringVideo,
 } from "./hering/HeringVideo";
-import { MOUTH_CLIP_SIZE, MouthClip, MouthStill } from "./hering/Mouth";
+import {
+  MOUTH_CLIP_SIZE,
+  MOUTH_SHEET_SIZE,
+  MouthClip,
+  MouthSheet,
+  MouthStill,
+} from "./hering/Mouth";
 import { FPS as HERING_CLIP_FPS, SEGMENTS, syllablesOf } from "./hering/timing";
 import {
   VoomCaptionOptions,
@@ -183,6 +189,14 @@ export const TalkingHeadComposition = () => {
           height={MOUTH_CLIP_SIZE.height}
         />
       ))}
+      <Composition
+        id="Boca-opcoes"
+        component={MouthSheet}
+        durationInFrames={1}
+        fps={HERING_CLIP_FPS}
+        width={MOUTH_SHEET_SIZE.width}
+        height={MOUTH_SHEET_SIZE.height}
+      />
       {[0, 0.5, 1].map((open) => (
         <Composition
           key={`boca-pose-${open}`}
