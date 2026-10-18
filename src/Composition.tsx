@@ -14,6 +14,8 @@ import {
   HERING_SIZE,
   HeringVideo,
 } from "./hering/HeringVideo";
+import { MOUTH_CLIP_SIZE, MouthClip, MouthStill } from "./hering/Mouth";
+import { FPS as HERING_CLIP_FPS, SEGMENTS, syllablesOf } from "./hering/timing";
 import {
   VoomCaptionOptions,
   VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
@@ -168,6 +170,31 @@ export const TalkingHeadComposition = () => {
         width={HERING_SIZE.width}
         height={HERING_SIZE.height}
       />
+      {/* Boca solta em fundo transparente (uma por fala dela), para o CapCut */}
+      {SEGMENTS.filter((s) => s.mouth).map((s) => (
+        <Composition
+          key={`boca-${s.id}`}
+          id={`Boca-${s.id}`}
+          component={MouthClip}
+          defaultProps={{ syllables: syllablesOf(s.pages.join(" ")) }}
+          durationInFrames={Math.round((s.to - s.from) * HERING_CLIP_FPS)}
+          fps={HERING_CLIP_FPS}
+          width={MOUTH_CLIP_SIZE.width}
+          height={MOUTH_CLIP_SIZE.height}
+        />
+      ))}
+      {[0, 0.5, 1].map((open) => (
+        <Composition
+          key={`boca-pose-${open}`}
+          id={`Boca-pose-${open * 10}`}
+          component={MouthStill}
+          defaultProps={{ open }}
+          durationInFrames={1}
+          fps={HERING_CLIP_FPS}
+          width={MOUTH_CLIP_SIZE.width}
+          height={MOUTH_CLIP_SIZE.height}
+        />
+      ))}
     </>
   );
 };

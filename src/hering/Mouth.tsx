@@ -66,9 +66,9 @@ export const MouthShape: React.FC<{ open: number; width: number }> = ({
       />
       <ellipse
         cx={150}
-        cy={bottom + 38 + gap * 0.12}
-        rx={48}
-        ry={9}
+        cy={bottom + 24 + gap * 0.1}
+        rx={40}
+        ry={8}
         fill="#FFFFFF"
         opacity={0.5}
       />
@@ -119,3 +119,46 @@ export const TalkingMouth: React.FC<{
     </div>
   );
 };
+
+// Clipe da boca solta, em fundo transparente, para sobrepor no CapCut. Uma
+// composição por fala dela (a duração vem de SEGMENTS); no CapCut basta
+// posicionar sobre o peito e alinhar com o áudio.
+export const MouthClip: React.FC<{ syllables: number }> = ({ syllables }) => {
+  const frame = useCurrentFrame();
+  const { fps, durationInFrames } = useVideoConfig();
+  const pop = spring({ frame, fps, config: { damping: 11, stiffness: 190 } });
+  const open = mouthOpenAt(frame, durationInFrames - 4, syllables);
+  const wobble = Math.sin(frame * 0.7) * 1.6 * open;
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        transform: `rotate(${-4 + wobble}deg) scale(${pop * (1 + open * 0.05)})`,
+      }}
+    >
+      <MouthShape open={open} width={MOUTH_CLIP_SIZE.width - 80} />
+    </div>
+  );
+};
+
+// Quadro estático da boca em um estado (0 fechada, 1 aberta), para PNG.
+export const MouthStill: React.FC<{ open: number }> = ({ open }) => (
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+  >
+    <MouthShape open={open} width={MOUTH_CLIP_SIZE.width - 80} />
+  </div>
+);
+
+export const MOUTH_CLIP_SIZE = { width: 720, height: 560 };
