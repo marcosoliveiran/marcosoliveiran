@@ -16,6 +16,12 @@ import {
 } from "./hering/HeringVideo";
 import { DEFAULT_GRADE } from "./hering/timing";
 import {
+  KIMI_DURATION_IN_FRAMES,
+  KIMI_FPS,
+  KIMI_SIZE,
+  KimiVideo,
+} from "./kimi/KimiVideo";
+import {
   VoomCaptionOptions,
   VOOM_CAPTION_OPTIONS_DURATION_IN_FRAMES,
   VOOM_CAPTION_OPTIONS_SIZE,
@@ -169,6 +175,14 @@ export const TalkingHeadComposition = () => {
         fps={HERING_FPS}
         width={HERING_SIZE.width}
         height={HERING_SIZE.height}
+      />
+      <Composition
+        id="Kimi"
+        component={KimiVideo}
+        durationInFrames={KIMI_DURATION_IN_FRAMES}
+        fps={KIMI_FPS}
+        width={KIMI_SIZE.width}
+        height={KIMI_SIZE.height}
       />
     </>
   );

@@ -120,3 +120,14 @@ o gancho e a abertura), a pedido do Marcos, agora no estilo "clean" em tamanho
 normal. Ajuste em
 `CAPTION_UNTIL_SENTENCE` e `CAPTION_SIZE` (`src/creep/CreepVideo.tsx`); o
 componente `Caption` do `src/kit.tsx` aceita `size`.
+
+## Vídeo do Kimi Antonelli (perfil pessoal, formato Creep)
+
+Marcos de frente para a câmera embaixo, motions em cima (painel transparente).
+**Sem legenda da fala**, só palavras-chave ligadas aos motions, a pedido do
+Marcos; efeitos sonoros incluídos, trilha no CapCut. O frame 0 é a capa (a
+frase "Você já ouviu falar de Kimi Antonelli?" já inteira na tela). Composição
+`Kimi` em `src/kimi/`, roteiro e mapa em `docs/kimi-direcao.md`, imagens em
+`public/kimi/` (lista em `public/kimi/LEIA-ME.md`). Tempos ligados a palavras
+da fala via `src/kimi/fala-info.json` (`npm run kimi:info`, com a transcrição
+real depois de `npm run transcrever`).
