@@ -70,25 +70,38 @@ const Placeholder: React.FC<{ label: string }> = ({ label }) => (
   </AbsoluteFill>
 );
 
+// Aceita .png, .jpg, .jpeg e .webp com o mesmo nome: tenta uma de cada vez.
+const EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+
 const SafeImage: React.FC<{
   file: string;
   fallback?: ReactNode;
   position?: string;
 }> = ({ file, fallback, position = "center bottom" }) => {
+  const base = file.replace(/\.[a-z]+$/i, "");
   const [handle] = useState(() => delayRender(`Imagem ${file}`));
+  const [attempt, setAttempt] = useState(0);
   const [state, setState] = useState<"loading" | "ok" | "missing">("loading");
   const finish = (next: "ok" | "missing") => {
     setState(next);
     continueRender(handle);
+  };
+  const failed = () => {
+    if (attempt + 1 < EXTENSIONS.length) {
+      setAttempt(attempt + 1);
+    } else {
+      finish("missing");
+    }
   };
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
       {/* <img> de propósito: com <Img> um arquivo que falta derruba o render; aqui o quadro de reserva aparece */}
       {/* eslint-disable-next-line @remotion/warn-native-media-tag */}
       <img
-        src={staticFile(`kimi/${file}`)}
+        key={attempt}
+        src={staticFile(`kimi/${base}.${EXTENSIONS[attempt]}`)}
         onLoad={() => finish("ok")}
-        onError={() => finish("missing")}
+        onError={failed}
         style={{
           width: "100%",
           height: "100%",

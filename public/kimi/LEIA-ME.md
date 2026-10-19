@@ -1,6 +1,6 @@
 # Pasta de imagens do vídeo do Kimi
 
-Coloque aqui os arquivos abaixo, com exatamente estes nomes. Se algum faltar, o
+Coloque aqui os arquivos abaixo, com exatamente estes nomes (a extensão pode ser `.png`, `.jpg`, `.jpeg` ou `.webp`; só `.png` e `.webp` têm fundo transparente). Se algum faltar, o
 vídeo mostra um quadro de reserva com o nome do arquivo, então dá para ir
 montando aos poucos. Recortes em PNG com fundo transparente, rosto nítido,
 de preferência com até 1200 px de altura. Use imagens que você tenha direito
