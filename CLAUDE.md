@@ -131,3 +131,14 @@ frase "Você já ouviu falar de Kimi Antonelli?" já inteira na tela). Composiç
 `public/kimi/` (lista em `public/kimi/LEIA-ME.md`). Tempos ligados a palavras
 da fala via `src/kimi/fala-info.json` (`npm run kimi:info`, com a transcrição
 real depois de `npm run transcrever`).
+
+## Quadro "Por Onde Anda?" (perfil pessoal)
+
+Layout fixo: cartaz de procurado(a) com o título **POR ONDE ANDA?** bem grande,
+foto em preto e branco com a palavra PROCURADA/PROCURADO e a faixa
+**Episódio N: Nome**, sobre fundo de **TV antiga com rabiscos dos anos 2000**
+(sem papel branco). O cartaz entra animado em tela cheia depois do gancho (com o
+rosto do Marcos), encolhe para a esquerda e vira o painel fixo; um carimbo
+ENCONTRADA(O) fecha a história. Componentes em `src/poronde/`; direção, texto e
+fatos do Episódio 1 (JoJo) em `docs/por-onde-anda-direcao.md`. Os rabiscos do
+fundo mudam conforme a época do artista.
