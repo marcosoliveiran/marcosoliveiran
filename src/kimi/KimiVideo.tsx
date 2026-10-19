@@ -26,10 +26,6 @@ export const KIMI_SIZE = { width: WIDTH, height: HEIGHT };
 
 const STAGE = { x: 60, y: 250 };
 
-// Linha do umbigo no quadro (y, em pixels): abaixo dela o vídeo fica preto.
-// Sobe o número para cortar mais alto, desce para mostrar mais do corpo.
-const BELLY_CUT = 1440;
-
 // --- Motions: de quando a quando (segundos, na fala) -------------------------------
 type Motion = { id: string; from: number; to: number; node: ReactNode };
 
@@ -296,19 +292,6 @@ export const KimiVideo: React.FC<KimiProps> = ({ hasVideo = HAS_VIDEO }) => {
             <FacePlaceholder />
           )}
         </div>
-
-        {/* Nada do corpo aparece abaixo da linha do umbigo: preto liso, com uma
-            borda suave de 60 px logo acima da linha (BELLY_CUT) */}
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            top: BELLY_CUT - 60,
-            width: WIDTH,
-            height: HEIGHT - (BELLY_CUT - 60),
-            background: `linear-gradient(to bottom, rgba(16,16,16,0) 0, ${VOOM.black} 60px)`,
-          }}
-        />
 
         {/* Motions (painel transparente, dentro da área segura) */}
         <div
