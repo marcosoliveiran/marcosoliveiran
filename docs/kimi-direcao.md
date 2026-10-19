@@ -53,3 +53,16 @@ transcrição real.
 - Último campeão italiano: Alberto Ascari, 1953 (73 anos).
 - Pontos e datas das corridas valem para quem posta antes de Austin; reconferir
   no dia. Austin só fecha o título se o Kimi vencer e o Russell não pontuar.
+
+## Gravação (transcrição em `transcricao/kimibruto.txt`)
+
+- O bloco da Taylor Swift foi cortado pelo Marcos (saíram o troféu do Grammy,
+  "Fearless · 2010" e o "20 anos" ao lado do Kimi). A frase "Quem está
+  acompanhando a temporada de 2026 da F1 está vendo o surgimento de um astro"
+  ficou, só com o rosto.
+- "70 e poucos anos depois" não foi dito: o contador de 73 anos virou um
+  número fixo que aparece junto com "1953 → 2026".
+- Vídeo de 59,67 s. Tempos reais em `src/kimi/fala-info.json`
+  (`npm run kimi:info -- transcricao/kimibruto.json --duracao=59.67`).
+- Falta conferir o enquadramento do rosto com o vídeo leve (`proxy`), que ainda
+  não chegou.

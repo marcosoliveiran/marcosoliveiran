@@ -1,1109 +1,954 @@
 {
   "fps": 30,
-  "estimado": true,
-  "durationMs": 64158,
+  "estimado": false,
+  "durationMs": 59670,
   "sentences": [
     {
       "index": 1,
-      "startMs": 300,
-      "endMs": 2358,
-      "text": "Você já ouviu falar de Kimi Antonelli?",
+      "startMs": 230,
+      "endMs": 2420,
+      "text": "Você já ouviu falar do Kim Antonelli?",
       "words": [
         {
           "text": "Você",
-          "startMs": 300,
-          "endMs": 552
+          "startMs": 230,
+          "endMs": 340
         },
         {
           "text": "já",
-          "startMs": 582,
-          "endMs": 758
+          "startMs": 340,
+          "endMs": 540
         },
         {
           "text": "ouviu",
-          "startMs": 788,
-          "endMs": 1078
+          "startMs": 540,
+          "endMs": 860
         },
         {
           "text": "falar",
-          "startMs": 1108,
-          "endMs": 1398
+          "startMs": 860,
+          "endMs": 1200
         },
         {
-          "text": "de",
-          "startMs": 1428,
-          "endMs": 1604
+          "text": "do",
+          "startMs": 1200,
+          "endMs": 1340
         },
         {
-          "text": "Kimi",
-          "startMs": 1634,
-          "endMs": 1886
+          "text": "Kim",
+          "startMs": 1340,
+          "endMs": 1530
         },
         {
           "text": "Antonelli?",
-          "startMs": 1916,
-          "endMs": 2358
+          "startMs": 1530,
+          "endMs": 2420
         }
       ]
     },
     {
       "index": 2,
-      "startMs": 2738,
-      "endMs": 7818,
-      "text": "O italiano que pode se tornar o campeão mais jovem da história da Fórmula 1, aos 20 anos.",
+      "startMs": 2420,
+      "endMs": 7800,
+      "text": "O italiano que pode se tornar o campeão mais jovem da história da F1 aos 20 anos de idade?",
       "words": [
         {
           "text": "O",
-          "startMs": 2738,
-          "endMs": 2876
+          "startMs": 2420,
+          "endMs": 2660
         },
         {
           "text": "italiano",
-          "startMs": 2906,
-          "endMs": 3310
+          "startMs": 2660,
+          "endMs": 3120
         },
         {
           "text": "que",
-          "startMs": 3340,
-          "endMs": 3554
+          "startMs": 3120,
+          "endMs": 3400
         },
         {
           "text": "pode",
-          "startMs": 3584,
-          "endMs": 3836
+          "startMs": 3400,
+          "endMs": 3660
         },
         {
           "text": "se",
-          "startMs": 3866,
-          "endMs": 4042
+          "startMs": 3660,
+          "endMs": 3810
         },
         {
           "text": "tornar",
-          "startMs": 4072,
-          "endMs": 4400
+          "startMs": 3810,
+          "endMs": 4360
         },
         {
           "text": "o",
-          "startMs": 4430,
-          "endMs": 4568
+          "startMs": 4360,
+          "endMs": 4390
         },
         {
           "text": "campeão",
-          "startMs": 4598,
-          "endMs": 4964
+          "startMs": 4390,
+          "endMs": 4720
         },
         {
           "text": "mais",
-          "startMs": 4994,
-          "endMs": 5246
+          "startMs": 4720,
+          "endMs": 4960
         },
         {
           "text": "jovem",
-          "startMs": 5276,
-          "endMs": 5566
+          "startMs": 4960,
+          "endMs": 5360
         },
         {
           "text": "da",
-          "startMs": 5596,
-          "endMs": 5772
+          "startMs": 5360,
+          "endMs": 5480
         },
         {
           "text": "história",
-          "startMs": 5802,
-          "endMs": 6206
+          "startMs": 5480,
+          "endMs": 6010
         },
         {
           "text": "da",
-          "startMs": 6236,
-          "endMs": 6412
+          "startMs": 6010,
+          "endMs": 6130
         },
         {
-          "text": "Fórmula",
-          "startMs": 6442,
-          "endMs": 6808
-        },
-        {
-          "text": "1,",
-          "startMs": 6838,
-          "endMs": 6976
+          "text": "F1",
+          "startMs": 6130,
+          "endMs": 6360
         },
         {
           "text": "aos",
-          "startMs": 7116,
-          "endMs": 7330
+          "startMs": 6360,
+          "endMs": 6540
         },
         {
           "text": "20",
-          "startMs": 7360,
-          "endMs": 7536
+          "startMs": 6540,
+          "endMs": 6890
         },
         {
-          "text": "anos.",
-          "startMs": 7566,
-          "endMs": 7818
+          "text": "anos",
+          "startMs": 6890,
+          "endMs": 7160
+        },
+        {
+          "text": "de",
+          "startMs": 7160,
+          "endMs": 7330
+        },
+        {
+          "text": "idade?",
+          "startMs": 7330,
+          "endMs": 7800
         }
       ]
     },
     {
       "index": 3,
-      "startMs": 8198,
-      "endMs": 13246,
-      "text": "Sabe aquela história de quando uma Suprema surge, a anterior vai ficando cada vez mais fraca?",
+      "startMs": 7800,
+      "endMs": 13040,
+      "text": "Sabe aquela história de que quando uma Suprema surge a anterior vai ficando cada vez mais fraca?",
       "words": [
         {
           "text": "Sabe",
-          "startMs": 8198,
-          "endMs": 8450
+          "startMs": 7800,
+          "endMs": 8050
         },
         {
           "text": "aquela",
-          "startMs": 8480,
-          "endMs": 8808
+          "startMs": 8050,
+          "endMs": 8440
         },
         {
           "text": "história",
-          "startMs": 8838,
-          "endMs": 9242
+          "startMs": 8440,
+          "endMs": 9030
         },
         {
           "text": "de",
-          "startMs": 9272,
-          "endMs": 9448
+          "startMs": 9030,
+          "endMs": 9200
+        },
+        {
+          "text": "que",
+          "startMs": 9200,
+          "endMs": 9360
         },
         {
           "text": "quando",
-          "startMs": 9478,
-          "endMs": 9806
+          "startMs": 9360,
+          "endMs": 9740
         },
         {
           "text": "uma",
-          "startMs": 9836,
-          "endMs": 10050
+          "startMs": 9740,
+          "endMs": 9930
         },
         {
           "text": "Suprema",
-          "startMs": 10080,
-          "endMs": 10446
+          "startMs": 9930,
+          "endMs": 10410
         },
         {
-          "text": "surge,",
-          "startMs": 10476,
-          "endMs": 10766
+          "text": "surge",
+          "startMs": 10410,
+          "endMs": 10760
         },
         {
           "text": "a",
-          "startMs": 10906,
-          "endMs": 11044
+          "startMs": 10760,
+          "endMs": 10820
         },
         {
           "text": "anterior",
-          "startMs": 11074,
-          "endMs": 11478
+          "startMs": 10820,
+          "endMs": 11290
         },
         {
           "text": "vai",
-          "startMs": 11508,
-          "endMs": 11722
+          "startMs": 11290,
+          "endMs": 11470
         },
         {
           "text": "ficando",
-          "startMs": 11752,
-          "endMs": 12118
+          "startMs": 11470,
+          "endMs": 11880
         },
         {
           "text": "cada",
-          "startMs": 12148,
-          "endMs": 12400
+          "startMs": 11880,
+          "endMs": 12120
         },
         {
           "text": "vez",
-          "startMs": 12430,
-          "endMs": 12644
+          "startMs": 12120,
+          "endMs": 12300
         },
         {
           "text": "mais",
-          "startMs": 12674,
-          "endMs": 12926
+          "startMs": 12300,
+          "endMs": 12540
         },
         {
           "text": "fraca?",
-          "startMs": 12956,
-          "endMs": 13246
+          "startMs": 12540,
+          "endMs": 13040
         }
       ]
     },
     {
       "index": 4,
-      "startMs": 13626,
-      "endMs": 20210,
-      "text": "Kimi entrou na Mercedes aos 18 anos, no lugar do Lewis Hamilton, que depois de 7 títulos mundiais foi para a Ferrari.",
+      "startMs": 13040,
+      "endMs": 25280,
+      "text": "Kim entrou na Mercedes aos 18 anos no lugar de Livus Hamilton, que depois de 7 títulos mundiais foi parar na Ferrari, a mesma Ferrari em que Michael Schmacher ganhou 5 dos 7 títulos mundiais dele.",
       "words": [
         {
-          "text": "Kimi",
-          "startMs": 13626,
-          "endMs": 13878
+          "text": "Kim",
+          "startMs": 13040,
+          "endMs": 13260
         },
         {
           "text": "entrou",
-          "startMs": 13908,
-          "endMs": 14236
+          "startMs": 13260,
+          "endMs": 13770
         },
         {
           "text": "na",
-          "startMs": 14266,
-          "endMs": 14442
+          "startMs": 13770,
+          "endMs": 13840
         },
         {
           "text": "Mercedes",
-          "startMs": 14472,
-          "endMs": 14876
+          "startMs": 13840,
+          "endMs": 14430
         },
         {
           "text": "aos",
-          "startMs": 14906,
-          "endMs": 15120
+          "startMs": 14430,
+          "endMs": 14650
         },
         {
           "text": "18",
-          "startMs": 15150,
-          "endMs": 15326
+          "startMs": 14650,
+          "endMs": 15090
         },
         {
-          "text": "anos,",
-          "startMs": 15356,
-          "endMs": 15608
+          "text": "anos",
+          "startMs": 15090,
+          "endMs": 15380
         },
         {
           "text": "no",
-          "startMs": 15748,
-          "endMs": 15924
+          "startMs": 15380,
+          "endMs": 15530
         },
         {
           "text": "lugar",
-          "startMs": 15954,
-          "endMs": 16244
-        },
-        {
-          "text": "do",
-          "startMs": 16274,
-          "endMs": 16450
-        },
-        {
-          "text": "Lewis",
-          "startMs": 16480,
-          "endMs": 16770
-        },
-        {
-          "text": "Hamilton,",
-          "startMs": 16800,
-          "endMs": 17204
-        },
-        {
-          "text": "que",
-          "startMs": 17344,
-          "endMs": 17558
-        },
-        {
-          "text": "depois",
-          "startMs": 17588,
-          "endMs": 17916
+          "startMs": 15530,
+          "endMs": 15900
         },
         {
           "text": "de",
-          "startMs": 17946,
-          "endMs": 18122
+          "startMs": 15900,
+          "endMs": 16050
+        },
+        {
+          "text": "Livus",
+          "startMs": 16050,
+          "endMs": 16410
+        },
+        {
+          "text": "Hamilton,",
+          "startMs": 16410,
+          "endMs": 17080
+        },
+        {
+          "text": "que",
+          "startMs": 17080,
+          "endMs": 17370
+        },
+        {
+          "text": "depois",
+          "startMs": 17370,
+          "endMs": 17710
+        },
+        {
+          "text": "de",
+          "startMs": 17710,
+          "endMs": 17840
         },
         {
           "text": "7",
-          "startMs": 18152,
-          "endMs": 18290
+          "startMs": 17840,
+          "endMs": 18100
         },
         {
           "text": "títulos",
-          "startMs": 18320,
-          "endMs": 18686
+          "startMs": 18100,
+          "endMs": 18620
         },
         {
           "text": "mundiais",
-          "startMs": 18716,
-          "endMs": 19120
+          "startMs": 18620,
+          "endMs": 19180
         },
         {
           "text": "foi",
-          "startMs": 19150,
-          "endMs": 19364
+          "startMs": 19180,
+          "endMs": 19390
         },
         {
-          "text": "para",
-          "startMs": 19394,
-          "endMs": 19646
+          "text": "parar",
+          "startMs": 19390,
+          "endMs": 19740
+        },
+        {
+          "text": "na",
+          "startMs": 19740,
+          "endMs": 19880
+        },
+        {
+          "text": "Ferrari,",
+          "startMs": 19880,
+          "endMs": 20440
         },
         {
           "text": "a",
-          "startMs": 19676,
-          "endMs": 19814
+          "startMs": 20440,
+          "endMs": 20620
         },
         {
-          "text": "Ferrari.",
-          "startMs": 19844,
-          "endMs": 20210
+          "text": "mesma",
+          "startMs": 20620,
+          "endMs": 20860
+        },
+        {
+          "text": "Ferrari",
+          "startMs": 20860,
+          "endMs": 21350
+        },
+        {
+          "text": "em",
+          "startMs": 21350,
+          "endMs": 21490
+        },
+        {
+          "text": "que",
+          "startMs": 21490,
+          "endMs": 21760
+        },
+        {
+          "text": "Michael",
+          "startMs": 21760,
+          "endMs": 22190
+        },
+        {
+          "text": "Schmacher",
+          "startMs": 22190,
+          "endMs": 22810
+        },
+        {
+          "text": "ganhou",
+          "startMs": 22810,
+          "endMs": 23240
+        },
+        {
+          "text": "5",
+          "startMs": 23240,
+          "endMs": 23450
+        },
+        {
+          "text": "dos",
+          "startMs": 23450,
+          "endMs": 23660
+        },
+        {
+          "text": "7",
+          "startMs": 23660,
+          "endMs": 23860
+        },
+        {
+          "text": "títulos",
+          "startMs": 23860,
+          "endMs": 24440
+        },
+        {
+          "text": "mundiais",
+          "startMs": 24440,
+          "endMs": 24990
+        },
+        {
+          "text": "dele.",
+          "startMs": 24990,
+          "endMs": 25280
         }
       ]
     },
     {
       "index": 5,
-      "startMs": 20590,
-      "endMs": 24850,
-      "text": "A mesma Ferrari em que Michael Schumacher ganhou 5 dos 7 títulos mundiais dele.",
+      "startMs": 25460,
+      "endMs": 30600,
+      "text": "Quem está acompanhando a temporada de 2026 da F1 está vendo o surgimento de um astro.",
       "words": [
         {
-          "text": "A",
-          "startMs": 20590,
-          "endMs": 20728
+          "text": "Quem",
+          "startMs": 25460,
+          "endMs": 25530
         },
         {
-          "text": "mesma",
-          "startMs": 20758,
-          "endMs": 21048
+          "text": "está",
+          "startMs": 25530,
+          "endMs": 25840
         },
         {
-          "text": "Ferrari",
-          "startMs": 21078,
-          "endMs": 21444
+          "text": "acompanhando",
+          "startMs": 25840,
+          "endMs": 26630
         },
         {
-          "text": "em",
-          "startMs": 21474,
-          "endMs": 21650
+          "text": "a",
+          "startMs": 26630,
+          "endMs": 26650
         },
         {
-          "text": "que",
-          "startMs": 21680,
-          "endMs": 21894
+          "text": "temporada",
+          "startMs": 26650,
+          "endMs": 27210
         },
         {
-          "text": "Michael",
-          "startMs": 21924,
-          "endMs": 22290
+          "text": "de",
+          "startMs": 27210,
+          "endMs": 27330
         },
         {
-          "text": "Schumacher",
-          "startMs": 22320,
-          "endMs": 22800
+          "text": "2026",
+          "startMs": 27330,
+          "endMs": 28090
         },
         {
-          "text": "ganhou",
-          "startMs": 22830,
-          "endMs": 23158
+          "text": "da",
+          "startMs": 28090,
+          "endMs": 28190
         },
         {
-          "text": "5",
-          "startMs": 23188,
-          "endMs": 23326
+          "text": "F1",
+          "startMs": 28190,
+          "endMs": 28430
         },
         {
-          "text": "dos",
-          "startMs": 23356,
-          "endMs": 23570
+          "text": "está",
+          "startMs": 28430,
+          "endMs": 28740
         },
         {
-          "text": "7",
-          "startMs": 23600,
-          "endMs": 23738
+          "text": "vendo",
+          "startMs": 28740,
+          "endMs": 29050
         },
         {
-          "text": "títulos",
-          "startMs": 23768,
-          "endMs": 24134
+          "text": "o",
+          "startMs": 29050,
+          "endMs": 29110
         },
         {
-          "text": "mundiais",
-          "startMs": 24164,
-          "endMs": 24568
+          "text": "surgimento",
+          "startMs": 29110,
+          "endMs": 29730
         },
         {
-          "text": "dele.",
-          "startMs": 24598,
-          "endMs": 24850
+          "text": "de",
+          "startMs": 29730,
+          "endMs": 29850
+        },
+        {
+          "text": "um",
+          "startMs": 29850,
+          "endMs": 29970
+        },
+        {
+          "text": "astro.",
+          "startMs": 29970,
+          "endMs": 30600
         }
       ]
     },
     {
       "index": 6,
-      "startMs": 25230,
-      "endMs": 28812,
-      "text": "Quem acompanhou a temporada 2026 viu nascer um astro da Fórmula 1.",
+      "startMs": 30600,
+      "endMs": 49640,
+      "text": "Com mais de 100 pontos de vantagem, o título pode vir já no GP de Austin, improvável mas matemáticamente possível, mas aposta que o título venha na cidade do México ou até mesmo no GP de São Paulo, aqui no Brasil, e será o primeiro título de um italiano na F1 desde Alberto Ascari em 1953.",
       "words": [
         {
-          "text": "Quem",
-          "startMs": 25230,
-          "endMs": 25482
+          "text": "Com",
+          "startMs": 30600,
+          "endMs": 30820
         },
         {
-          "text": "acompanhou",
-          "startMs": 25512,
-          "endMs": 25992
+          "text": "mais",
+          "startMs": 30820,
+          "endMs": 31020
         },
         {
-          "text": "a",
-          "startMs": 26022,
-          "endMs": 26160
+          "text": "de",
+          "startMs": 31020,
+          "endMs": 31140
         },
         {
-          "text": "temporada",
-          "startMs": 26190,
-          "endMs": 26632
+          "text": "100",
+          "startMs": 31140,
+          "endMs": 31670
         },
         {
-          "text": "2026",
-          "startMs": 26662,
-          "endMs": 26914
+          "text": "pontos",
+          "startMs": 31670,
+          "endMs": 32060
         },
         {
-          "text": "viu",
-          "startMs": 26944,
-          "endMs": 27158
+          "text": "de",
+          "startMs": 32060,
+          "endMs": 32160
         },
         {
-          "text": "nascer",
-          "startMs": 27188,
-          "endMs": 27516
+          "text": "vantagem,",
+          "startMs": 32160,
+          "endMs": 32760
+        },
+        {
+          "text": "o",
+          "startMs": 32760,
+          "endMs": 32840
+        },
+        {
+          "text": "título",
+          "startMs": 32840,
+          "endMs": 33400
+        },
+        {
+          "text": "pode",
+          "startMs": 33400,
+          "endMs": 33720
+        },
+        {
+          "text": "vir",
+          "startMs": 33720,
+          "endMs": 33960
+        },
+        {
+          "text": "já",
+          "startMs": 33960,
+          "endMs": 34210
+        },
+        {
+          "text": "no",
+          "startMs": 34210,
+          "endMs": 34370
+        },
+        {
+          "text": "GP",
+          "startMs": 34370,
+          "endMs": 34570
+        },
+        {
+          "text": "de",
+          "startMs": 34570,
+          "endMs": 34680
+        },
+        {
+          "text": "Austin,",
+          "startMs": 34680,
+          "endMs": 35200
+        },
+        {
+          "text": "improvável",
+          "startMs": 35200,
+          "endMs": 35810
+        },
+        {
+          "text": "mas",
+          "startMs": 35810,
+          "endMs": 35980
+        },
+        {
+          "text": "matemáticamente",
+          "startMs": 35980,
+          "endMs": 36870
+        },
+        {
+          "text": "possível,",
+          "startMs": 36870,
+          "endMs": 37650
+        },
+        {
+          "text": "mas",
+          "startMs": 37650,
+          "endMs": 37710
+        },
+        {
+          "text": "aposta",
+          "startMs": 37710,
+          "endMs": 38110
+        },
+        {
+          "text": "que",
+          "startMs": 38110,
+          "endMs": 38350
+        },
+        {
+          "text": "o",
+          "startMs": 38350,
+          "endMs": 38350
+        },
+        {
+          "text": "título",
+          "startMs": 38350,
+          "endMs": 38840
+        },
+        {
+          "text": "venha",
+          "startMs": 38840,
+          "endMs": 39120
+        },
+        {
+          "text": "na",
+          "startMs": 39120,
+          "endMs": 39230
+        },
+        {
+          "text": "cidade",
+          "startMs": 39230,
+          "endMs": 39580
+        },
+        {
+          "text": "do",
+          "startMs": 39580,
+          "endMs": 39720
+        },
+        {
+          "text": "México",
+          "startMs": 39720,
+          "endMs": 40440
+        },
+        {
+          "text": "ou",
+          "startMs": 40440,
+          "endMs": 40660
+        },
+        {
+          "text": "até",
+          "startMs": 40660,
+          "endMs": 40800
+        },
+        {
+          "text": "mesmo",
+          "startMs": 40800,
+          "endMs": 41100
+        },
+        {
+          "text": "no",
+          "startMs": 41100,
+          "endMs": 41220
+        },
+        {
+          "text": "GP",
+          "startMs": 41220,
+          "endMs": 41340
+        },
+        {
+          "text": "de",
+          "startMs": 41340,
+          "endMs": 41470
+        },
+        {
+          "text": "São",
+          "startMs": 41470,
+          "endMs": 41700
+        },
+        {
+          "text": "Paulo,",
+          "startMs": 41700,
+          "endMs": 42120
+        },
+        {
+          "text": "aqui",
+          "startMs": 42120,
+          "endMs": 42360
+        },
+        {
+          "text": "no",
+          "startMs": 42360,
+          "endMs": 42480
+        },
+        {
+          "text": "Brasil,",
+          "startMs": 42480,
+          "endMs": 43000
+        },
+        {
+          "text": "e",
+          "startMs": 43000,
+          "endMs": 43230
+        },
+        {
+          "text": "será",
+          "startMs": 43230,
+          "endMs": 43520
+        },
+        {
+          "text": "o",
+          "startMs": 43520,
+          "endMs": 43600
+        },
+        {
+          "text": "primeiro",
+          "startMs": 43600,
+          "endMs": 44300
+        },
+        {
+          "text": "título",
+          "startMs": 44300,
+          "endMs": 44910
+        },
+        {
+          "text": "de",
+          "startMs": 44910,
+          "endMs": 45080
         },
         {
           "text": "um",
-          "startMs": 27546,
-          "endMs": 27722
+          "startMs": 45080,
+          "endMs": 45250
         },
         {
-          "text": "astro",
-          "startMs": 27752,
-          "endMs": 28042
+          "text": "italiano",
+          "startMs": 45250,
+          "endMs": 45940
         },
         {
-          "text": "da",
-          "startMs": 28072,
-          "endMs": 28248
+          "text": "na",
+          "startMs": 45940,
+          "endMs": 46200
         },
         {
-          "text": "Fórmula",
-          "startMs": 28278,
-          "endMs": 28644
+          "text": "F1",
+          "startMs": 46200,
+          "endMs": 46460
         },
         {
-          "text": "1.",
-          "startMs": 28674,
-          "endMs": 28812
+          "text": "desde",
+          "startMs": 46460,
+          "endMs": 46900
+        },
+        {
+          "text": "Alberto",
+          "startMs": 46900,
+          "endMs": 47510
+        },
+        {
+          "text": "Ascari",
+          "startMs": 47510,
+          "endMs": 48000
+        },
+        {
+          "text": "em",
+          "startMs": 48000,
+          "endMs": 48210
+        },
+        {
+          "text": "1953.",
+          "startMs": 48210,
+          "endMs": 49640
         }
       ]
     },
     {
       "index": 7,
-      "startMs": 29192,
-      "endMs": 35936,
-      "text": "Foi como ver a Taylor Swift ganhar o primeiro Álbum do Ano, dos quatro dela, com Fearless, lá em 2010, aos 20 anos.",
+      "startMs": 49640,
+      "endMs": 51800,
+      "text": "Mas e aí, para quem vai sua torcida?",
       "words": [
         {
-          "text": "Foi",
-          "startMs": 29192,
-          "endMs": 29406
+          "text": "Mas",
+          "startMs": 49640,
+          "endMs": 49830
         },
         {
-          "text": "como",
-          "startMs": 29436,
-          "endMs": 29688
+          "text": "e",
+          "startMs": 49830,
+          "endMs": 50010
         },
         {
-          "text": "ver",
-          "startMs": 29718,
-          "endMs": 29932
+          "text": "aí,",
+          "startMs": 50010,
+          "endMs": 50210
         },
         {
-          "text": "a",
-          "startMs": 29962,
-          "endMs": 30100
+          "text": "para",
+          "startMs": 50210,
+          "endMs": 50470
         },
         {
-          "text": "Taylor",
-          "startMs": 30130,
-          "endMs": 30458
+          "text": "quem",
+          "startMs": 50470,
+          "endMs": 50750
         },
         {
-          "text": "Swift",
-          "startMs": 30488,
-          "endMs": 30778
+          "text": "vai",
+          "startMs": 50750,
+          "endMs": 50920
         },
         {
-          "text": "ganhar",
-          "startMs": 30808,
-          "endMs": 31136
+          "text": "sua",
+          "startMs": 50920,
+          "endMs": 51110
         },
         {
-          "text": "o",
-          "startMs": 31166,
-          "endMs": 31304
-        },
-        {
-          "text": "primeiro",
-          "startMs": 31334,
-          "endMs": 31738
-        },
-        {
-          "text": "Álbum",
-          "startMs": 31768,
-          "endMs": 32058
-        },
-        {
-          "text": "do",
-          "startMs": 32088,
-          "endMs": 32264
-        },
-        {
-          "text": "Ano,",
-          "startMs": 32294,
-          "endMs": 32508
-        },
-        {
-          "text": "dos",
-          "startMs": 32648,
-          "endMs": 32862
-        },
-        {
-          "text": "quatro",
-          "startMs": 32892,
-          "endMs": 33220
-        },
-        {
-          "text": "dela,",
-          "startMs": 33250,
-          "endMs": 33502
-        },
-        {
-          "text": "com",
-          "startMs": 33642,
-          "endMs": 33856
-        },
-        {
-          "text": "Fearless,",
-          "startMs": 33886,
-          "endMs": 34290
-        },
-        {
-          "text": "lá",
-          "startMs": 34430,
-          "endMs": 34606
-        },
-        {
-          "text": "em",
-          "startMs": 34636,
-          "endMs": 34812
-        },
-        {
-          "text": "2010,",
-          "startMs": 34842,
-          "endMs": 35094
-        },
-        {
-          "text": "aos",
-          "startMs": 35234,
-          "endMs": 35448
-        },
-        {
-          "text": "20",
-          "startMs": 35478,
-          "endMs": 35654
-        },
-        {
-          "text": "anos.",
-          "startMs": 35684,
-          "endMs": 35936
+          "text": "torcida?",
+          "startMs": 51110,
+          "endMs": 51800
         }
       ]
     },
     {
       "index": 8,
-      "startMs": 36316,
-      "endMs": 37284,
-      "text": "Igualzinho ao Kimi.",
-      "words": [
-        {
-          "text": "Igualzinho",
-          "startMs": 36316,
-          "endMs": 36796
-        },
-        {
-          "text": "ao",
-          "startMs": 36826,
-          "endMs": 37002
-        },
-        {
-          "text": "Kimi.",
-          "startMs": 37032,
-          "endMs": 37284
-        }
-      ]
-    },
-    {
-      "index": 9,
-      "startMs": 37664,
-      "endMs": 43744,
-      "text": "Com mais de 100 pontos de vantagem, o título pode vir no GP de Austin, improvável mas matematicamente possível.",
-      "words": [
-        {
-          "text": "Com",
-          "startMs": 37664,
-          "endMs": 37878
-        },
-        {
-          "text": "mais",
-          "startMs": 37908,
-          "endMs": 38160
-        },
-        {
-          "text": "de",
-          "startMs": 38190,
-          "endMs": 38366
-        },
-        {
-          "text": "100",
-          "startMs": 38396,
-          "endMs": 38610
-        },
-        {
-          "text": "pontos",
-          "startMs": 38640,
-          "endMs": 38968
-        },
-        {
-          "text": "de",
-          "startMs": 38998,
-          "endMs": 39174
-        },
-        {
-          "text": "vantagem,",
-          "startMs": 39204,
-          "endMs": 39608
-        },
-        {
-          "text": "o",
-          "startMs": 39748,
-          "endMs": 39886
-        },
-        {
-          "text": "título",
-          "startMs": 39916,
-          "endMs": 40244
-        },
-        {
-          "text": "pode",
-          "startMs": 40274,
-          "endMs": 40526
-        },
-        {
-          "text": "vir",
-          "startMs": 40556,
-          "endMs": 40770
-        },
-        {
-          "text": "no",
-          "startMs": 40800,
-          "endMs": 40976
-        },
-        {
-          "text": "GP",
-          "startMs": 41006,
-          "endMs": 41182
-        },
-        {
-          "text": "de",
-          "startMs": 41212,
-          "endMs": 41388
-        },
-        {
-          "text": "Austin,",
-          "startMs": 41418,
-          "endMs": 41746
-        },
-        {
-          "text": "improvável",
-          "startMs": 41886,
-          "endMs": 42366
-        },
-        {
-          "text": "mas",
-          "startMs": 42396,
-          "endMs": 42610
-        },
-        {
-          "text": "matematicamente",
-          "startMs": 42640,
-          "endMs": 43310
-        },
-        {
-          "text": "possível.",
-          "startMs": 43340,
-          "endMs": 43744
-        }
-      ]
-    },
-    {
-      "index": 10,
-      "startMs": 44124,
-      "endMs": 48958,
-      "text": "A aposta é que o título venha na Cidade do México ou até mesmo no GP de São Paulo.",
-      "words": [
-        {
-          "text": "A",
-          "startMs": 44124,
-          "endMs": 44262
-        },
-        {
-          "text": "aposta",
-          "startMs": 44292,
-          "endMs": 44620
-        },
-        {
-          "text": "é",
-          "startMs": 44650,
-          "endMs": 44788
-        },
-        {
-          "text": "que",
-          "startMs": 44818,
-          "endMs": 45032
-        },
-        {
-          "text": "o",
-          "startMs": 45062,
-          "endMs": 45200
-        },
-        {
-          "text": "título",
-          "startMs": 45230,
-          "endMs": 45558
-        },
-        {
-          "text": "venha",
-          "startMs": 45588,
-          "endMs": 45878
-        },
-        {
-          "text": "na",
-          "startMs": 45908,
-          "endMs": 46084
-        },
-        {
-          "text": "Cidade",
-          "startMs": 46114,
-          "endMs": 46442
-        },
-        {
-          "text": "do",
-          "startMs": 46472,
-          "endMs": 46648
-        },
-        {
-          "text": "México",
-          "startMs": 46678,
-          "endMs": 47006
-        },
-        {
-          "text": "ou",
-          "startMs": 47036,
-          "endMs": 47212
-        },
-        {
-          "text": "até",
-          "startMs": 47242,
-          "endMs": 47456
-        },
-        {
-          "text": "mesmo",
-          "startMs": 47486,
-          "endMs": 47776
-        },
-        {
-          "text": "no",
-          "startMs": 47806,
-          "endMs": 47982
-        },
-        {
-          "text": "GP",
-          "startMs": 48012,
-          "endMs": 48188
-        },
-        {
-          "text": "de",
-          "startMs": 48218,
-          "endMs": 48394
-        },
-        {
-          "text": "São",
-          "startMs": 48424,
-          "endMs": 48638
-        },
-        {
-          "text": "Paulo.",
-          "startMs": 48668,
-          "endMs": 48958
-        }
-      ]
-    },
-    {
-      "index": 11,
-      "startMs": 49338,
-      "endMs": 55488,
-      "text": "E será o primeiro título de um italiano na Fórmula 1 desde Alberto Ascari, em 1953, 70 e poucos anos depois.",
-      "words": [
-        {
-          "text": "E",
-          "startMs": 49338,
-          "endMs": 49476
-        },
-        {
-          "text": "será",
-          "startMs": 49506,
-          "endMs": 49758
-        },
-        {
-          "text": "o",
-          "startMs": 49788,
-          "endMs": 49926
-        },
-        {
-          "text": "primeiro",
-          "startMs": 49956,
-          "endMs": 50360
-        },
-        {
-          "text": "título",
-          "startMs": 50390,
-          "endMs": 50718
-        },
-        {
-          "text": "de",
-          "startMs": 50748,
-          "endMs": 50924
-        },
-        {
-          "text": "um",
-          "startMs": 50954,
-          "endMs": 51130
-        },
-        {
-          "text": "italiano",
-          "startMs": 51160,
-          "endMs": 51564
-        },
-        {
-          "text": "na",
-          "startMs": 51594,
-          "endMs": 51770
-        },
-        {
-          "text": "Fórmula",
-          "startMs": 51800,
-          "endMs": 52166
-        },
-        {
-          "text": "1",
-          "startMs": 52196,
-          "endMs": 52334
-        },
-        {
-          "text": "desde",
-          "startMs": 52364,
-          "endMs": 52654
-        },
-        {
-          "text": "Alberto",
-          "startMs": 52684,
-          "endMs": 53050
-        },
-        {
-          "text": "Ascari,",
-          "startMs": 53080,
-          "endMs": 53408
-        },
-        {
-          "text": "em",
-          "startMs": 53548,
-          "endMs": 53724
-        },
-        {
-          "text": "1953,",
-          "startMs": 53754,
-          "endMs": 54006
-        },
-        {
-          "text": "70",
-          "startMs": 54146,
-          "endMs": 54322
-        },
-        {
-          "text": "e",
-          "startMs": 54352,
-          "endMs": 54490
-        },
-        {
-          "text": "poucos",
-          "startMs": 54520,
-          "endMs": 54848
-        },
-        {
-          "text": "anos",
-          "startMs": 54878,
-          "endMs": 55130
-        },
-        {
-          "text": "depois.",
-          "startMs": 55160,
-          "endMs": 55488
-        }
-      ]
-    },
-    {
-      "index": 12,
-      "startMs": 55868,
-      "endMs": 58144,
-      "text": "Mas e aí, pra quem vai a sua torcida?",
-      "words": [
-        {
-          "text": "Mas",
-          "startMs": 55868,
-          "endMs": 56082
-        },
-        {
-          "text": "e",
-          "startMs": 56112,
-          "endMs": 56250
-        },
-        {
-          "text": "aí,",
-          "startMs": 56280,
-          "endMs": 56456
-        },
-        {
-          "text": "pra",
-          "startMs": 56596,
-          "endMs": 56810
-        },
-        {
-          "text": "quem",
-          "startMs": 56840,
-          "endMs": 57092
-        },
-        {
-          "text": "vai",
-          "startMs": 57122,
-          "endMs": 57336
-        },
-        {
-          "text": "a",
-          "startMs": 57366,
-          "endMs": 57504
-        },
-        {
-          "text": "sua",
-          "startMs": 57534,
-          "endMs": 57748
-        },
-        {
-          "text": "torcida?",
-          "startMs": 57778,
-          "endMs": 58144
-        }
-      ]
-    },
-    {
-      "index": 13,
-      "startMs": 58524,
-      "endMs": 63778,
-      "text": "Conta aqui nos comentários, e me segue pra acompanhar a reta final dessa temporada da Fórmula 1.",
+      "startMs": 52020,
+      "endMs": 56800,
+      "text": "Conta para mim aqui nos comentários e me siga para acompanhar a reta final dessa temporada da F1.",
       "words": [
         {
           "text": "Conta",
-          "startMs": 58524,
-          "endMs": 58814
+          "startMs": 52020,
+          "endMs": 52070
+        },
+        {
+          "text": "para",
+          "startMs": 52070,
+          "endMs": 52300
+        },
+        {
+          "text": "mim",
+          "startMs": 52300,
+          "endMs": 52460
         },
         {
           "text": "aqui",
-          "startMs": 58844,
-          "endMs": 59096
+          "startMs": 52460,
+          "endMs": 52690
         },
         {
           "text": "nos",
-          "startMs": 59126,
-          "endMs": 59340
+          "startMs": 52690,
+          "endMs": 52900
         },
         {
-          "text": "comentários,",
-          "startMs": 59370,
-          "endMs": 59888
+          "text": "comentários",
+          "startMs": 52900,
+          "endMs": 53530
         },
         {
           "text": "e",
-          "startMs": 60028,
-          "endMs": 60166
+          "startMs": 53530,
+          "endMs": 53580
         },
         {
           "text": "me",
-          "startMs": 60196,
-          "endMs": 60372
+          "startMs": 53580,
+          "endMs": 53690
         },
         {
-          "text": "segue",
-          "startMs": 60402,
-          "endMs": 60692
+          "text": "siga",
+          "startMs": 53690,
+          "endMs": 53910
         },
         {
-          "text": "pra",
-          "startMs": 60722,
-          "endMs": 60936
+          "text": "para",
+          "startMs": 53910,
+          "endMs": 54130
         },
         {
           "text": "acompanhar",
-          "startMs": 60966,
-          "endMs": 61446
+          "startMs": 54130,
+          "endMs": 54700
         },
         {
           "text": "a",
-          "startMs": 61476,
-          "endMs": 61614
+          "startMs": 54700,
+          "endMs": 54750
         },
         {
           "text": "reta",
-          "startMs": 61644,
-          "endMs": 61896
+          "startMs": 54750,
+          "endMs": 55030
         },
         {
           "text": "final",
-          "startMs": 61926,
-          "endMs": 62216
+          "startMs": 55030,
+          "endMs": 55360
         },
         {
           "text": "dessa",
-          "startMs": 62246,
-          "endMs": 62536
+          "startMs": 55360,
+          "endMs": 55760
         },
         {
           "text": "temporada",
-          "startMs": 62566,
-          "endMs": 63008
+          "startMs": 55760,
+          "endMs": 56360
         },
         {
           "text": "da",
-          "startMs": 63038,
-          "endMs": 63214
+          "startMs": 56360,
+          "endMs": 56500
         },
         {
-          "text": "Fórmula",
-          "startMs": 63244,
-          "endMs": 63610
-        },
-        {
-          "text": "1.",
-          "startMs": 63640,
-          "endMs": 63778
+          "text": "F1.",
+          "startMs": 56500,
+          "endMs": 56800
         }
       ]
     }

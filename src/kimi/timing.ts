@@ -48,7 +48,7 @@ const next = (pattern: RegExp): Hit => {
 };
 
 // --- Momentos, na ordem da fala -------------------------------------------------
-const kimi1 = next(/^kimi$/);
+const kimi1 = next(/^kimi?$/);
 const antonelli = next(/^antonel/);
 const campeao = next(/^campea/);
 const jovem = next(/^jovem/);
@@ -64,17 +64,10 @@ const hamilton = next(/^hamil/);
 const sete1 = next(/^(7|sete)$/);
 const ferrari1 = next(/^ferrari/);
 const ferrari2 = next(/^ferrari/);
-const schumacher = next(/^s(ch|h)u/);
+const schumacher = next(/^(sch|shu|chu|xu)/);
 const cinco = next(/^(5|cinco)$/);
 const sete2 = next(/^(7|sete)$/);
-const acompanhou = next(/^acompanhou/);
-const taylor = next(/^tayl/);
-const album = next(/^album$/);
-const quatro = next(/^(4|quatro)$/);
-const fearless = next(/^fear/);
-const y2010 = next(/^(2010|2|dois)$/);
-const vinte2 = next(/^(20|vinte)$/);
-const kimi2 = next(/^kimi$/);
+const acompanhou = next(/^acompanh/);
 const com = next(/^com$/);
 const cem = next(/^(100|cem)$/);
 const austin = next(/^austin/);
@@ -82,15 +75,13 @@ const mexico = next(/^mexico/);
 const paulo = next(/^paulo/);
 const ascari = next(/^as[ck]ar/);
 const y1953 = next(/^(1953|mil)$/);
-const poucos = next(/^poucos/);
-const depois = next(/^depois/);
 const mas = next(/^mas$/);
 const quem = next(/^quem$/);
 const torcida = next(/^torcida/);
 const comentarios = next(/^comentarios/);
-const segue = next(/^segu/);
+const segue = next(/^(segue|siga)$/);
 
-export const END = WORDS[WORDS.length - 1].endMs / 1000 + 0.6;
+export const END = info.durationMs / 1000;
 
 export const T = {
   kimi1: kimi1.start,
@@ -113,13 +104,6 @@ export const T = {
   cinco: cinco.start,
   sete2: sete2.start,
   acompanhou: acompanhou.start,
-  taylor: taylor.start,
-  album: album.start,
-  quatro: quatro.start,
-  fearless: fearless.start,
-  y2010: y2010.start,
-  vinte2: vinte2.start,
-  kimi2: kimi2.start,
   com: com.start,
   cem: cem.start,
   austin: austin.start,
@@ -128,8 +112,6 @@ export const T = {
   pauloEnd: paulo.end,
   ascari: ascari.start,
   y1953: y1953.start,
-  poucos: poucos.start,
-  depois: depois.start,
   mas: mas.start,
   quem: quem.start,
   torcida: torcida.start,

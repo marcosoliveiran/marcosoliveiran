@@ -108,25 +108,6 @@ const MOTIONS: Motion[] = [
     to: T.cinco + KEY_LEN,
     node: <M.Keyword text="5 DOS 7" />,
   },
-  // 4 · Taylor Swift
-  { id: "taylor", from: T.taylor, to: T.com - 0.1, node: <M.TaylorPhoto /> },
-  {
-    id: "trofeus",
-    from: T.album,
-    to: T.vinte2,
-    node: (
-      <M.GrammyTrophies
-        fourAt={rel(T.album, T.quatro)}
-        fearlessAt={rel(T.album, T.fearless)}
-      />
-    ),
-  },
-  {
-    id: "vinte-de-novo",
-    from: T.vinte2,
-    to: T.com - 0.1,
-    node: <M.TwentyAgain kimiAt={rel(T.vinte2, T.kimi2)} />,
-  },
   // 5 · As corridas e o título italiano
   { id: "mais100", from: T.cem, to: T.austin, node: <M.PlusHundred /> },
   {
@@ -143,12 +124,12 @@ const MOTIONS: Motion[] = [
   {
     id: "ascari",
     from: T.ascari,
-    to: T.depois + 0.9,
+    to: T.mas + 0.4,
     node: (
       <M.Ascari
         yearsAt={rel(T.ascari, T.y1953)}
-        countAt={rel(T.ascari, T.poucos)}
-        countDur={Math.max(0.8, rel(T.poucos, T.depois) + 0.3)}
+        countAt={rel(T.ascari, T.y1953) + 0.1}
+        countDur={0.5}
       />
     ),
   },
@@ -191,7 +172,6 @@ const CUTS = [
   T.hamilton,
   T.schumacher,
   T.acompanhou,
-  T.fearless,
   T.com,
   T.mexico,
   T.ascari,
@@ -229,20 +209,14 @@ const SFX: Array<[number, string, number]> = [
   [T.ferrari1, "whoosh.wav", 0.4],
   [T.schumacher, "whoosh.wav", 0.4],
   [T.cinco, "sparkle.wav", 0.45],
-  [T.taylor, "whoosh.wav", 0.35],
-  [T.album, "bounce.wav", 0.6],
-  [T.quatro, "pop.wav", 0.5],
-  [T.fearless, "sparkle.wav", 0.5],
-  [T.vinte2, "riser.wav", 0.35],
-  [T.kimi2, "whoosh.wav", 0.3],
   [T.cem, "riser.wav", 0.45],
   [T.cem + 0.7, "impact.wav", 0.5],
   [T.austin, "pop.wav", 0.5],
   [T.mexico, "pop.wav", 0.5],
   [T.paulo, "pop.wav", 0.5],
   [T.ascari, "whoosh.wav", 0.4],
-  [T.poucos, "riser.wav", 0.4],
-  [T.depois + 0.4, "ding.wav", 0.5],
+  [T.y1953, "riser.wav", 0.35],
+  [T.y1953 + 0.5, "ding.wav", 0.5],
   [T.quem, "impact.wav", 0.55],
   [T.quem + 0.5, "pop.wav", 0.4],
   [T.segue, "notification.wav", 0.5],

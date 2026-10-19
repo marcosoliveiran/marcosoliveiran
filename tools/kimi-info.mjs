@@ -6,11 +6,11 @@
 //
 // Com a transcrição do vídeo final (gerada por `npm run transcrever`): usa os
 // tempos reais da fala.
-//   npm run kimi:info -- transcricao/kimi.json
+//   npm run kimi:info -- transcricao/kimi.json --duracao=59.67
+// (--duracao = duração do vídeo em segundos; sem ele usa o fim da fala + 0,6 s)
 
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { toSentences } from "./transcrever.mjs";
 
 const OUT = path.resolve("src/kimi/fala-info.json");
 
@@ -57,34 +57,84 @@ const estimar = () => {
   return { fps: 30, estimado: true, durationMs: Math.round(t), sentences };
 };
 
-const dosTempos = async (file) => {
+// O Whisper devolve pedaços de palavra ("Ant", "one", "lli", "?"): um pedaço sem
+// espaço na frente continua a palavra anterior. Trechos entre colchetes, como
+// "[Música]", não são fala e saem.
+const juntarPalavras = (tokens) => {
+  const words = [];
+  let dentroDeColchetes = false;
+  for (const token of tokens) {
+    const text = token.text;
+    if (text.includes("[")) {
+      dentroDeColchetes = true;
+    }
+    if (dentroDeColchetes) {
+      if (text.includes("]")) {
+        dentroDeColchetes = false;
+      }
+      continue;
+    }
+    if (text.trim() === "") {
+      continue;
+    }
+    if (words.length === 0 || /^\s/.test(text)) {
+      words.push({
+        text: text.trim(),
+        startMs: token.startMs,
+        endMs: token.endMs,
+      });
+    } else {
+      const last = words[words.length - 1];
+      last.text += text;
+      last.endMs = Math.max(last.endMs, token.endMs);
+    }
+  }
+  return words;
+};
+
+const dosTempos = async (file, duracao) => {
   const raw = JSON.parse(await readFile(file, "utf8"));
-  const captions = raw.filter((w) => w.text.trim() !== "");
-  const sentences = toSentences(captions).map((s, i) => ({
-    index: i + 1,
-    startMs: s.startMs,
-    endMs: s.endMs,
-    text: s.text,
-    words: captions
-      .filter((w) => w.startMs >= s.startMs && w.endMs <= s.endMs)
-      .map((w) => ({
-        text: w.text.trim(),
-        startMs: w.startMs,
-        endMs: w.endMs,
-      })),
-  }));
-  const last = captions[captions.length - 1];
+  const words = juntarPalavras(raw);
+  const sentences = [];
+  let current = null;
+  for (const word of words) {
+    if (current && word.startMs - current.endMs > 700) {
+      sentences.push(current);
+      current = null;
+    }
+    if (!current) {
+      current = { startMs: word.startMs, endMs: word.endMs, words: [] };
+    }
+    current.words.push(word);
+    current.endMs = word.endMs;
+    if (/[.!?…]$/.test(word.text)) {
+      sentences.push(current);
+      current = null;
+    }
+  }
+  if (current) {
+    sentences.push(current);
+  }
+  const last = words[words.length - 1];
   return {
     fps: 30,
     estimado: false,
-    durationMs: last.endMs + 600,
-    sentences,
+    durationMs: duracao ? Math.round(duracao * 1000) : last.endMs + 600,
+    sentences: sentences.map((sentence, i) => ({
+      index: i + 1,
+      startMs: sentence.startMs,
+      endMs: sentence.endMs,
+      text: sentence.words.map((w) => w.text).join(" "),
+      words: sentence.words,
+    })),
   };
 };
 
 const main = async () => {
-  const input = process.argv[2];
-  const info = input ? await dosTempos(input) : estimar();
+  const input = process.argv.find((a, i) => i > 1 && !a.startsWith("--"));
+  const duracaoArg = process.argv.find((a) => a.startsWith("--duracao="));
+  const duracao = duracaoArg ? Number(duracaoArg.split("=")[1]) : undefined;
+  const info = input ? await dosTempos(input, duracao) : estimar();
   await writeFile(OUT, JSON.stringify(info, null, 1) + "\n");
   console.log(
     `${input ? "Tempos reais" : "Estimativa"} gravados em src/kimi/fala-info.json (${(info.durationMs / 1000).toFixed(1)} s)`,
