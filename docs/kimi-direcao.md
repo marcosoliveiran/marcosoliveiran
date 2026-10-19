@@ -62,7 +62,8 @@ transcrição real.
   ficou, só com o rosto.
 - "70 e poucos anos depois" não foi dito: o contador de 73 anos virou um
   número fixo que aparece junto com "1953 → 2026".
-- Vídeo de 59,67 s. Tempos reais em `src/kimi/fala-info.json`
-  (`npm run kimi:info -- transcricao/kimibruto.json --duracao=59.67`).
-- Falta conferir o enquadramento do rosto com o vídeo leve (`proxy`), que ainda
-  não chegou.
+- Vídeo de 59,67 s, mas o final tem a tela do CapCut (a partir de 57,67 s): a composição termina em 57,6 s e não mostra essa tela. Tempos reais em `src/kimi/fala-info.json`
+  (`npm run kimi:info -- transcricao/kimibruto.json --duracao=57.6`).
+- Enquadramento conferido com o vídeo leve: o rosto fica na mesma posição do
+  Creep (`FACE` em `KimiVideo.tsx`) e os motions de cima não o cobrem. Nos
+  primeiros ~2 s ele está mais longe da câmera e à esquerda; é o frame da capa.
