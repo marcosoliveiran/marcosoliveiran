@@ -26,6 +26,10 @@ export const KIMI_SIZE = { width: WIDTH, height: HEIGHT };
 
 const STAGE = { x: 60, y: 250 };
 
+// Linha do umbigo no quadro (y, em pixels): abaixo dela o vídeo fica preto.
+// Sobe o número para cortar mais alto, desce para mostrar mais do corpo.
+const BELLY_CUT = 1440;
+
 // --- Motions: de quando a quando (segundos, na fala) -------------------------------
 type Motion = { id: string; from: number; to: number; node: ReactNode };
 
@@ -155,14 +159,15 @@ const MOTIONS: Motion[] = [
 ];
 
 // --- Enquadramentos (iguais ao Creep) ------------------------------------------------
-// A = aberto, B = médio (112%). Centro do rosto no vídeo de 1080 x 1920.
+// A = aberto (120%), B = médio (132%). Os dois cobrem o topo inteiro com o vídeo
+// (sem faixa preta): a cabeça fica logo abaixo da área dos motions. Centro do rosto no vídeo de 1080 x 1920.
 type Mode = "A" | "B";
 type Framing = { scale: number; x: number; y: number };
 
 const FACE = { x: 590, y: 816 };
 const FRAMINGS: Record<Mode, Framing> = {
-  A: { scale: 1.0, x: 590, y: 1056 },
-  B: { scale: 1.12, x: 540, y: 1050 },
+  A: { scale: 1.2, x: 590, y: 970 },
+  B: { scale: 1.32, x: 590, y: 970 },
 };
 
 // Cortes alternando A e B a cada 4 a 8 s, sempre em início de assunto.
@@ -292,19 +297,18 @@ export const KimiVideo: React.FC<KimiProps> = ({ hasVideo = HAS_VIDEO }) => {
           )}
         </div>
 
-        {/* O vídeo começa abaixo do topo: o preto sobe e se dissolve nele */}
-        {video.top > 0 ? (
-          <div
-            style={{
-              position: "absolute",
-              left: 0,
-              top: 0,
-              width: WIDTH,
-              height: video.top + 220,
-              background: `linear-gradient(to bottom, ${VOOM.black} 0, ${VOOM.black} ${video.top}px, rgba(16,16,16,0) 100%)`,
-            }}
-          />
-        ) : null}
+        {/* Nada do corpo aparece abaixo da linha do umbigo: preto liso, com uma
+            borda suave de 60 px logo acima da linha (BELLY_CUT) */}
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: BELLY_CUT - 60,
+            width: WIDTH,
+            height: HEIGHT - (BELLY_CUT - 60),
+            background: `linear-gradient(to bottom, rgba(16,16,16,0) 0, ${VOOM.black} 60px)`,
+          }}
+        />
 
         {/* Motions (painel transparente, dentro da área segura) */}
         <div
