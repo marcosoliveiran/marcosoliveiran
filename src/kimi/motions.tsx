@@ -122,7 +122,13 @@ const SafeImage: React.FC<{
 // adesivo, cantos arredondados e sombra. O corte prioriza o rosto: `x` e `y`
 // (0 a 100) dizem onde está o rosto na foto original e `zoom` aproxima.
 type Focus = { x: number; y: number; zoom?: number };
-const FOCUS: Record<string, Focus> = {};
+const FOCUS: Record<string, Focus> = {
+  kimi: { x: 50, y: 30, zoom: 1.3 },
+  hamilton: { x: 50, y: 30, zoom: 1.45 },
+  schumacher: { x: 57, y: 35, zoom: 1.5 },
+  russell: { x: 50, y: 20, zoom: 1.5 },
+  "ahs-coven": { x: 50, y: 15 },
+};
 const DEFAULT_FOCUS: Focus = { x: 50, y: 28 };
 
 const PhotoCard: React.FC<{ file: string }> = ({ file }) => {
