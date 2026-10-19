@@ -77,7 +77,8 @@ const SafeImage: React.FC<{
   file: string;
   fallback?: ReactNode;
   position?: string;
-}> = ({ file, fallback, position = "center bottom" }) => {
+  fit?: "contain" | "cover";
+}> = ({ file, fallback, position = "center bottom", fit = "contain" }) => {
   const base = file.replace(/\.[a-z]+$/i, "");
   const [handle] = useState(() => delayRender(`Imagem ${file}`));
   const [attempt, setAttempt] = useState(0);
@@ -105,7 +106,7 @@ const SafeImage: React.FC<{
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "contain",
+          objectFit: fit,
           objectPosition: position,
           display: state === "ok" ? "block" : "none",
         }}
@@ -117,14 +118,42 @@ const SafeImage: React.FC<{
 
 // --- Peças básicas -----------------------------------------------------------------
 
-// Recorte com borda branca de adesivo, sombra leve, balanço e plaquinha de nome.
-const OUTLINE = [
-  "drop-shadow(5px 0 0 #fff)",
-  "drop-shadow(-5px 0 0 #fff)",
-  "drop-shadow(0 5px 0 #fff)",
-  "drop-shadow(0 -5px 0 #fff)",
-  "drop-shadow(0 14px 16px rgba(0,0,0,0.5))",
-].join(" ");
+// Foto em cartão (as fotos vêm com fundo, sem recorte): borda branca de
+// adesivo, cantos arredondados e sombra. O corte prioriza o rosto: `x` e `y`
+// (0 a 100) dizem onde está o rosto na foto original e `zoom` aproxima.
+type Focus = { x: number; y: number; zoom?: number };
+const FOCUS: Record<string, Focus> = {};
+const DEFAULT_FOCUS: Focus = { x: 50, y: 28 };
+
+const PhotoCard: React.FC<{ file: string }> = ({ file }) => {
+  const base = file.replace(/\.[a-z]+$/i, "");
+  const { x, y, zoom = 1 } = FOCUS[base] ?? DEFAULT_FOCUS;
+  return (
+    <div
+      style={{
+        position: "absolute",
+        inset: 0,
+        borderRadius: 34,
+        overflow: "hidden",
+        border: "6px solid #fff",
+        boxSizing: "border-box",
+        background: "#222",
+        boxShadow: "0 14px 24px rgba(0,0,0,0.5)",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          transform: `scale(${zoom})`,
+          transformOrigin: `${x}% ${y}%`,
+        }}
+      >
+        <SafeImage file={file} fit="cover" position={`${x}% ${y}%`} />
+      </div>
+    </div>
+  );
+};
 
 const NamePlate: React.FC<{ text: string; size?: number }> = ({
   text,
@@ -192,9 +221,7 @@ const Cutout: React.FC<{
         transform: `translate(${dx}px, ${dy + float}px) rotate(${tilt}deg) scale(${0.88 + 0.12 * p})`,
       }}
     >
-      <div style={{ position: "absolute", inset: 0, filter: OUTLINE }}>
-        <SafeImage file={file} />
-      </div>
+      <PhotoCard file={file} />
       {name ? <NamePlate text={name} /> : null}
     </Abs>
   );
@@ -940,12 +967,7 @@ export const VersusHeads: React.FC<{ cycleAt: number }> = ({ cycleAt }) => {
             transform: `translateY(${(1 - enter) * 60}px) scale(${0.85 + 0.15 * enter}) rotate(${2 + Math.sin(frame / 10) * 1.5}deg)`,
           }}
         >
-          <div
-            key={rival.file}
-            style={{ position: "absolute", inset: 0, filter: OUTLINE }}
-          >
-            <SafeImage file={rival.file} />
-          </div>
+          <PhotoCard key={rival.file} file={rival.file} />
           <NamePlate text={rival.name} />
         </Abs>
       ) : null}
