@@ -70,8 +70,25 @@ const Placeholder: React.FC<{ label: string }> = ({ label }) => (
   </AbsoluteFill>
 );
 
-// Aceita .png, .jpg, .jpeg e .webp com o mesmo nome: tenta uma de cada vez.
-const EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+// Aceita .png, .jpg, .jpeg e .webp com o mesmo nome. A extensão que já existe em
+// public/kimi vem primeiro (IMAGE_EXT), então não há tentativa com 404; as outras
+// só são tentadas se o arquivo for trocado por um de outro formato.
+const IMAGE_EXT: Record<string, string> = {
+  kimi: "jpg",
+  hamilton: "jpg",
+  schumacher: "jpg",
+  ascari: "jpg",
+  russell: "jpg",
+  verstappen: "jpg",
+  "ahs-coven": "jpg",
+};
+const ALL_EXTENSIONS = ["png", "jpg", "jpeg", "webp"];
+const extensionsFor = (base: string): string[] => {
+  const first = IMAGE_EXT[base];
+  return first
+    ? [first, ...ALL_EXTENSIONS.filter((e) => e !== first)]
+    : ALL_EXTENSIONS;
+};
 
 const SafeImage: React.FC<{
   file: string;
@@ -80,6 +97,7 @@ const SafeImage: React.FC<{
   fit?: "contain" | "cover";
 }> = ({ file, fallback, position = "center bottom", fit = "contain" }) => {
   const base = file.replace(/\.[a-z]+$/i, "");
+  const extensions = extensionsFor(base);
   const [handle] = useState(() => delayRender(`Imagem ${file}`));
   const [attempt, setAttempt] = useState(0);
   const [state, setState] = useState<"loading" | "ok" | "missing">("loading");
@@ -88,7 +106,7 @@ const SafeImage: React.FC<{
     continueRender(handle);
   };
   const failed = () => {
-    if (attempt + 1 < EXTENSIONS.length) {
+    if (attempt + 1 < extensions.length) {
       setAttempt(attempt + 1);
     } else {
       finish("missing");
@@ -100,7 +118,7 @@ const SafeImage: React.FC<{
       {/* eslint-disable-next-line @remotion/warn-native-media-tag */}
       <img
         key={attempt}
-        src={staticFile(`kimi/${base}.${EXTENSIONS[attempt]}`)}
+        src={staticFile(`kimi/${base}.${extensions[attempt]}`)}
         onLoad={() => finish("ok")}
         onError={failed}
         style={{
