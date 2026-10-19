@@ -17,10 +17,8 @@ de usar.
 | `russell.png` | George Russell (CTA) |
 | `verstappen.png` | Max Verstappen (CTA) |
 | `ahs-coven.png` | Cena de American Horror Story: Coven (Suprema) |
-| `trofeu.png` | Troféu do Grammy (sem ele aparece uma taça de reserva) |
 
-Depois de pôr `fala.mp4` aqui:
+Depois de pôr `fala.mp4` aqui, `npm run previa:kimi` (prévia leve) ou
+`npm run render:kimi` (final) já usam o vídeo. Se o vídeo mudar, refaça os tempos:
 1. `npm run transcrever -- "caminho/do/video.mp4"` (gera `transcricao/*.json`)
-2. `npm run kimi:info -- transcricao/NOME.json` (tempos reais da fala)
-3. `HAS_VIDEO = true` em `src/kimi/timing.ts`
-4. `npm run previa:kimi` ou `npm run render:kimi`
+2. `npm run kimi:info -- transcricao/NOME.json --duracao=SEGUNDOS`

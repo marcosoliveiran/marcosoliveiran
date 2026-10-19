@@ -15,6 +15,7 @@ import {
   HeringVideo,
 } from "./hering/HeringVideo";
 import { DEFAULT_GRADE } from "./hering/timing";
+import { HAS_VIDEO } from "./kimi/timing";
 import {
   KIMI_DURATION_IN_FRAMES,
   KIMI_FPS,
@@ -179,6 +180,7 @@ export const TalkingHeadComposition = () => {
       <Composition
         id="Kimi"
         component={KimiVideo}
+        defaultProps={{ hasVideo: HAS_VIDEO }}
         durationInFrames={KIMI_DURATION_IN_FRAMES}
         fps={KIMI_FPS}
         width={KIMI_SIZE.width}

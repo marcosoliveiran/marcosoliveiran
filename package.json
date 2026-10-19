@@ -38,8 +38,8 @@
     "render:hering-limpo": "remotion render Hering out/hering-limpo.mp4 --codec=h264 --crf=18 --props=src/hering/props/off.json",
     "render:hering-cinema": "remotion render Hering out/hering-cinema.mp4 --codec=h264 --crf=18 --props=src/hering/props/cinema.json",
     "kimi:info": "node tools/kimi-info.mjs",
-    "previa:kimi": "remotion render Kimi out/kimi-previa.mp4 --scale=0.4 --crf=30",
-    "render:kimi": "remotion render Kimi out/kimi.mp4 --codec=h264 --crf=18",
+    "previa:kimi": "remotion render Kimi out/kimi-previa.mp4 --scale=0.4 --crf=30 --props=src/kimi/props/com-video.json",
+    "render:kimi": "remotion render Kimi out/kimi.mp4 --codec=h264 --crf=18 --props=src/kimi/props/com-video.json",
     "render:creep": "remotion render Creep out/creep.mp4 --codec=h264 --crf=18"
   },
   "sideEffects": [

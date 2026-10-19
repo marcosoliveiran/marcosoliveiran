@@ -127,6 +127,8 @@ const FOCUS: Record<string, Focus> = {
   hamilton: { x: 50, y: 30, zoom: 1.45 },
   schumacher: { x: 57, y: 35, zoom: 1.5 },
   russell: { x: 50, y: 20, zoom: 1.5 },
+  ascari: { x: 37, y: 25, zoom: 1.5 },
+  verstappen: { x: 48, y: 18, zoom: 1.4 },
   "ahs-coven": { x: 50, y: 15 },
 };
 const DEFAULT_FOCUS: Focus = { x: 50, y: 28 };
@@ -936,16 +938,16 @@ export const VersusHeads: React.FC<{ cycleAt: number }> = ({ cycleAt }) => {
         file="kimi.png"
         name="KIMI"
         x={10}
-        y={20}
-        w={290}
-        h={420}
+        y={10}
+        w={280}
+        h={390}
         tilt={-2}
         from="left"
       />
       <Abs
         style={{
           left: 305,
-          top: 170,
+          top: 140,
           transform: `scale(${vs}) rotate(-6deg)`,
           background: VOOM.lime,
           color: VOOM.black,
@@ -966,9 +968,9 @@ export const VersusHeads: React.FC<{ cycleAt: number }> = ({ cycleAt }) => {
         <Abs
           style={{
             left: 560,
-            top: 20,
-            width: 300,
-            height: 420,
+            top: 10,
+            width: 290,
+            height: 390,
             opacity: Math.min(1, enter * 2),
             transform: `translateY(${(1 - enter) * 60}px) scale(${0.85 + 0.15 * enter}) rotate(${2 + Math.sin(frame / 10) * 1.5}deg)`,
           }}

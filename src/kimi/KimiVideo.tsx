@@ -248,12 +248,14 @@ const FacePlaceholder: React.FC = () => (
       fontSize={34}
       fill={VOOM.gray}
     >
-      quadro de reserva: public/kimi/fala.mp4 + HAS_VIDEO = true
+      quadro de reserva: coloque public/kimi/fala.mp4 e use npm run render:kimi
     </text>
   </svg>
 );
 
-export const KimiVideo: React.FC = () => {
+export type KimiProps = { hasVideo?: boolean };
+
+export const KimiVideo: React.FC<KimiProps> = ({ hasVideo = HAS_VIDEO }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const time = frame / fps;
@@ -280,7 +282,7 @@ export const KimiVideo: React.FC = () => {
             height: video.height,
           }}
         >
-          {HAS_VIDEO ? (
+          {hasVideo ? (
             <OffthreadVideo
               src={staticFile("kimi/fala.mp4")}
               style={{ width: "100%", height: "100%", objectFit: "fill" }}
@@ -329,7 +331,7 @@ export const KimiVideo: React.FC = () => {
           ))}
         </div>
 
-        {ESTIMADO && !HAS_VIDEO ? (
+        {ESTIMADO && !hasVideo ? (
           <div
             style={{
               position: "absolute",
