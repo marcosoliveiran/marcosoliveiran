@@ -191,7 +191,7 @@ export const TalkingHeadComposition = () => {
       <Composition
         id="PorOndeAnda-Parede"
         component={CapaParede}
-        defaultProps={{ fundo: "lima" as const }}
+        defaultProps={{ fundo: "tv" as const }}
         durationInFrames={90}
         fps={30}
         width={1080}

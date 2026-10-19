@@ -167,7 +167,7 @@ const DOODLES: Array<{
   { node: <Cassette />, x: -70, y: 560, size: 270, rot: -16 },
   { node: <Phones />, x: 930, y: 640, size: 220, rot: 12 },
   { node: <Flip />, x: -30, y: 1010, size: 210, rot: 10 },
-  { node: <Star />, x: 40, y: 330, size: 90, rot: -8 },
+  { node: <Star />, x: 24, y: 440, size: 90, rot: -8 },
   { node: <Note />, x: 940, y: 1030, size: 160, rot: -10 },
   { node: <Cd />, x: 870, y: 1330, size: 210, rot: 18 },
   { node: <Star />, x: 20, y: 1360, size: 110, rot: 14 },
@@ -175,7 +175,7 @@ const DOODLES: Array<{
   { node: <Note />, x: 400, y: 1560, size: 150, rot: 6 },
 ];
 
-const Doodles: React.FC = () => (
+const Doodles: React.FC<{ neon?: boolean }> = ({ neon = false }) => (
   <>
     {DOODLES.map((d, i) => (
       <div
@@ -187,7 +187,9 @@ const Doodles: React.FC = () => (
           width: d.size,
           height: d.size,
           transform: `translateY(${0}px) rotate(${d.rot}deg)`,
-          filter: "drop-shadow(0 8px 10px rgba(0,0,0,0.25))",
+          filter: neon
+            ? "drop-shadow(0 0 14px rgba(198,255,26,0.55)) drop-shadow(0 8px 10px rgba(0,0,0,0.5))"
+            : "drop-shadow(0 8px 10px rgba(0,0,0,0.25))",
         }}
       >
         <FloatBox seed={i}>{d.node}</FloatBox>
@@ -272,6 +274,13 @@ const FundoTv: React.FC = () => {
             "repeating-linear-gradient(0deg, rgba(255,255,255,0.06) 0 2px, rgba(0,0,0,0) 2px 6px)",
         }}
       />
+      <Doodles neon />
+      <AbsoluteFill
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 0 2px, rgba(0,0,0,0) 2px 6px)",
+        }}
+      />
       <div
         style={{
           position: "absolute",
@@ -286,8 +295,8 @@ const FundoTv: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 64,
-          top: 1500,
+          left: 640,
+          top: 1640,
           fontFamily: VOOM_TEXT_FONT,
           fontWeight: 900,
           fontSize: 44,
@@ -300,8 +309,8 @@ const FundoTv: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 64,
-          top: 1560,
+          left: 640,
+          top: 1700,
           fontFamily: VOOM_TITLE_FONT,
           fontWeight: 700,
           fontSize: 40,
@@ -360,13 +369,14 @@ export const Folha: React.FC<CapaProps> = (props) => (
 export type ParedeProps = CapaProps & { fundo?: Fundo };
 
 export const CapaParede: React.FC<ParedeProps> = ({
-  fundo = "lima",
+  fundo = "tv",
   ...props
 }) => (
   <AbsoluteFill style={{ backgroundColor: VOOM.black }}>
     {fundo === "lima" ? <FundoLima /> : null}
     {fundo === "halftone" ? <FundoHalftone /> : null}
     {fundo === "tv" ? <FundoTv /> : null}
-    <Folha {...props} />
+    {/* Na TV não há papel branco: o título, a foto e a faixa ficam direto no fundo escuro */}
+    {fundo === "tv" ? <CapaConteudo escuro {...props} /> : <Folha {...props} />}
   </AbsoluteFill>
 );

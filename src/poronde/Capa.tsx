@@ -12,6 +12,7 @@ export type CapaProps = {
   name?: string;
   photo?: string; // arquivo em public/poronde (png, jpg, jpeg ou webp)
   female?: boolean; // PROCURADA x PROCURADO
+  escuro?: boolean; // sem papel branco: texto off-white direto no fundo escuro
 };
 
 const CENTER_X = 500; // centro útil (a direita é coberta pelos botões)
@@ -109,6 +110,7 @@ export const CapaConteudo: React.FC<CapaProps> = ({
   name = "JoJo",
   photo = "jojo-2000s",
   female = true,
+  escuro = false,
 }) => (
   <AbsoluteFill>
     {/* Título */}
@@ -121,7 +123,7 @@ export const CapaConteudo: React.FC<CapaProps> = ({
         textAlign: "center",
         fontFamily: VOOM_TITLE_FONT,
         fontWeight: 700,
-        color: VOOM.black,
+        color: escuro ? VOOM.offWhite : VOOM.black,
         lineHeight: 0.92,
       }}
     >
@@ -133,6 +135,7 @@ export const CapaConteudo: React.FC<CapaProps> = ({
           padding: "0 34px 8px",
           fontSize: 200,
           background: VOOM.lime,
+          color: VOOM.black,
           transform: "rotate(-2deg)",
           boxShadow: "0 10px 0 rgba(0,0,0,0.9)",
         }}
@@ -157,6 +160,7 @@ export const CapaConteudo: React.FC<CapaProps> = ({
           position: "absolute",
           inset: 0,
           background: VOOM.black,
+          border: escuro ? `6px solid ${VOOM.offWhite}` : "none",
           padding: 16,
           boxSizing: "border-box",
           boxShadow: "0 22px 34px rgba(0,0,0,0.38)",
