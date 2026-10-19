@@ -67,3 +67,17 @@ transcrição real.
 - Enquadramento conferido com o vídeo leve: o rosto fica na mesma posição do
   Creep (`FACE` em `KimiVideo.tsx`) e os motions de cima não o cobrem. Nos
   primeiros ~2 s ele está mais longe da câmera e à esquerda; é o frame da capa.
+
+## Enquadramentos e efeitos sonoros (cortes por assunto)
+
+- 13 planos em ~57 s, cortes secos com zoom lento de 4% em cada um (`SHOTS` em
+  `src/kimi/KimiVideo.tsx`): aberto 120% (o mais distante, limite do próprio
+  vídeo), médio 140% e fechado 160 a 175% (rosto um pouco mais baixo, para a
+  testa não encostar nas palavras-chave). Mapa: capa aberto; "O italiano" médio;
+  Suprema fechado; Mercedes aberto; Hamilton médio; Schumacher fechado; "Quem
+  está acompanhando" fechado (só o rosto); "100 pontos" aberto; Austin médio;
+  México fechado; Ascari médio; "Mas e aí" aberto; "Conta para mim" fechado.
+- Sons novos (`tools/make-sfx-kimi.py`): `k-corte` em todo corte, `k-zoom` nos
+  cortes para plano mais fechado, `k-card` nos cartões de foto e nas trocas de
+  rival do CTA, `k-dot` nas bolinhas do "5 dos 7" (tom sobe a cada uma).
+- Fala a 85% de volume (já vinha a -0,2 dB) para os efeitos não estourarem.

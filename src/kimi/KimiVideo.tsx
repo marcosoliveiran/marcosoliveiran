@@ -154,68 +154,101 @@ const MOTIONS: Motion[] = [
   },
 ];
 
-// --- Enquadramentos (iguais ao Creep) ------------------------------------------------
-// A = aberto (120%), B = médio (132%). Os dois cobrem o topo inteiro com o vídeo
-// (sem faixa preta): a cabeça fica logo abaixo da área dos motions. Centro do rosto no vídeo de 1080 x 1920.
-type Mode = "A" | "B";
-type Framing = { scale: number; x: number; y: number };
+// --- Enquadramentos -----------------------------------------------------------------
+// Cada plano é um corte seco (como no CapCut) com um zoom lento durante o trecho.
+// scale 1,2 = aberto: é o mais distante possível, porque abaixo disso o vídeo
+// deixa de cobrir o topo do quadro. `y` é onde fica o centro do rosto; nos
+// planos fechados ele desce um pouco para a testa não encostar nas palavras-chave.
+type Shot = { at: number; scale: number; y: number };
 
-const FACE = { x: 590, y: 816 };
-const FRAMINGS: Record<Mode, Framing> = {
-  A: { scale: 1.2, x: 590, y: 970 },
-  B: { scale: 1.32, x: 590, y: 970 },
-};
+const FACE = { x: 590, y: 816 }; // centro do rosto no vídeo de 1080 x 1920
+const PUSH = 0.04; // zoom lento de cada plano
+// A fala já vem perto de 0 dB; um pouco abaixo deixa folga para os efeitos sem estourar.
+const VOICE_VOLUME = 0.85;
+const OPEN = { scale: 1.2, y: 970 };
+const MID = { scale: 1.4, y: 1005 };
 
-// Cortes alternando A e B a cada 4 a 8 s, sempre em início de assunto.
-const CUTS = [
-  T.sabe,
-  T.entrou,
-  T.hamilton,
-  T.schumacher,
-  T.acompanhou,
-  T.com,
-  T.mexico,
-  T.ascari,
-  T.mas,
+const SHOTS: Shot[] = [
+  { at: 0, ...OPEN }, // capa
+  { at: T.italiano - 0.05, ...MID },
+  { at: T.sabe - 0.05, scale: 1.7, y: 1080 }, // Suprema: tom de segredo
+  { at: T.kimEntrou - 0.05, ...OPEN },
+  { at: T.hamilton - 0.1, ...MID },
+  { at: T.schumacher - 0.1, scale: 1.65, y: 1075 },
+  { at: T.acompanhou - 0.05, scale: 1.75, y: 1085 }, // só o rosto
+  { at: T.com - 0.05, ...OPEN },
+  { at: T.austin - 0.1, ...MID },
+  { at: T.mexico - 0.1, scale: 1.6, y: 1060 },
+  { at: T.ascari - 0.1, ...MID },
+  { at: T.mas - 0.05, ...OPEN },
+  { at: T.conta - 0.05, scale: 1.7, y: 1080 }, // convite íntimo
 ];
 
-const framingAt = (time: number): { framing: Framing; progress: number } => {
+const framingAt = (time: number): { shot: Shot; progress: number } => {
   let index = 0;
-  CUTS.forEach((cut, i) => {
-    if (time >= cut) {
-      index = i + 1;
+  SHOTS.forEach((shot, i) => {
+    if (time >= shot.at) {
+      index = i;
     }
   });
-  const from = index === 0 ? 0 : CUTS[index - 1];
-  const to = index < CUTS.length ? CUTS[index] : END;
+  const from = SHOTS[index].at;
+  const to = index + 1 < SHOTS.length ? SHOTS[index + 1].at : END;
   const progress = Math.min(
     1,
     Math.max(0, (time - from) / Math.max(0.1, to - from)),
   );
-  return { framing: FRAMINGS[index % 2 === 0 ? "A" : "B"], progress };
+  return { shot: SHOTS[index], progress };
 };
 
 // --- Efeitos sonoros ------------------------------------------------------------------
-const SFX: Array<[number, string, number]> = [
+// [segundo, arquivo, volume, velocidade (opcional)]. Sons novos: tools/make-sfx-kimi.py.
+type Sfx = [number, string, number, number?];
+
+// Cortes de câmera: swish curto em todos; plano mais fechado ganha o som de aproximação.
+const CUT_SFX: Sfx[] = SHOTS.slice(1).flatMap((shot, i): Sfx[] => {
+  const closer = shot.scale > SHOTS[i].scale;
+  return [
+    [shot.at, "k-corte.wav", 0.5],
+    ...(closer ? ([[shot.at - 0.05, "k-zoom.wav", 0.4]] as Sfx[]) : []),
+  ];
+});
+
+// Cartões de foto entrando (e as trocas de rival no CTA).
+const SWAPS: Sfx[] = [];
+for (let t = T.quem + 0.5; t < T.segue - 0.3; t += 28 / FPS) {
+  SWAPS.push([t, "k-card.wav", 0.4]);
+}
+
+const SFX: Sfx[] = [
+  ...CUT_SFX,
+  ...SWAPS,
   [T.campeao, "pop.wav", 0.45],
   [T.vinte1, "riser.wav", 0.4],
-  [T.sabe, "whoosh.wav", 0.4],
+  [T.sabe, "k-card.wav", 0.5],
   [T.suprema, "stamp.wav", 0.85],
   [T.anterior, "riser.wav", 0.4],
-  [T.mercedes, "whoosh.wav", 0.4],
-  [T.lugar, "whoosh.wav", 0.4],
+  [T.mercedes, "k-card.wav", 0.5],
+  [T.lugar, "k-card.wav", 0.5],
   [T.lugar + 0.1, "pop.wav", 0.45],
   [T.sete1, "riser.wav", 0.4],
   [T.sete1 + 0.9, "ding.wav", 0.45],
   [T.ferrari1, "whoosh.wav", 0.4],
-  [T.schumacher, "whoosh.wav", 0.4],
+  [T.schumacher, "k-card.wav", 0.5],
+  ...[0, 1, 2, 3, 4].map(
+    (i): Sfx => [
+      T.schumacher + Math.max(0.8, T.cinco - T.schumacher) + 0.18 * i,
+      "k-dot.wav",
+      0.4,
+      1 + 0.12 * i,
+    ],
+  ),
   [T.cinco, "sparkle.wav", 0.45],
   [T.cem, "riser.wav", 0.45],
   [T.cem + 0.7, "impact.wav", 0.5],
   [T.austin, "pop.wav", 0.5],
   [T.mexico, "pop.wav", 0.5],
   [T.paulo, "pop.wav", 0.5],
-  [T.ascari, "whoosh.wav", 0.4],
+  [T.ascari, "k-card.wav", 0.5],
   [T.y1953, "riser.wav", 0.35],
   [T.y1953 + 0.5, "ding.wav", 0.5],
   [T.quem, "impact.wav", 0.55],
@@ -260,14 +293,14 @@ export const KimiVideo: React.FC<KimiProps> = ({ hasVideo = HAS_VIDEO }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const time = frame / fps;
-  const { framing, progress } = framingAt(time);
+  const { shot, progress } = framingAt(time);
 
-  const scale = framing.scale * (1 + 0.025 * progress);
+  const scale = shot.scale * (1 + PUSH * progress);
   const video = {
     width: WIDTH * scale,
     height: HEIGHT * scale,
-    left: framing.x - FACE.x * scale,
-    top: framing.y - FACE.y * scale,
+    left: FACE.x - FACE.x * scale,
+    top: shot.y - FACE.y * scale,
   };
 
   return (
@@ -286,6 +319,7 @@ export const KimiVideo: React.FC<KimiProps> = ({ hasVideo = HAS_VIDEO }) => {
           {hasVideo ? (
             <OffthreadVideo
               src={staticFile("kimi/fala.mp4")}
+              volume={VOICE_VOLUME}
               style={{ width: "100%", height: "100%", objectFit: "fill" }}
             />
           ) : (
@@ -335,14 +369,18 @@ export const KimiVideo: React.FC<KimiProps> = ({ hasVideo = HAS_VIDEO }) => {
         ) : null}
 
         {/* Efeitos sonoros */}
-        {SFX.map(([at, file, volume], i) => (
+        {SFX.map(([at, file, volume, rate = 1], i) => (
           <Sequence
             key={`sfx-${i}`}
             from={Math.round(at * fps)}
             layout="none"
             name={`sfx ${file}`}
           >
-            <Html5Audio src={staticFile(`sfx/${file}`)} volume={() => volume} />
+            <Html5Audio
+              src={staticFile(`sfx/${file}`)}
+              volume={() => volume}
+              playbackRate={rate}
+            />
           </Sequence>
         ))}
       </AbsoluteFill>

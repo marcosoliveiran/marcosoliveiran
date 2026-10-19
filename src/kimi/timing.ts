@@ -50,6 +50,7 @@ const next = (pattern: RegExp): Hit => {
 // --- Momentos, na ordem da fala -------------------------------------------------
 const kimi1 = next(/^kimi?$/);
 const antonelli = next(/^antonel/);
+const italiano = next(/^italiano/);
 const campeao = next(/^campea/);
 const jovem = next(/^jovem/);
 const vinte1 = next(/^(20|vinte)$/);
@@ -57,6 +58,7 @@ const sabe = next(/^sabe$/);
 const suprema = next(/^suprema/);
 const anterior = next(/^anterior/);
 const fraca = next(/^fraca/);
+const kimEntrou = next(/^kimi?$/);
 const entrou = next(/^entrou/);
 const mercedes = next(/^mercedes/);
 const lugar = next(/^lugar$/);
@@ -78,6 +80,7 @@ const y1953 = next(/^(1953|mil)$/);
 const mas = next(/^mas$/);
 const quem = next(/^quem$/);
 const torcida = next(/^torcida/);
+const conta = next(/^cont/);
 const comentarios = next(/^comentarios/);
 const segue = next(/^(segue|siga)$/);
 
@@ -86,6 +89,7 @@ export const END = info.durationMs / 1000;
 export const T = {
   kimi1: kimi1.start,
   antonelliEnd: antonelli.end,
+  italiano: italiano.start,
   campeao: campeao.start,
   jovem: jovem.start,
   vinte1: vinte1.start,
@@ -93,6 +97,7 @@ export const T = {
   suprema: suprema.start,
   anterior: anterior.start,
   fracaEnd: fraca.end,
+  kimEntrou: kimEntrou.start,
   entrou: entrou.start,
   mercedes: mercedes.start,
   lugar: lugar.start,
@@ -115,6 +120,7 @@ export const T = {
   mas: mas.start,
   quem: quem.start,
   torcida: torcida.start,
+  conta: conta.start,
   comentarios: comentarios.start,
   segue: segue.start,
 };
