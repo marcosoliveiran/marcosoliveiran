@@ -46,7 +46,7 @@ const SOFT_SHADOW = "drop-shadow(0 12px 16px rgba(0,0,0,0.45))";
 // --- Imagens (public/kimi) -------------------------------------------------------
 // Se o arquivo ainda não existe, mostra um quadro de reserva com o nome dele.
 
-const Placeholder: React.FC<{ label: string }> = ({ label }) => (
+export const Placeholder: React.FC<{ label: string }> = ({ label }) => (
   <AbsoluteFill
     style={{
       background: "linear-gradient(160deg, #3a3a38, #1c1c1b)",
@@ -90,12 +90,19 @@ const extensionsFor = (base: string): string[] => {
     : ALL_EXTENSIONS;
 };
 
-const SafeImage: React.FC<{
+export const SafeImage: React.FC<{
   file: string;
   fallback?: ReactNode;
   position?: string;
   fit?: "contain" | "cover";
-}> = ({ file, fallback, position = "center bottom", fit = "contain" }) => {
+  dir?: string;
+}> = ({
+  file,
+  fallback,
+  position = "center bottom",
+  fit = "contain",
+  dir = "kimi",
+}) => {
   const base = file.replace(/\.[a-z]+$/i, "");
   const extensions = extensionsFor(base);
   const [handle] = useState(() => delayRender(`Imagem ${file}`));
@@ -118,7 +125,7 @@ const SafeImage: React.FC<{
       {/* eslint-disable-next-line @remotion/warn-native-media-tag */}
       <img
         key={attempt}
-        src={staticFile(`kimi/${base}.${extensions[attempt]}`)}
+        src={staticFile(`${dir}/${base}.${extensions[attempt]}`)}
         onLoad={() => finish("ok")}
         onError={failed}
         style={{
