@@ -1,7 +1,6 @@
 import { AbsoluteFill } from "remotion";
-import { HEIGHT, WIDTH } from "../kit";
 import { SafeImage } from "../kimi/motions";
-import { VOOM, VOOM_TEXT_FONT, VOOM_TITLE_FONT } from "../themes/voom";
+import { VOOM, VOOM_TITLE_FONT } from "../themes/voom";
 
 // Quadro "Por Onde Anda?": cartaz de procurado em tela cheia (a capa do vídeo).
 // De cima para baixo: o título bem grande, a foto de "procurada" e a faixa
@@ -102,15 +101,16 @@ const Ribbon: React.FC<{ text: string }> = ({ text }) => (
   </div>
 );
 
-export const Capa: React.FC<CapaProps> = ({
+// Título, foto de procurada e faixa do episódio, desenhados num quadro de
+// 1080 x 1920 (centro útil x = 500). Serve para a capa em tela cheia e para a
+// folha colada na parede (CapaParede).
+export const CapaConteudo: React.FC<CapaProps> = ({
   episode = 1,
   name = "JoJo",
   photo = "jojo-2000s",
   female = true,
 }) => (
-  <AbsoluteFill style={{ backgroundColor: VOOM.offWhite }}>
-    <Paper />
-
+  <AbsoluteFill>
     {/* Título */}
     <div
       style={{
@@ -211,18 +211,14 @@ export const Capa: React.FC<CapaProps> = ({
     >
       <Ribbon text={`Episódio ${episode}: ${name}`} />
     </div>
-
-    <div
-      style={{
-        position: "absolute",
-        left: 60,
-        top: 1850,
-        fontFamily: VOOM_TEXT_FONT,
-        fontSize: 1,
-        opacity: 0,
-      }}
-    >
-      {WIDTH}x{HEIGHT}
-    </div>
   </AbsoluteFill>
 );
+
+export const Capa: React.FC<CapaProps> = (props) => (
+  <AbsoluteFill style={{ backgroundColor: VOOM.offWhite }}>
+    <Paper />
+    <CapaConteudo {...props} />
+  </AbsoluteFill>
+);
+
+export { Paper };

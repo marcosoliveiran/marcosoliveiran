@@ -17,6 +17,7 @@ import {
 import { DEFAULT_GRADE } from "./hering/timing";
 import { HAS_VIDEO } from "./kimi/timing";
 import { Capa } from "./poronde/Capa";
+import { CapaParede } from "./poronde/Parede";
 import {
   KIMI_DURATION_IN_FRAMES,
   KIMI_FPS,
@@ -186,6 +187,15 @@ export const TalkingHeadComposition = () => {
         fps={KIMI_FPS}
         width={KIMI_SIZE.width}
         height={KIMI_SIZE.height}
+      />
+      <Composition
+        id="PorOndeAnda-Parede"
+        component={CapaParede}
+        defaultProps={{ fundo: "lima" as const }}
+        durationInFrames={90}
+        fps={30}
+        width={1080}
+        height={1920}
       />
       <Composition
         id="PorOndeAnda-Capa"
